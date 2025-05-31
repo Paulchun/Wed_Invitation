@@ -12,27 +12,46 @@
     Your browser does not support the audio element.
   </audio>
 
+  <script>
+    const password = prompt("비밀번호를 입력하세요:");
+    if (password !== "ggh2025") {
+      alert("비밀번호가 틀렸습니다.");
+      document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
+    }
+  </script>
+
+  <div class="language-tabs">
+    <button onclick="setLanguage('ko')">한국어</button>
+    <button onclick="setLanguage('ja')">日本語</button>
+  </div>
+
   <section class="cover">
     <img src="assets/img/character1.png" class="character left">
     <img src="assets/img/character2.png" class="character right">
     <h1>Paul & Paulwaifu</h1>
-    <p>2025년 6월 20일<br>서울 한옥 야외 웨딩홀</p>
+    <p data-lang-ko="2025년 6월 20일<br>서울 한옥 야외 웨딩홀"
+       data-lang-ja="2025年6月20日<br>ソウル韓屋野外ウェディングホール">
+       2025년 6월 20일<br>서울 한옥 야외 웨딩홀</p>
+    <div id="countdown"></div>
   </section>
 
   <section class="gallery">
-    <h2>Our Memories</h2>
-    <div class="photos">
-      <img src="assets/img/photo1.jpg">
-      <img src="assets/img/photo2.jpg">
-      <img src="assets/img/photo3.jpg">
+    <h2 data-lang-ko="우리의 추억" data-lang-ja="思い出">우리의 추억</h2>
+    <div class="slider">
+      <img src="assets/img/photo1.jpg" class="slide active">
+      <img src="assets/img/photo2.jpg" class="slide">
+      <img src="assets/img/photo3.jpg" class="slide">
     </div>
+    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="next" onclick="changeSlide(1)">&#10095;</button>
   </section>
 
   <section class="details">
-    <h2>Wedding Details</h2>
-    <p>🗓️ 날짜: 2025년 6월 20일 (금)<br>
-    📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>
-    📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx</p>
+    <h2 data-lang-ko="예식 정보" data-lang-ja="結婚式の情報">예식 정보</h2>
+    <p data-lang-ko="🗓️ 날짜: 2025년 6월 20일 (금)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
+       data-lang-ja="🗓️ 日付: 2025年6月20日(金)<br>📍 場所: ソウル鍾路区 韓屋野外ウェディングホール<br>📞 連絡先: 新郎 - 010-xxxx-xxxx / 新婦 - 010-xxxx-xxxx">
+       🗓️ 날짜: 2025년 6월 20일 (금)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx
+    </p>
   </section>
 
   <script src="script.js"></script>

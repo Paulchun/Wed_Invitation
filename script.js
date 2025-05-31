@@ -1,6 +1,4 @@
-// script.js
-
-// 🖼️ 이미지 슬라이드
+// 이미지 슬라이드
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 function showSlide(n) {
@@ -12,7 +10,7 @@ function changeSlide(n) {
   showSlide(currentSlide + n);
 }
 
-// 📅 카운트다운
+// D-day 카운트다운
 const countdown = document.getElementById("countdown");
 const weddingDate = new Date("2025-06-20T00:00:00+09:00");
 function updateCountdown() {
@@ -28,7 +26,7 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// 🌐 다국어 지원
+// 다국어 지원
 function setLanguage(lang) {
   document.querySelectorAll('[data-lang-ko]').forEach(el => {
     el.innerHTML = el.getAttribute(`data-lang-${lang}`);

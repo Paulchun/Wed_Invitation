@@ -1,4 +1,3 @@
-/* style.css */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -6,6 +5,21 @@ body {
   color: #333;
   text-align: center;
   overflow-x: hidden;
+}
+
+.language-tabs {
+  margin-top: 20px;
+}
+
+.language-tabs button {
+  margin: 0 5px;
+  padding: 5px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #f9a8d4;
+  color: white;
 }
 
 .cover {
@@ -24,6 +38,12 @@ body {
 
 .cover p {
   font-size: 1.2rem;
+}
+
+#countdown {
+  font-size: 1.4rem;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .character {
@@ -50,24 +70,41 @@ body {
   margin-bottom: 20px;
 }
 
-.photos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+.slider {
+  position: relative;
+  max-width: 90%;
+  margin: auto;
 }
 
-.photos img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+.slide {
+  display: none;
+  width: 100%;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: transform 0.3s;
 }
 
-.photos img:hover {
-  transform: scale(1.05);
+.slide.active {
+  display: block;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
 }
 
 .details {
