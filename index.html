@@ -6,16 +6,21 @@
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<audio id="bgm" autoplay muted loop>
-  <source src="assets/audio/bgm.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+<body>
+  <audio id="bgm" autoplay muted loop>
+    <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const bgm = document.getElementById("bgm");
+  <script>
+    const password = prompt("비밀번호를 입력하세요:");
+    if (password !== "ggh2025") {
+      alert("비밀번호가 틀렸습니다.");
+      document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
+    }
 
-    const tryPlay = () => {
+    window.addEventListener("DOMContentLoaded", () => {
+      const bgm = document.getElementById("bgm");
       const playPromise = bgm.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
@@ -30,18 +35,14 @@
                 clearInterval(fadeIn);
               }
               bgm.volume = vol;
-            }, 200); // 200ms 간격으로 점점 볼륨 증가
-          }, 1000); // 1초 대기 후 시작
+            }, 200);
+          }, 1000);
         }).catch((err) => {
-          console.log(\"Auto-play blocked:\", err);
+          console.log("Auto-play blocked:", err);
         });
       }
-    };
-
-    tryPlay();
-  });
-</script>
-
+    });
+  </script>
   <script>
     const password = prompt("비밀번호를 입력하세요:");
     if (password !== "ggh2025") {
