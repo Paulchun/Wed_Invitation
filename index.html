@@ -1,61 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <audio id="bgm" autoplay muted loop>
+
+  <!-- 배경 음악 -->
+  <audio id="bgm" autoplay loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
+  <!-- 비밀번호 → 자동 재생 -->
   <script>
     const password = prompt("비밀번호를 입력하세요:");
     if (password !== "ggh2025") {
       alert("비밀번호가 틀렸습니다.");
       document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
+    } else {
       const bgm = document.getElementById("bgm");
+      bgm.volume = 0.8;
       const playPromise = bgm.play();
       if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setTimeout(() => {
-            bgm.muted = false;
-            bgm.volume = 0;
-            let vol = 0;
-            const fadeIn = setInterval(() => {
-              vol += 0.05;
-              if (vol >= 1) {
-                vol = 1;
-                clearInterval(fadeIn);
-              }
-              bgm.volume = vol;
-            }, 200);
-          }, 1000);
-        }).catch((err) => {
-          console.log("Auto-play blocked:", err);
+        playPromise.catch(err => {
+          console.log("자동 재생 차단됨:", err);
         });
       }
-    });
-  </script>
-  <script>
-    const password = prompt("비밀번호를 입력하세요:");
-    if (password !== "ggh2025") {
-      alert("비밀번호가 틀렸습니다.");
-      document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
     }
   </script>
 
+  <!-- 언어 선택 -->
   <div class="language-tabs">
     <button onclick="setLanguage('ko')">한국어</button>
     <button onclick="setLanguage('ja')">日本語</button>
   </div>
 
+  <!-- 커버 -->
   <section class="cover">
     <img src="assets/img/character1.png" class="character left">
     <img src="assets/img/character2.png" class="character right">
@@ -66,6 +49,7 @@
     <div id="countdown"></div>
   </section>
 
+  <!-- 갤러리 -->
   <section class="gallery">
     <h2 data-lang-ko="우리의 추억" data-lang-ja="思い出">우리의 추억</h2>
     <div class="slider">
@@ -77,6 +61,7 @@
     <button class="next" onclick="changeSlide(1)">&#10095;</button>
   </section>
 
+  <!-- 상세 정보 -->
   <section class="details">
     <h2 data-lang-ko="예식 정보" data-lang-ja="結婚式の情報">예식 정보</h2>
     <p data-lang-ko="🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
@@ -85,6 +70,7 @@
     </p>
   </section>
 
+  <!-- 스크립트 -->
   <script src="script.js"></script>
 </body>
 </html>
