@@ -1,90 +1,122 @@
-/* 전체 폰트 및 배경 */
+/* 기본 설정 */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #ffe0f0, #ffffff);
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #fffafc;
   color: #333;
-  text-align: center;
-  overflow-x: hidden;
 }
 
 /* 언어 선택 탭 */
 .language-tabs {
-  margin-top: 20px;
+  text-align: center;
+  margin: 1rem 0;
 }
 
 .language-tabs button {
-  margin: 0 5px;
-  padding: 5px 15px;
-  font-size: 14px;
-  cursor: pointer;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 5px;
-  background-color: #f9a8d4;
+  background-color: #f472b6;
   color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 잠금 화면 (랜딩) */
+#lockScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #ffe0f0, #fff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+#lockScreen select,
+#lockScreen input,
+#lockScreen button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+#lockScreen select,
+#lockScreen input {
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+#lockScreen button {
+  background-color: #f472b6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 220px;
 }
 
 /* 커버 섹션 */
 .cover {
-  padding: 60px 20px;
-  position: relative;
-  background: url('assets/img/bg.jpg') no-repeat center center/cover;
-  color: white;
-  text-shadow: 1px 1px 4px #000;
-  animation: fadeIn 2s ease-in;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #fff0f5;
 }
 
 .cover h1 {
   font-size: 2.5rem;
-  margin: 20px 0 10px;
+  margin-bottom: 1rem;
 }
 
 .cover p {
   font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
-#countdown {
-  font-size: 1.4rem;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* 캐릭터 이미지 위치 */
+/* 캐릭터 이미지 */
 .character {
   width: 120px;
-  position: absolute;
-  top: 10px;
+  position: relative;
+  top: 0;
+  animation: float 2.5s ease-in-out infinite;
 }
 
-.character.left {
-  left: 10px;
+.left {
+  float: left;
+  margin-left: 2rem;
 }
 
-.character.right {
-  right: 10px;
+.right {
+  float: right;
+  margin-right: 2rem;
 }
 
-/* 갤러리 */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 슬라이드 갤러리 */
 .gallery {
+  text-align: center;
+  padding: 2rem 1rem;
   background: #fff;
-  padding: 40px 20px;
-}
-
-.gallery h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
 }
 
 .slider {
   position: relative;
   max-width: 90%;
   margin: auto;
+  overflow: hidden;
 }
 
 .slide {
   display: none;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .slide.active {
@@ -94,65 +126,54 @@ body {
 .prev, .next {
   cursor: pointer;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 45%;
   padding: 10px;
-  color: #fff;
-  font-size: 18px;
+  color: #f472b6;
+  font-size: 2rem;
+  font-weight: bold;
   border: none;
-  background: rgba(0,0,0,0.3);
-  border-radius: 50%;
+  background: transparent;
+  z-index: 10;
 }
 
 .prev {
-  left: 10px;
+  left: 0;
 }
 
 .next {
-  right: 10px;
+  right: 0;
 }
 
-/* 예식 상세 정보 */
+/* 예식 정보 */
 .details {
-  background: #fceef5;
-  padding: 40px 20px;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #fffafc;
 }
 
 .details h2 {
-  font-size: 1.6rem;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
 }
 
-/* 애니메이션 */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.details p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  white-space: pre-line;
 }
 
-/* 음악 재생 오버레이 */
-#audioOverlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
+/* 반응형 대응 */
+@media (max-width: 768px) {
+  .character {
+    display: none;
+  }
 
-#audioOverlay.hidden {
-  display: none;
-}
+  .cover h1 {
+    font-size: 2rem;
+  }
 
-#audioOverlay button {
-  font-size: 1.2rem;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 30px;
-  background-color: #f472b6;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  .cover p,
+  .details p {
+    font-size: 1rem;
+  }
 }
