@@ -12,7 +12,7 @@ function changeSlide(n) {
 
 // D-day 카운트다운
 const countdown = document.getElementById("countdown");
-const weddingDate = new Date("2025-06-20T00:00:00+09:00");
+const weddingDate = new Date("2025-09-20T00:00:00+09:00");
 function updateCountdown() {
   const now = new Date();
   const diff = weddingDate - now;
