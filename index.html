@@ -5,57 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #audioOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #audioOverlay button {
+      font-size: 1.2rem;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      background-color: #f472b6;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    #audioOverlay.hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <audio id="bgm" autoplay muted loop>
+  <!-- 오디오 재생 버튼 오버레이 -->
+  <div id="audioOverlay" class="hidden">
+    <button id="playMusicBtn">🎶 음악 재생하기</button>
+  </div>
+
+  <!-- 배경 음악 -->
+  <audio id="bgm" loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
+  <!-- 비밀번호 + 음악 재생 스크립트 -->
   <script>
     const password = prompt("비밀번호를 입력하세요:");
     if (password !== "ggh2025") {
       alert("비밀번호가 틀렸습니다.");
       document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
+    } else {
+      document.getElementById("audioOverlay").classList.remove("hidden");
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      const bgm = document.getElementById("bgm");
-      const playPromise = bgm.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setTimeout(() => {
-            bgm.muted = false;
-            bgm.volume = 0;
-            let vol = 0;
-            const fadeIn = setInterval(() => {
-              vol += 0.05;
-              if (vol >= 1) {
-                vol = 1;
-                clearInterval(fadeIn);
-              }
-              bgm.volume = vol;
-            }, 200);
-          }, 1000);
-        }).catch((err) => {
-          console.log("Auto-play blocked:", err);
-        });
-      }
+    document.getElementById('playMusicBtn').addEventListener('click', () => {
+      const bgm = document.getElementById('bgm');
+      bgm.volume = 0.8;
+      bgm.play();
+      document.getElementById('audioOverlay').classList.add("hidden");
     });
   </script>
-  <script>
-    const password = prompt("비밀번호를 입력하세요:");
-    if (password !== "ggh2025") {
-      alert("비밀번호가 틀렸습니다.");
-      document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
-    }
-  </script>
 
+  <!-- 언어 선택 -->
   <div class="language-tabs">
     <button onclick="setLanguage('ko')">한국어</button>
     <button onclick="setLanguage('ja')">日本語</button>
   </div>
 
+  <!-- 커버 -->
   <section class="cover">
     <img src="assets/img/character1.png" class="character left">
     <img src="assets/img/character2.png" class="character right">
@@ -66,6 +81,7 @@
     <div id="countdown"></div>
   </section>
 
+  <!-- 갤러리 -->
   <section class="gallery">
     <h2 data-lang-ko="우리의 추억" data-lang-ja="思い出">우리의 추억</h2>
     <div class="slider">
@@ -77,6 +93,7 @@
     <button class="next" onclick="changeSlide(1)">&#10095;</button>
   </section>
 
+  <!-- 디테일 -->
   <section class="details">
     <h2 data-lang-ko="예식 정보" data-lang-ja="結婚式の情報">예식 정보</h2>
     <p data-lang-ko="🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
@@ -85,6 +102,7 @@
     </p>
   </section>
 
+  <!-- 스크립트 -->
   <script src="script.js"></script>
 </body>
 </html>
