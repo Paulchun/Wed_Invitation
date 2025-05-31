@@ -6,11 +6,41 @@
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <audio autoplay loop>
-    <source src="assets/audio/bgm.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+<audio id="bgm" autoplay muted loop>
+  <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const bgm = document.getElementById("bgm");
+
+    const tryPlay = () => {
+      const playPromise = bgm.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setTimeout(() => {
+            bgm.muted = false;
+            bgm.volume = 0;
+            let vol = 0;
+            const fadeIn = setInterval(() => {
+              vol += 0.05;
+              if (vol >= 1) {
+                vol = 1;
+                clearInterval(fadeIn);
+              }
+              bgm.volume = vol;
+            }, 200); // 200ms 간격으로 점점 볼륨 증가
+          }, 1000); // 1초 대기 후 시작
+        }).catch((err) => {
+          console.log(\"Auto-play blocked:\", err);
+        });
+      }
+    };
+
+    tryPlay();
+  });
+</script>
 
   <script>
     const password = prompt("비밀번호를 입력하세요:");
