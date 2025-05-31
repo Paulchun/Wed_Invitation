@@ -1,0 +1,86 @@
+/* style.css */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #ffe0f0, #ffffff);
+  color: #333;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.cover {
+  padding: 60px 20px;
+  position: relative;
+  background: url('assets/img/bg.jpg') no-repeat center center/cover;
+  color: white;
+  text-shadow: 1px 1px 4px #000;
+  animation: fadeIn 2s ease-in;
+}
+
+.cover h1 {
+  font-size: 2.5rem;
+  margin: 20px 0 10px;
+}
+
+.cover p {
+  font-size: 1.2rem;
+}
+
+.character {
+  width: 120px;
+  position: absolute;
+  top: 10px;
+}
+
+.character.left {
+  left: 10px;
+}
+
+.character.right {
+  right: 10px;
+}
+
+.gallery {
+  background: #fff;
+  padding: 40px 20px;
+}
+
+.gallery h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.photos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.photos img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.photos img:hover {
+  transform: scale(1.05);
+}
+
+.details {
+  background: #fceef5;
+  padding: 40px 20px;
+}
+
+.details h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
