@@ -5,72 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #lockScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #ffe0f0, #fff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    #lockScreen select, #lockScreen input, #lockScreen button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin: 5px 0;
+    }
+
+    #lockScreen select, #lockScreen input {
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+
+    #lockScreen button {
+      background-color: #f472b6;
+      color: white;
+      border: none;
+      cursor: pointer;
+      width: 220px;
+    }
+
+    #mainContent {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- 배경 음악 -->
-  <audio id="bgm" autoplay loop>
+  <!-- 🔐 잠금 + 언어 선택 화면 -->
+  <div id="lockScreen">
+    <select id="languageSelect">
+      <option value="ko">한국어</option>
+      <option value="ja">日本語</option>
+    </select>
+    <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
+    <button onclick="unlock()">청첩장 열기</button>
+  </div>
+
+  <!-- 🎵 배경 음악 -->
+  <audio id="bgm" loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
   </audio>
 
-  <!-- 비밀번호 → 자동 재생 -->
+  <!-- ✅ 본문 콘텐츠 -->
+  <div id="mainContent">
+    <div class="language-tabs">
+      <button onclick="setLanguage('ko')">한국어</button>
+      <button onclick="setLanguage('ja')">日本語</button>
+    </div>
+
+    <section class="cover">
+      <img src="assets/img/character1.png" class="character left">
+      <img src="assets/img/character2.png" class="character right">
+      <h1>Paul & Paulwaifu</h1>
+      <p data-lang-ko="2025년 9월 20일<br>서울 한옥 야외 웨딩홀"
+         data-lang-ja="2025年9月20日<br>ソウル韓屋野外ウェディングホール">
+         2025년 9월 20일<br>서울 한옥 야외 웨딩홀</p>
+      <div id="countdown"></div>
+    </section>
+
+    <section class="gallery">
+      <h2 data-lang-ko="우리의 추억" data-lang-ja="思い出">우리의 추억</h2>
+      <div class="slider">
+        <img src="assets/img/photo1.jpg" class="slide active">
+        <img src="assets/img/photo2.jpg" class="slide">
+        <img src="assets/img/photo3.jpg" class="slide">
+      </div>
+      <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+      <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </section>
+
+    <section class="details">
+      <h2 data-lang-ko="예식 정보" data-lang-ja="結婚式の情報">예식 정보</h2>
+      <p data-lang-ko="🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
+         data-lang-ja="🗓️ 日付: 2025年9月20日(土)<br>📍 場所: ソウル鍾路区 韓屋野外ウェディングホール<br>📞 連絡先: 新郎 - 010-xxxx-xxxx / 新婦 - 010-xxxx-xxxx">
+         🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx
+      </p>
+    </section>
+  </div>
+
+  <!-- 🔐 해제 로직 -->
   <script>
-    const password = prompt("비밀번호를 입력하세요:");
-    if (password !== "ggh2025") {
-      alert("비밀번호가 틀렸습니다.");
-      document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>접근이 제한되었습니다.</h2>";
-    } else {
-      const bgm = document.getElementById("bgm");
-      bgm.volume = 0.8;
-      const playPromise = bgm.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(err => {
-          console.log("자동 재생 차단됨:", err);
+    const correctPassword = "ggh2025";
+
+    // Enter 키 허용
+    document.getElementById("pwInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") unlock();
+    });
+
+    function unlock() {
+      const input = document.getElementById("pwInput").value;
+      const lang = document.getElementById("languageSelect").value;
+
+      if (input === correctPassword) {
+        // 콘텐츠 표시
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+
+        // 언어 반영
+        setLanguage(lang);
+
+        // 음악 재생
+        const bgm = document.getElementById("bgm");
+        bgm.volume = 0.8;
+        bgm.play().catch(err => {
+          console.log("BGM 재생 실패:", err);
         });
+      } else {
+        alert("초대 코드가 틀렸습니다.");
       }
+    }
+
+    function setLanguage(lang) {
+      document.querySelectorAll("[data-lang-ko]").forEach(el => {
+        el.innerHTML = el.getAttribute(`data-lang-${lang}`);
+      });
     }
   </script>
 
-  <!-- 언어 선택 -->
-  <div class="language-tabs">
-    <button onclick="setLanguage('ko')">한국어</button>
-    <button onclick="setLanguage('ja')">日本語</button>
-  </div>
-
-  <!-- 커버 -->
-  <section class="cover">
-    <img src="assets/img/character1.png" class="character left">
-    <img src="assets/img/character2.png" class="character right">
-    <h1>Paul & Paulwaifu</h1>
-    <p data-lang-ko="2025년 9월 20일<br>서울 한옥 야외 웨딩홀"
-       data-lang-ja="2025年9月20日<br>ソウル韓屋野外ウェディングホール">
-       2025년 9월 20일<br>서울 한옥 야외 웨딩홀</p>
-    <div id="countdown"></div>
-  </section>
-
-  <!-- 갤러리 -->
-  <section class="gallery">
-    <h2 data-lang-ko="우리의 추억" data-lang-ja="思い出">우리의 추억</h2>
-    <div class="slider">
-      <img src="assets/img/photo1.jpg" class="slide active">
-      <img src="assets/img/photo2.jpg" class="slide">
-      <img src="assets/img/photo3.jpg" class="slide">
-    </div>
-    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-    <button class="next" onclick="changeSlide(1)">&#10095;</button>
-  </section>
-
-  <!-- 상세 정보 -->
-  <section class="details">
-    <h2 data-lang-ko="예식 정보" data-lang-ja="結婚式の情報">예식 정보</h2>
-    <p data-lang-ko="🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
-       data-lang-ja="🗓️ 日付: 2025年9月20日(土)<br>📍 場所: ソウル鍾路区 韓屋野外ウェディングホール<br>📞 連絡先: 新郎 - 010-xxxx-xxxx / 新婦 - 010-xxxx-xxxx">
-       🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx
-    </p>
-  </section>
-
-  <!-- 스크립트 -->
   <script src="script.js"></script>
 </body>
 </html>
