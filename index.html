@@ -2,10 +2,18 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- 🔗 모바일 링크 공유용 이미지 미리보기 -->
+  <meta property="og:title" content="Paul & Paulwaifu Wedding Invitation">
+  <meta property="og:description" content="초대합니다 - 2025년 9월 20일 서울 한옥 야외 웨딩홀에서">
+  <meta property="og:image" content="https://yourusername.github.io/your-repo/assets/img/preview.jpg">
+  <meta property="og:url" content="https://yourusername.github.io/your-repo/">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
+
 <body>
   <!-- 🔐 언어 선택 + 초대 코드 입력 -->
   <div id="lockScreen">
@@ -35,8 +43,6 @@
     </div>
 
     <section class="cover">
-      <img src="assets/img/character1.png" class="character left">
-      <img src="assets/img/character2.png" class="character right">
       <h1>Paul & Paulwaifu</h1>
       <p 
         data-lang-ko="2025년 9월 20일<br>서울 한옥 야외 웨딩홀"
@@ -90,7 +96,9 @@
         bgm.volume = 0.8;
         bgm.play().catch(err => console.log("BGM 재생 실패:", err));
       } else {
-        alert(lang === "ja" ? "招待コードが間違っています。" : lang === "en" ? "Invitation code is incorrect." : "초대 코드가 틀렸습니다.");
+        alert(lang === "ja" ? "招待コードが間違っています。" :
+               lang === "en" ? "Invitation code is incorrect." :
+               "초대 코드가 틀렸습니다.");
       }
     }
 
