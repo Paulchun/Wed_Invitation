@@ -42,16 +42,19 @@ body {
   margin-bottom: 10px;
 }
 
-#lockScreen select, #lockScreen input, #lockScreen button {
+#lockScreen select,
+#lockScreen input,
+#lockScreen button {
   padding: 10px;
   font-size: 16px;
   border-radius: 8px;
   margin: 5px 0;
 }
 
-#lockScreen select, #lockScreen input {
+#lockScreen select,
+#lockScreen input {
   border: 1px solid #ccc;
-  width: 200px;
+  width: 240px; /* 일본어 등 긴 텍스트 대응 */
 }
 
 #lockScreen button {
@@ -59,7 +62,7 @@ body {
   color: white;
   border: none;
   cursor: pointer;
-  width: 220px;
+  width: 260px;
 }
 
 /* 커버 섹션 */
@@ -165,7 +168,7 @@ body {
   white-space: pre-line;
 }
 
-/* 반응형 대응 */
+/* 반응형 대응 - 모바일 청첩장 기준 */
 @media (max-width: 768px) {
   .character {
     display: none;
@@ -178,5 +181,12 @@ body {
   .cover p,
   .details p {
     font-size: 1rem;
+  }
+
+  #lockScreen select,
+  #lockScreen input,
+  #lockScreen button {
+    width: 90%;
+    font-size: 14px;
   }
 }
