@@ -1,34 +1,74 @@
-// 이미지 슬라이드
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-function showSlide(n) {
-  slides.forEach(slide => slide.classList.remove('active'));
-  currentSlide = (n + slides.length) % slides.length;
-  slides[currentSlide].classList.add('active');
-}
-function changeSlide(n) {
-  showSlide(currentSlide + n);
-}
+// 🔐 초대 코드 및 언어 처리
+const correctPassword = "ggh2025";
 
-// D-day 카운트다운
-const countdown = document.getElementById("countdown");
-const weddingDate = new Date("2025-09-20T00:00:00+09:00");
-function updateCountdown() {
-  const now = new Date();
-  const diff = weddingDate - now;
-  if (diff <= 0) {
-    countdown.textContent = "오늘은 우리의 결혼식 날이에요! 💖";
-    return;
+document.getElementById("pwInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") unlock();
+});
+
+function unlock() {
+  const input = document.getElementById("pwInput").value;
+  const lang = document.getElementById("languageSelect").value;
+
+  if (input === correctPassword) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+    setLanguage(lang);
+
+    const bgm = document.getElementById("bgm");
+    bgm.volume = 0.8;
+    bgm.play().catch(err => console.log("BGM 재생 실패:", err));
+  } else {
+    alert(lang === "ja"
+      ? "招待コードが間違っています。"
+      : lang === "en"
+      ? "Invitation code is incorrect."
+      : "초대 코드가 틀렸습니다.");
   }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  countdown.textContent = `D-${days}`;
 }
-setInterval(updateCountdown, 1000);
-updateCountdown();
 
-// 다국어 지원
 function setLanguage(lang) {
-  document.querySelectorAll('[data-lang-ko]').forEach(el => {
+  document.querySelectorAll("[data-lang-ko]").forEach(el => {
     el.innerHTML = el.getAttribute(`data-lang-${lang}`);
   });
+  updateLockScreenLang();
 }
+
+function updateLockScreenLang() {
+  const lang = document.getElementById("languageSelect").value;
+  const pwInput = document.getElementById("pwInput");
+  const unlockBtn = document.getElementById("unlockBtn");
+
+  if (lang === "ko") {
+    pwInput.placeholder = "초대 코드를 입력하세요";
+    unlockBtn.innerText = "청첩장 열기";
+  } else if (lang === "ja") {
+    pwInput.placeholder = "招待コードを入力してください";
+    unlockBtn.innerText = "招待状を開く";
+  } else if (lang === "en") {
+    pwInput.placeholder = "Enter invitation code";
+    unlockBtn.innerText = "Open Invitation";
+  }
+}
+
+// 🖼️ 이미지 슬라이드 기능
+let currentSlide = 0;
+let slides = [];
+
+function showSlide(index) {
+  if (slides.length === 0) return;
+  slides.forEach(slide => slide.classList.remove('active'));
+  currentSlide = (index + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+function changeSlide(offset) {
+  showSlide(currentSlide + offset);
+}
+
+// 🎯 초기 실행
+document.addEventListener('DOMContentLoaded', () => {
+  updateLockScreenLang();
+
+  slides = document.querySelectorAll('.slide');
+  showSlide(currentSlide);
+});
