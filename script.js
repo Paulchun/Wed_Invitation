@@ -12,7 +12,8 @@ function unlock() {
   if (input === correctPassword) {
     document.getElementById("lockScreen").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
-    document.querySelector(".language-tabs").style.display = "none"; // 로그인 후 언어 선택 바 제거
+    const langTabs = document.querySelector(".language-tabs");
+    if (langTabs) langTabs.remove(); // 언어 선택 바 제거
     setLanguage(lang);
 
     const bgm = document.getElementById("bgm");
@@ -66,19 +67,42 @@ function changeSlide(offset) {
   showSlide(currentSlide + offset);
 }
 
-// 🎯 초기 실행
+// 🎯 초기 실행 + 스와이프 이벤트 바인딩
 document.addEventListener('DOMContentLoaded', () => {
   updateLockScreenLang();
 
   slides = document.querySelectorAll('.slide');
   showSlide(currentSlide);
 
-  // 화살표 버튼 바인딩 (모바일에서도 확실하게 동작)
   const prevBtn = document.querySelector('.prev');
   const nextBtn = document.querySelector('.next');
 
   if (prevBtn && nextBtn) {
     prevBtn.addEventListener('click', () => changeSlide(-1));
     nextBtn.addEventListener('click', () => changeSlide(1));
+  }
+
+  // ✅ 터치 슬라이드 이벤트
+  const slider = document.querySelector(".slider");
+  let startX = 0;
+  let endX = 0;
+
+  if (slider) {
+    slider.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    slider.addEventListener("touchend", (e) => {
+      endX = e.changedTouches[0].clientX;
+      const deltaX = endX - startX;
+
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          changeSlide(-1); // 왼쪽으로 넘기면 이전 슬라이드
+        } else {
+          changeSlide(1); // 오른쪽으로 넘기면 다음 슬라이드
+        }
+      }
+    });
   }
 });
