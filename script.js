@@ -12,6 +12,7 @@ function unlock() {
   if (input === correctPassword) {
     document.getElementById("lockScreen").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
+    document.querySelector(".language-tabs").style.display = "none"; // 로그인 후 언어 선택 바 제거
     setLanguage(lang);
 
     const bgm = document.getElementById("bgm");
@@ -71,4 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   slides = document.querySelectorAll('.slide');
   showSlide(currentSlide);
+
+  // 화살표 버튼 바인딩 (모바일에서도 확실하게 동작)
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => changeSlide(-1));
+    nextBtn.addEventListener('click', () => changeSlide(1));
+  }
 });
