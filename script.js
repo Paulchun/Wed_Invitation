@@ -1,6 +1,10 @@
 // 🔐 초대 코드 및 언어 처리
 const correctPassword = "ggh2025";
 
+let currentSlide = 0;
+let slides = [];
+let autoSlideInterval;
+
 document.getElementById("pwInput").addEventListener("keydown", (e) => {
   if (e.key === "Enter") unlock();
 });
@@ -12,13 +16,17 @@ function unlock() {
   if (input === correctPassword) {
     document.getElementById("lockScreen").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
+
     const langTabs = document.querySelector(".language-tabs");
     if (langTabs) langTabs.remove(); // 언어 선택 바 제거
+
     setLanguage(lang);
 
     const bgm = document.getElementById("bgm");
     bgm.volume = 0.8;
     bgm.play().catch(err => console.log("BGM 재생 실패:", err));
+
+    initSlider(); // ✅ 슬라이더 시작
   } else {
     alert(lang === "ja"
       ? "招待コードが間違っています。"
@@ -52,10 +60,7 @@ function updateLockScreenLang() {
   }
 }
 
-// 🖼️ 이미지 슬라이드 기능
-let currentSlide = 0;
-let slides = [];
-
+// ✅ 슬라이드 기능
 function showSlide(index) {
   if (slides.length === 0) return;
   slides.forEach(slide => slide.classList.remove('active'));
@@ -67,10 +72,7 @@ function changeSlide(offset) {
   showSlide(currentSlide + offset);
 }
 
-// 🎯 초기 실행 + 스와이프 이벤트 바인딩
-document.addEventListener('DOMContentLoaded', () => {
-  updateLockScreenLang();
-
+function initSlider() {
   slides = document.querySelectorAll('.slide');
   showSlide(currentSlide);
 
@@ -82,10 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', () => changeSlide(1));
   }
 
+  // ✅ 자동 슬라이드 전환 (5초 간격)
+  autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+
   // ✅ 터치 슬라이드 이벤트
   const slider = document.querySelector(".slider");
   let startX = 0;
-  let endX = 0;
 
   if (slider) {
     slider.addEventListener("touchstart", (e) => {
@@ -93,16 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     slider.addEventListener("touchend", (e) => {
-      endX = e.changedTouches[0].clientX;
+      const endX = e.changedTouches[0].clientX;
       const deltaX = endX - startX;
 
       if (Math.abs(deltaX) > 50) {
         if (deltaX > 0) {
-          changeSlide(-1); // 왼쪽으로 넘기면 이전 슬라이드
+          changeSlide(-1); // 왼쪽으로 넘기면 이전
         } else {
-          changeSlide(1); // 오른쪽으로 넘기면 다음 슬라이드
+          changeSlide(1);  // 오른쪽으로 넘기면 다음
         }
       }
     });
   }
-});
+}
+
+// 초기 언어 UI 세팅
+updateLockScreenLang();
