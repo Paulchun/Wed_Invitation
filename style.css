@@ -1,11 +1,11 @@
-/* 기본 */
+/* 기본 설정 */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background: black;
   color: white;
-  overflow: hidden;
+  overflow-x: hidden; /* ⛔ 수평 스크롤 차단 */
 }
 
 /* 🔐 잠금 화면 */
@@ -19,6 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  text-align: center;
 }
 
 #lockScreen .lang-row {
@@ -45,7 +46,7 @@ body {
   cursor: pointer;
 }
 
-/* 🔽 스크롤 영역 */
+/* 🔽 스크롤 섹션 */
 main {
   height: 100vh;
   overflow-y: scroll;
@@ -53,7 +54,7 @@ main {
   scroll-behavior: smooth;
 }
 
-/* 🎞️ 슬라이드 */
+/* 🎞️ 슬라이드 공통 */
 .slide {
   scroll-snap-align: start;
   position: relative;
@@ -64,6 +65,25 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeInZoom 1s ease forwards;
+  opacity: 0;
+}
+
+.slide.active,
+main section:target {
+  opacity: 1;
+}
+
+/* 🎬 효과: 페이드 인 + 줌 인 */
+@keyframes fadeInZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* 💬 텍스트 오버레이 */
@@ -77,7 +97,7 @@ main {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
 }
 
-/* 👰🤵 신랑/신부 소개 */
+/* 👰🤵 신랑 신부 소개 */
 .intro .couple-intro {
   display: flex;
   justify-content: center;
@@ -100,7 +120,7 @@ main {
   color: white;
 }
 
-/* 📍 오시는 길 */
+/* 🗺 오시는 길 */
 .info {
   flex-direction: column;
   background-color: white;
