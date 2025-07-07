@@ -1,47 +1,6 @@
 const correctPassword = "ggh2025";
-let slides = [];
-let current = 0;
-let interval;
 
-document.getElementById("pwInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") unlock();
-});
-
-function unlock() {
-  const input = document.getElementById("pwInput").value;
-  const lang = document.getElementById("languageSelect").value;
-
-  if (input === correctPassword) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-
-    const bgm = document.getElementById("bgm");
-    bgm.volume = 0.8;
-    bgm.play().catch(err => console.log("BGM 재생 실패:", err));
-
-    setLanguage(lang);
-    initSlides();
-  } else {
-    alert(
-      lang === "ja" ? "招待コードが間違っています。" :
-      lang === "en" ? "Invitation code is incorrect." :
-      "초대 코드가 틀렸습니다."
-    );
-  }
-}
-
-function setLanguage(lang) {
-  document.querySelectorAll("[data-lang-ko]").forEach(el => {
-    el.innerHTML = el.getAttribute(`data-lang-${lang}`);
-  });
-  updateLockScreenLang();
-
-  const gMap = document.querySelector(".map-link-en-ja");
-  if (gMap) {
-    gMap.style.display = (lang === "ko") ? "none" : "inline";
-  }
-}
-
+// 언어 변경
 function updateLockScreenLang() {
   const lang = document.getElementById("languageSelect").value;
   const pwInput = document.getElementById("pwInput");
@@ -59,20 +18,38 @@ function updateLockScreenLang() {
   }
 }
 
-function initSlides() {
-  slides = document.querySelectorAll(".slide");
-  if (slides.length === 0) return;
+// 잠금 해제
+function unlock() {
+  const input = document.getElementById("pwInput").value;
+  const lang = document.getElementById("languageSelect").value;
 
-  slides.forEach(slide => slide.classList.remove("active"));
-  current = 0;
-  slides[current].classList.add("active");
+  if (input === correctPassword) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
 
-  interval = setInterval(() => {
-    slides[current].classList.remove("active");
-    current = (current + 1) % slides.length;
-    slides[current].classList.add("active");
-  }, 6000);
+    const bgm = document.getElementById("bgm");
+    bgm.volume = 0.8;
+    bgm.play().catch(err => console.log("BGM 재생 실패:", err));
+
+    // 언어 텍스트 적용
+    document.querySelectorAll("[data-lang-ko]").forEach(el => {
+      const newText = el.getAttribute(`data-lang-${lang}`);
+      if (newText) {
+        el.innerHTML = newText;
+      }
+    });
+  } else {
+    alert(
+      lang === "ja" ? "招待コードが間違っています。" :
+      lang === "en" ? "Invitation code is incorrect." :
+      "초대 코드가 틀렸습니다."
+    );
+  }
 }
 
-// 최초 실행
+// Enter 키로 unlock
+document.getElementById("pwInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") unlock();
+});
+
 updateLockScreenLang();
