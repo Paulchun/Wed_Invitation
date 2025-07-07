@@ -6,97 +6,86 @@
   <title>Paul & Paulwaifu Wedding Invitation</title>
   <link rel="stylesheet" href="style.css" />
   <meta property="og:title" content="Paul & Paulwaifu Wedding Invitation" />
-  <meta property="og:description" content="초대합니다 - 2025년 9월 20일 화성 라비돌 리조트 야외 웨딩홀" />
+  <meta property="og:description" content="2025년 9월 20일 라비돌 리조트에서 결혼합니다" />
   <meta property="og:image" content="https://yourusername.github.io/your-repo/assets/img/preview.png" />
   <meta property="og:url" content="https://yourusername.github.io/your-repo/" />
   <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
-  <!-- 🔐 잠금 화면 -->
-  <div id="lockScreen">
-    <div class="lang-row">
-      <span style="font-size: 20px;">🌐</span>
-      <select id="languageSelect" onchange="updateLockScreenLang()">
-        <option value="ko">한국어</option>
-        <option value="ja">日本語</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-    <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
-    <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
+
+<!-- 🔐 잠금 화면 -->
+<div id="lockScreen">
+  <div class="lang-row">
+    <span>🌐</span>
+    <select id="languageSelect" onchange="updateLockScreenLang()">
+      <option value="ko">한국어</option>
+      <option value="ja">日本語</option>
+      <option value="en">English</option>
+    </select>
   </div>
+  <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
+  <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
+</div>
 
-  <!-- 🎵 배경 음악 -->
-  <audio id="bgm" loop>
-    <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
-  </audio>
+<!-- 🎵 배경 음악 -->
+<audio id="bgm" loop>
+  <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
+</audio>
 
-  <!-- 🎬 본문 -->
-  <div id="mainContent">
-    <!-- Slide 1 -->
-    <div class="slide fade" id="slide1" style="background-image: url('assets/img/1.jpg');">
-      <div class="overlay-text">처음 만난 그날, 우리 기억해요.</div>
-    </div>
+<!-- 🎬 본문: scroll-snap 기반 섹션 -->
+<main id="mainContent">
+  <!-- Slide 1 -->
+  <section class="slide" style="background-image: url('assets/img/1.jpg')">
+    <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요.">처음 만난 그날, 우리 기억해요.</div>
+  </section>
 
-    <!-- Slide 2 -->
-    <div class="slide fade" id="slide2" style="background-image: url('assets/img/2.jpg');">
-      <div class="overlay-text">같은 방향을 바라보기 시작했고,</div>
-    </div>
+  <!-- Slide 2 -->
+  <section class="slide" style="background-image: url('assets/img/2.jpg')">
+    <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고,">같은 방향을 바라보기 시작했고,</div>
+  </section>
 
-    <!-- Slide 3 -->
-    <div class="slide fade" id="slide3" style="background-image: url('assets/img/3.jpg');">
-      <div class="overlay-text">함께 걷는 길이 익숙해졌죠.</div>
-    </div>
+  <!-- Slide 3 -->
+  <section class="slide" style="background-image: url('assets/img/3.jpg')">
+    <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠.">함께 걷는 길이 익숙해졌죠.</div>
+  </section>
 
-    <!-- Slide 4: 신랑/신부 소개 -->
-    <div class="slide fade" id="slide4">
-      <div class="couple-intro">
-        <div class="groom">
-          <img src="assets/img/groom.jpg" />
-          <p>그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.</p>
-        </div>
-        <div class="bride">
-          <img src="assets/img/bride.jpg" />
-          <p>그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.</p>
-        </div>
+  <!-- Slide 4: 신랑/신부 소개 -->
+  <section class="slide intro">
+    <div class="couple-intro">
+      <div class="groom">
+        <img src="assets/img/groom.jpg" alt="신랑" />
+        <p data-lang-ko="그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.">
+          그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.
+        </p>
+      </div>
+      <div class="bride">
+        <img src="assets/img/bride.jpg" alt="신부" />
+        <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.">
+          그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.
+        </p>
       </div>
     </div>
+  </section>
 
-    <!-- Slide 5: 초대 -->
-    <div class="slide fade" id="slide5" style="background-image: url('assets/img/5.jpg');">
-      <div class="overlay-text">2025년 9월 20일<br>화성 라비돌 리조트에서 만나뵈어요.</div>
+  <!-- Slide 5: 예식 정보 -->
+  <section class="slide" style="background-image: url('assets/img/5.jpg')">
+    <div class="overlay-text" data-lang-ko="2025년 9월 20일<br>화성 라비돌 리조트에서<br>만나뵈어요.">
+      2025년 9월 20일<br>화성 라비돌 리조트에서<br>만나뵈어요.
     </div>
+  </section>
 
-    <!-- 오시는 길 -->
-    <section class="location">
-      <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-      <p
-        data-lang-ko="📍 주소: 경기도 화성시 동탄면 라비돌1길 33
-🚌 버스 노선 안내:
-  - 수원역 6-3번 마을버스 (첫차 09:00, 막차 19:00, 45분 간격)
-  - 병점역 35-1번 (첫차 06:00, 막차 22:20, 20분 간격)
-  - 병점역 35-3번 / 50번 마을버스도 이용 가능
-🗺️ 지도 보기: 카카오 지도 클릭"
-        data-lang-ja="📍 住所: 京畿道華城市 東灘面 ラビドル1ギル 33
-🚌 バス案内:
-  - 水原駅 6-3番
-  - 餅店駅 35-1番, 35-3番, 50番
-🗺️ Googleマップを開く"
-        data-lang-en="📍 Address: 33 Laviedor 1-gil, Dongtan-myeon, Hwaseong-si
-🚌 Bus Info:
-  - Suwon Station: 6-3 bus
-  - Byeongjeom Station: 35-1, 35-3, 50
-🗺️ View on Google Maps">
-        📍 주소: 경기도 화성시 동탄면 라비돌1길 33<br>
-        🚌 버스: 수원역 6-3 / 병점역 35-1, 35-3, 50번<br><br>
-        🗺️ 지도 보기: 
-        <a href="https://map.kakao.com/link/search/라비돌 리조트" target="_blank">카카오 지도</a> /
-        <a href="https://www.google.com/maps/place/33+Laviedor+1-gil" target="_blank" class="map-link-en-ja" style="display:none;">Google Maps</a>
-      </p>
-    </section>
-  </div>
+  <!-- Slide 6: 오시는 길 -->
+  <section class="slide info">
+    <h2 data-lang-ko="오시는 길">오시는 길</h2>
+    <p data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50<br>🗺️ 카카오맵:">
+      📍 경기도 화성시 동탄면 라비돌1길 33<br>
+      🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50<br><br>
+      🗺️ <a href="https://map.kakao.com/link/search/라비돌 리조트" target="_blank">카카오맵으로 열기</a>
+    </p>
+  </section>
+</main>
 
-  <!-- 🔧 스크립트 연결 -->
-  <script src="script.js"></script>
+<!-- JS -->
+<script src="script.js"></script>
 </body>
 </html>
