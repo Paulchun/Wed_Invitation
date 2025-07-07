@@ -12,6 +12,7 @@
   <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
+  <!-- 🔐 잠금 화면 -->
   <div id="lockScreen">
     <div class="lang-row">
       <span style="font-size: 20px;">🌐</span>
@@ -25,20 +26,29 @@
     <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
   </div>
 
+  <!-- 🎵 배경 음악 -->
   <audio id="bgm" loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- 🎬 본문 -->
   <div id="mainContent">
-    <div class="slide fade" id="slide1">
+    <!-- Slide 1 -->
+    <div class="slide fade" id="slide1" style="background-image: url('assets/img/1.jpg');">
       <div class="overlay-text">처음 만난 그날, 우리 기억해요.</div>
     </div>
-    <div class="slide fade" id="slide2">
+
+    <!-- Slide 2 -->
+    <div class="slide fade" id="slide2" style="background-image: url('assets/img/2.jpg');">
       <div class="overlay-text">같은 방향을 바라보기 시작했고,</div>
     </div>
-    <div class="slide fade" id="slide3">
+
+    <!-- Slide 3 -->
+    <div class="slide fade" id="slide3" style="background-image: url('assets/img/3.jpg');">
       <div class="overlay-text">함께 걷는 길이 익숙해졌죠.</div>
     </div>
+
+    <!-- Slide 4: 신랑/신부 소개 -->
     <div class="slide fade" id="slide4">
       <div class="couple-intro">
         <div class="groom">
@@ -51,16 +61,32 @@
         </div>
       </div>
     </div>
-    <div class="slide fade" id="slide5">
+
+    <!-- Slide 5: 초대 -->
+    <div class="slide fade" id="slide5" style="background-image: url('assets/img/5.jpg');">
       <div class="overlay-text">2025년 9월 20일<br>화성 라비돌 리조트에서 만나뵈어요.</div>
     </div>
 
+    <!-- 오시는 길 -->
     <section class="location">
       <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
       <p
-        data-lang-ko="📍 주소: 경기도 화성시 동탄면 라비돌1길 33\n🚌 버스 노선 안내:\n  - 수원역 6-3번 마을버스 (첫차 09:00, 막차 19:00, 45분 간격)\n  - 병점역 35-1번 (첫차 06:00, 막차 22:20, 20분 간격)\n  - 병점역 35-3번 / 50번 마을버스도 이용 가능\n🗺️ 지도 보기: 카카오 지도 클릭"
-        data-lang-ja="📍 住所: 京畿道華城市 東灘面 ラビドル1ギル 33\n🚌 バス案内:\n  - 水原駅 6-3番\n  - 餅店駅 35-1番, 35-3番, 50番\n🗺️ Googleマップを開く"
-        data-lang-en="📍 Address: 33 Laviedor 1-gil, Dongtan-myeon, Hwaseong-si\n🚌 Bus Info:\n  - Suwon Station: 6-3 bus\n  - Byeongjeom Station: 35-1, 35-3, 50\n🗺️ View on Google Maps">
+        data-lang-ko="📍 주소: 경기도 화성시 동탄면 라비돌1길 33
+🚌 버스 노선 안내:
+  - 수원역 6-3번 마을버스 (첫차 09:00, 막차 19:00, 45분 간격)
+  - 병점역 35-1번 (첫차 06:00, 막차 22:20, 20분 간격)
+  - 병점역 35-3번 / 50번 마을버스도 이용 가능
+🗺️ 지도 보기: 카카오 지도 클릭"
+        data-lang-ja="📍 住所: 京畿道華城市 東灘面 ラビドル1ギル 33
+🚌 バス案内:
+  - 水原駅 6-3番
+  - 餅店駅 35-1番, 35-3番, 50番
+🗺️ Googleマップを開く"
+        data-lang-en="📍 Address: 33 Laviedor 1-gil, Dongtan-myeon, Hwaseong-si
+🚌 Bus Info:
+  - Suwon Station: 6-3 bus
+  - Byeongjeom Station: 35-1, 35-3, 50
+🗺️ View on Google Maps">
         📍 주소: 경기도 화성시 동탄면 라비돌1길 33<br>
         🚌 버스: 수원역 6-3 / 병점역 35-1, 35-3, 50번<br><br>
         🗺️ 지도 보기: 
@@ -70,6 +96,7 @@
     </section>
   </div>
 
+  <!-- 🔧 스크립트 연결 -->
   <script src="script.js"></script>
 </body>
 </html>
