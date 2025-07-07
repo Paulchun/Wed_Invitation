@@ -46,11 +46,10 @@
       <h1>Paul & Paulwaifu</h1>
       <p 
         data-lang-ko="2025년 9월 20일<br>화성 라비돌 리조트 야외 웨딩홀"
-        data-lang-ja="2025年9月20日<br>華城市（ファソンし) La Vie D'or Resort (ラヴィドルリゾート)"
-        data-lang-en="Sep 20, 2025<br>La Vie D'or Resort Garden Wedding, Hwa Seong-Si">
+        data-lang-ja="2025年9月20日<br>華城市（ファソン市）ラヴィドルリゾート野外ウェディングホール"
+        data-lang-en="Sep 20, 2025<br>La Vie D'or Resort Garden Wedding, Hwaseong-si">
         2025년 9월 20일<br>화성 라비돌 리조트 야외 웨딩홀
       </p>
-      <div id="countdown"></div>
     </section>
 
     <section class="gallery">
@@ -62,74 +61,22 @@
         <img src="assets/img/4.jpg" class="slide">
         <img src="assets/img/5.jpg" class="slide">
       </div>
-      <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-      <button class="next" onclick="changeSlide(1)">&#10095;</button>
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
     </section>
 
     <section class="details">
       <h2 data-lang-ko="예식 정보" data-lang-ja="結婚式の情報" data-lang-en="Wedding Info">예식 정보</h2>
       <p
-        data-lang-ko="🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
-        data-lang-ja="🗓️ 日付: 2025年9月20日(土)<br>📍 場所: ソウル鍾路区 韓屋野外ウェディングホール<br>📞 連絡先: 新郎 - 010-xxxx-xxxx / 新婦 - 010-xxxx-xxxx"
-        data-lang-en="🗓️ Date: Saturday, Sep 20, 2025<br>📍 Venue: Hanok Outdoor Garden, Jongno-gu, Seoul<br>📞 Contact: Groom - 010-xxxx-xxxx / Bride - 010-xxxx-xxxx">
-        🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 서울 종로구 한옥 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx
+        data-lang-ko="🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 경기도 화성시 라비돌 리조트 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx"
+        data-lang-ja="🗓️ 日付: 2025年9月20日(土)<br>📍 場所: 京畿道華城市 ラヴィドルリゾート野外ウェディングホール<br>📞 連絡先: 新郎 - 010-xxxx-xxxx / 新婦 - 010-xxxx-xxxx"
+        data-lang-en="🗓️ Date: Saturday, Sep 20, 2025<br>📍 Venue: Outdoor Wedding Garden, La Vie D’or Resort, Hwaseong, Gyeonggi-do<br>📞 Contact: Groom - 010-xxxx-xxxx / Bride - 010-xxxx-xxxx">
+        🗓️ 날짜: 2025년 9월 20일 (토)<br>📍 장소: 경기도 화성시 라비돌 리조트 야외 웨딩홀<br>📞 연락처: 신랑 - 010-xxxx-xxxx / 신부 - 010-xxxx-xxxx
       </p>
     </section>
   </div>
 
   <!-- 🔧 스크립트 -->
-  <script>
-    const correctPassword = "ggh2025";
-
-    document.getElementById("pwInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") unlock();
-    });
-
-    function unlock() {
-      const input = document.getElementById("pwInput").value;
-      const lang = document.getElementById("languageSelect").value;
-
-      if (input === correctPassword) {
-        document.getElementById("lockScreen").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-        setLanguage(lang);
-
-        const bgm = document.getElementById("bgm");
-        bgm.volume = 0.8;
-        bgm.play().catch(err => console.log("BGM 재생 실패:", err));
-      } else {
-        alert(lang === "ja" ? "招待コードが間違っています。" :
-               lang === "en" ? "Invitation code is incorrect." :
-               "초대 코드가 틀렸습니다.");
-      }
-    }
-
-    function setLanguage(lang) {
-      document.querySelectorAll("[data-lang-ko]").forEach(el => {
-        el.innerHTML = el.getAttribute(`data-lang-${lang}`);
-      });
-      updateLockScreenLang();
-    }
-
-    function updateLockScreenLang() {
-      const lang = document.getElementById("languageSelect").value;
-      const pwInput = document.getElementById("pwInput");
-      const unlockBtn = document.getElementById("unlockBtn");
-
-      if (lang === "ko") {
-        pwInput.placeholder = "초대 코드를 입력하세요";
-        unlockBtn.innerText = "청첩장 열기";
-      } else if (lang === "ja") {
-        pwInput.placeholder = "招待コードを入力してください";
-        unlockBtn.innerText = "招待状を開く";
-      } else if (lang === "en") {
-        pwInput.placeholder = "Enter invitation code";
-        unlockBtn.innerText = "Open Invitation";
-      }
-    }
-
-    updateLockScreenLang();
-  </script>
   <script src="script.js"></script>
 </body>
 </html>
