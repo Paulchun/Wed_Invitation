@@ -46,15 +46,11 @@ body {
 #lockScreen input,
 #lockScreen button {
   padding: 10px;
-  font-size: 16px;
+  font-size: 16px; /* ✅ iOS 확대 방지 */
   border-radius: 8px;
   margin: 5px 0;
-}
-
-#lockScreen select,
-#lockScreen input {
+  width: 220px;
   border: 1px solid #ccc;
-  width: 240px; /* 일본어 등 긴 텍스트 대응 */
 }
 
 #lockScreen button {
@@ -62,7 +58,6 @@ body {
   color: white;
   border: none;
   cursor: pointer;
-  width: 260px;
 }
 
 /* 커버 섹션 */
@@ -80,29 +75,6 @@ body {
 .cover p {
   font-size: 1.2rem;
   margin-bottom: 1rem;
-}
-
-/* 캐릭터 이미지 */
-.character {
-  width: 120px;
-  position: relative;
-  top: 0;
-  animation: float 2.5s ease-in-out infinite;
-}
-
-.left {
-  float: left;
-  margin-left: 2rem;
-}
-
-.right {
-  float: right;
-  margin-right: 2rem;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
 }
 
 /* 슬라이드 갤러리 */
@@ -168,12 +140,8 @@ body {
   white-space: pre-line;
 }
 
-/* 반응형 대응 - 모바일 청첩장 기준 */
+/* 반응형 대응 */
 @media (max-width: 768px) {
-  .character {
-    display: none;
-  }
-
   .cover h1 {
     font-size: 2rem;
   }
@@ -183,10 +151,7 @@ body {
     font-size: 1rem;
   }
 
-  #lockScreen select,
-  #lockScreen input,
-  #lockScreen button {
-    width: 90%;
-    font-size: 14px;
+  .prev, .next {
+    font-size: 1.5rem;
   }
 }
