@@ -3,7 +3,6 @@ let slides = [];
 let current = 0;
 let interval;
 
-// 초대코드 엔터 허용
 document.getElementById("pwInput").addEventListener("keydown", (e) => {
   if (e.key === "Enter") unlock();
 });
@@ -75,5 +74,5 @@ function initSlides() {
   }, 6000);
 }
 
-// 최초 언어 설정 적용
+// 최초 실행
 updateLockScreenLang();
