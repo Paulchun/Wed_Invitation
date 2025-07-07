@@ -1,4 +1,4 @@
-/* Reset */
+/* 기본 설정 */
 body {
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
@@ -7,7 +7,7 @@ body {
   overflow: hidden;
 }
 
-/* 🔐 잠금 화면 */
+/* 🔐 초대 코드 입력 화면 */
 #lockScreen {
   position: fixed;
   top: 0; left: 0;
@@ -31,7 +31,7 @@ body {
 #lockScreen input,
 #lockScreen button {
   padding: 12px;
-  font-size: 16px; /* iOS 확대 방지 */
+  font-size: 16px;
   border-radius: 8px;
   margin: 6px 0;
   width: 240px;
@@ -45,13 +45,12 @@ body {
   cursor: pointer;
 }
 
-/* 🎞️ 슬라이드 구조 */
+/* 🎞️ 슬라이드 영역 */
 .slide {
   display: none;
   position: absolute;
   top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   background-size: cover;
   background-position: center;
   animation: fade 1s ease-in-out;
@@ -66,7 +65,7 @@ body {
   to { opacity: 1; }
 }
 
-/* 💬 텍스트 오버레이 */
+/* 💬 오버레이 텍스트 */
 .overlay-text {
   position: absolute;
   bottom: 15%;
@@ -78,7 +77,7 @@ body {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 
-/* 👰🤵 신랑 & 신부 소개 */
+/* 👰🤵 신랑 신부 소개 */
 .couple-intro {
   display: flex;
   justify-content: space-around;
