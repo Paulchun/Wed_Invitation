@@ -1,55 +1,40 @@
-/* 기본 설정 */
+/* Reset */
 body {
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  background: #fffafc;
-  color: #333;
-}
-
-/* 언어 선택 탭 */
-.language-tabs {
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.language-tabs button {
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #f472b6;
+  background: black;
   color: white;
-  border-radius: 8px;
-  cursor: pointer;
+  overflow: hidden;
 }
 
-/* 잠금 화면 (랜딩) */
+/* 🔐 잠금 화면 */
 #lockScreen {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: linear-gradient(to bottom, #ffe0f0, #fff);
+  background: #ffe8f0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  z-index: 9999;
+  z-index: 1000;
 }
 
 #lockScreen .lang-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
 #lockScreen select,
 #lockScreen input,
 #lockScreen button {
-  padding: 10px;
-  font-size: 16px; /* ✅ iOS 확대 방지 */
+  padding: 12px;
+  font-size: 16px; /* iOS 확대 방지 */
   border-radius: 8px;
-  margin: 5px 0;
-  width: 220px;
+  margin: 6px 0;
+  width: 240px;
   border: 1px solid #ccc;
 }
 
@@ -60,98 +45,116 @@ body {
   cursor: pointer;
 }
 
-/* 커버 섹션 */
-.cover {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: #fff0f5;
-}
-
-.cover h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.cover p {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-/* 슬라이드 갤러리 */
-.gallery {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: #fff;
-}
-
-.slider {
-  position: relative;
-  max-width: 90%;
-  margin: auto;
-  overflow: hidden;
-}
-
+/* 🎞️ 슬라이드 구조 */
 .slide {
   display: none;
+  position: absolute;
+  top: 0; left: 0;
   width: 100%;
-  border-radius: 8px;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: fade 1s ease-in-out;
 }
 
 .slide.active {
   display: block;
 }
 
-.prev, .next {
-  cursor: pointer;
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 💬 텍스트 오버레이 */
+.overlay-text {
   position: absolute;
-  top: 45%;
-  padding: 10px;
-  color: #f472b6;
-  font-size: 2rem;
-  font-weight: bold;
-  border: none;
-  background: transparent;
-  z-index: 10;
-}
-
-.prev {
-  left: 0;
-}
-
-.next {
-  right: 0;
-}
-
-/* 예식 정보 */
-.details {
+  bottom: 15%;
+  width: 100%;
   text-align: center;
-  padding: 2rem 1rem;
-  background: #fffafc;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
 }
 
-.details h2 {
-  font-size: 1.8rem;
+/* 👰🤵 신랑 & 신부 소개 */
+.couple-intro {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.couple-intro .groom,
+.couple-intro .bride {
+  text-align: center;
+  max-width: 300px;
+  flex: 1;
+}
+
+.couple-intro img {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 12px;
   margin-bottom: 1rem;
 }
 
-.details p {
+.couple-intro p {
   font-size: 1.1rem;
+  color: white;
+  line-height: 1.5;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* 🗺 오시는 길 */
+.location {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  color: #333;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.location h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.location p {
+  font-size: 1rem;
   line-height: 1.6;
   white-space: pre-line;
 }
 
-/* 반응형 대응 */
+.location a {
+  color: #f472b6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* 📱 반응형 */
 @media (max-width: 768px) {
-  .cover h1 {
-    font-size: 2rem;
+  .overlay-text {
+    font-size: 1.2rem;
+    padding: 0 1rem;
   }
 
-  .cover p,
-  .details p {
+  .couple-intro {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .couple-intro img {
+    max-width: 90%;
+  }
+
+  .couple-intro p {
     font-size: 1rem;
-  }
-
-  .prev, .next {
-    font-size: 1.5rem;
   }
 }
