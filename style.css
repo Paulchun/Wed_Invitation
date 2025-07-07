@@ -1,13 +1,14 @@
-/* 기본 설정 */
+/* 기본 */
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background: black;
   color: white;
   overflow: hidden;
 }
 
-/* 🔐 초대 코드 입력 화면 */
+/* 🔐 잠금 화면 */
 #lockScreen {
   position: fixed;
   top: 0; left: 0;
@@ -17,12 +18,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 #lockScreen .lang-row {
   display: flex;
-  align-items: center;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -30,11 +30,11 @@ body {
 #lockScreen select,
 #lockScreen input,
 #lockScreen button {
-  padding: 12px;
   font-size: 16px;
-  border-radius: 8px;
-  margin: 6px 0;
+  padding: 12px;
   width: 240px;
+  margin: 6px 0;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 
@@ -45,115 +45,98 @@ body {
   cursor: pointer;
 }
 
-/* 🎞️ 슬라이드 영역 */
+/* 🔽 스크롤 영역 */
+main {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* 🎞️ 슬라이드 */
 .slide {
-  display: none;
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  scroll-snap-align: start;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
   background-size: cover;
   background-position: center;
-  animation: fade 1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.slide.active {
-  display: block;
-}
-
-@keyframes fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* 💬 오버레이 텍스트 */
+/* 💬 텍스트 오버레이 */
 .overlay-text {
-  position: absolute;
-  bottom: 15%;
-  width: 100%;
-  text-align: center;
   font-size: 1.8rem;
   font-weight: bold;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 1rem;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
 }
 
-/* 👰🤵 신랑 신부 소개 */
-.couple-intro {
+/* 👰🤵 신랑/신부 소개 */
+.intro .couple-intro {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  height: 100%;
-  padding: 2rem;
   gap: 2rem;
   flex-wrap: wrap;
-}
-
-.couple-intro .groom,
-.couple-intro .bride {
   text-align: center;
-  max-width: 300px;
-  flex: 1;
 }
 
-.couple-intro img {
-  width: 100%;
-  max-width: 250px;
-  border-radius: 12px;
-  margin-bottom: 1rem;
+.intro img {
+  width: 220px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-.couple-intro p {
+.intro p {
   font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: 1rem;
   color: white;
-  line-height: 1.5;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 }
 
-/* 🗺 오시는 길 */
-.location {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(255,255,255,0.95);
+/* 📍 오시는 길 */
+.info {
+  flex-direction: column;
+  background-color: white;
   color: #333;
-  padding: 2rem 1rem;
+  padding: 2rem;
   text-align: center;
 }
 
-.location h2 {
-  font-size: 1.6rem;
+.info h2 {
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
-.location p {
+.info p {
   font-size: 1rem;
   line-height: 1.6;
   white-space: pre-line;
 }
 
-.location a {
+.info a {
   color: #f472b6;
   text-decoration: none;
   font-weight: bold;
 }
 
-/* 📱 반응형 */
+/* 📱 모바일 대응 */
 @media (max-width: 768px) {
   .overlay-text {
     font-size: 1.2rem;
-    padding: 0 1rem;
   }
 
-  .couple-intro {
-    flex-direction: column;
-    padding: 1rem;
+  .intro img {
+    width: 160px;
   }
 
-  .couple-intro img {
-    max-width: 90%;
-  }
-
-  .couple-intro p {
+  .intro p {
     font-size: 1rem;
   }
 }
