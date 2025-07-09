@@ -1,23 +1,23 @@
 const correctPassword = "ggh2025";
 
-const lockScreen = document.getElementById("lockScreen");
-const mainContent = document.getElementById("mainContent");
-const pwInput = document.getElementById("pwInput");
-const unlockBtn = document.getElementById("unlockBtn");
-const languageSelect = document.getElementById("languageSelect");
-const bgm = document.getElementById("bgm");
+document.getElementById("pwInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") unlock();
+});
 
-// 🔐 잠금 해제 처리
 function unlock() {
-  const input = pwInput.value;
-  const lang = languageSelect.value;
+  const input = document.getElementById("pwInput").value;
+  const lang = document.getElementById("languageSelect").value;
 
   if (input === correctPassword) {
-    lockScreen.style.display = "none";
-    mainContent.style.display = "block";
+    document.getElementById("lockScreen").style.display = "none";
+    document.body.style.overflow = "auto";
     setLanguage(lang);
-    bgm.volume = 0.7;
-    bgm.play().catch(() => {});
+
+    const bgm = document.getElementById("bgm");
+    if (bgm) {
+      bgm.volume = 0.8;
+      bgm.play().catch(err => console.log("BGM 재생 실패:", err));
+    }
   } else {
     alert(
       lang === "ja"
@@ -29,56 +29,60 @@ function unlock() {
   }
 }
 
-// ⌨️ Enter 키 입력 감지
-pwInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") unlock();
-});
-
-// 🌐 다국어 처리
 function setLanguage(lang) {
   document.querySelectorAll("[data-lang-ko]").forEach((el) => {
-    const text = el.getAttribute(`data-lang-${lang}`);
-    if (text) el.innerHTML = text;
+    el.innerHTML = el.getAttribute(`data-lang-${lang}`);
   });
-  updateLockScreenLang();
+  updateLockScreenLang(lang);
 }
 
-function updateLockScreenLang() {
-  const lang = languageSelect.value;
+function updateLockScreenLang(lang) {
+  const pwInput = document.getElementById("pwInput");
+  const unlockBtn = document.getElementById("unlockBtn");
 
-  const placeholders = {
-    ko: "초대 코드를 입력하세요",
-    ja: "招待コードを入力してください",
-    en: "Enter invitation code",
-  };
-  const btnTexts = {
-    ko: "청첩장 열기",
-    ja: "招待状を開く",
-    en: "Open Invitation",
-  };
+  if (!lang) {
+    lang = document.getElementById("languageSelect").value;
+  }
 
-  pwInput.placeholder = placeholders[lang];
-  unlockBtn.innerText = btnTexts[lang];
+  if (lang === "ko") {
+    pwInput.placeholder = "초대 코드를 입력하세요";
+    unlockBtn.innerText = "청첩장 열기";
+  } else if (lang === "ja") {
+    pwInput.placeholder = "招待コードを入力してください";
+    unlockBtn.innerText = "招待状を開く";
+  } else if (lang === "en") {
+    pwInput.placeholder = "Enter invitation code";
+    unlockBtn.innerText = "Open Invitation";
+  }
 }
 
-// 🔄 언어 선택 시 자동 적용
-languageSelect.addEventListener("change", () => {
-  updateLockScreenLang();
-});
+// 스크롤 중 가로 이동 방지
+document.addEventListener("touchmove", function (e) {
+  if (Math.abs(e.touches[0].clientX - (this.lastTouchX || 0)) > 10) {
+    e.preventDefault();
+  }
+  this.lastTouchX = e.touches[0].clientX;
+}, { passive: false });
 
-updateLockScreenLang();
+// 스크롤 효과 개선
+let lastScroll = 0;
+document.addEventListener("wheel", function (e) {
+  const slides = document.querySelectorAll(".slide");
+  let currentIndex = Math.round(window.scrollY / window.innerHeight);
 
-// 🎞️ 스크롤 페이드 인 애니메이션 (옵션)
-const slides = document.querySelectorAll(".slide");
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-      }
+  if (e.deltaY > 0 && currentIndex < slides.length - 1) {
+    scrollToSlide(currentIndex + 1);
+  } else if (e.deltaY < 0 && currentIndex > 0) {
+    scrollToSlide(currentIndex - 1);
+  }
+}, { passive: false });
+
+function scrollToSlide(index) {
+  const target = document.querySelectorAll(".slide")[index];
+  if (target) {
+    window.scrollTo({
+      top: target.offsetTop,
+      behavior: "smooth"
     });
-  },
-  { threshold: 0.4 }
-);
-
-slides.forEach((slide) => observer.observe(slide));
+  }
+}
