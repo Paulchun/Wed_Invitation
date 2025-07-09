@@ -1,162 +1,227 @@
 /* 기본 설정 */
-body {
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-  background: black;
-  color: white;
-  overflow-x: hidden; /* ⛔ 수평 스크롤 차단 */
+  box-sizing: border-box;
 }
 
-/* 🔐 잠금 화면 */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* 👉 가로 스크롤 방지 */
+  font-family: 'Pretendard', sans-serif;
+  background-color: #fff0f5;
+  scroll-behavior: smooth;
+}
+
+/* 잠금 화면 */
 #lockScreen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #ffe8f0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  z-index: 9999;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
   text-align: center;
+  background-color: #fff0f5;
 }
 
-#lockScreen .lang-row {
+.lang-row {
+  margin-bottom: 16px;
   display: flex;
+  align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
-#lockScreen select,
-#lockScreen input,
-#lockScreen button {
+#languageSelect {
+  padding: 10px;
   font-size: 16px;
-  padding: 12px;
-  width: 240px;
-  margin: 6px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-#lockScreen button {
-  background-color: #f472b6;
+#pwInput {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px 0;
+  font-size: 16px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+}
+
+#unlockBtn {
+  padding: 10px 20px;
+  background-color: #ff69b4;
   color: white;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
+  font-size: 16px;
 }
 
-/* 🔽 스크롤 섹션 */
-main {
-  height: 100vh;
-  overflow-y: scroll;
+/* 본문 콘텐츠 */
+#mainContent {
+  display: none;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-}
-
-/* 🎞️ 슬라이드 공통 */
-.slide {
-  scroll-snap-align: start;
-  position: relative;
-  width: 100vw;
+  overflow-y: scroll;
   height: 100vh;
-  background-size: cover;
-  background-position: center;
+}
+
+section {
+  height: 100vh;
+  scroll-snap-align: start;
+  padding: 40px 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeInZoom 1s ease forwards;
-  opacity: 0;
-}
-
-.slide.active,
-main section:target {
-  opacity: 1;
-}
-
-/* 🎬 효과: 페이드 인 + 줌 인 */
-@keyframes fadeInZoom {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* 💬 텍스트 오버레이 */
-.overlay-text {
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.5;
-  padding: 0 1rem;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-}
-
-/* 👰🤵 신랑 신부 소개 */
-.intro .couple-intro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  text-align: center;
-}
-
-.intro img {
-  width: 220px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-
-.intro p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-top: 1rem;
-  color: white;
-}
-
-/* 🗺 오시는 길 */
-.info {
   flex-direction: column;
-  background-color: white;
-  color: #333;
-  padding: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover h1 {
+  font-size: 36px;
+  color: #d6336c;
+  margin-bottom: 20px;
+}
+
+.cover p {
+  font-size: 20px;
   text-align: center;
 }
 
-.info h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+#countdown {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.info p {
-  font-size: 1rem;
+/* 슬라이드 갤러리 */
+.gallery {
+  text-align: center;
+}
+
+.gallery h2 {
+  margin-bottom: 20px;
+}
+
+.slider {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+
+.slide.active {
+  display: block;
+}
+
+/* 이전/다음 버튼 */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+/* 예식 정보 */
+.details h2, .location h2 {
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.details p, .location p {
+  font-size: 16px;
+  text-align: center;
   line-height: 1.6;
   white-space: pre-line;
 }
 
-.info a {
-  color: #f472b6;
-  text-decoration: none;
-  font-weight: bold;
+/* 언어 탭 (로그인 후에는 제거됨) */
+.language-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
 }
 
-/* 📱 모바일 대응 */
-@media (max-width: 768px) {
-  .overlay-text {
-    font-size: 1.2rem;
-  }
+.language-tabs button {
+  padding: 6px 12px;
+  border: 1px solid #d6336c;
+  background-color: white;
+  color: #d6336c;
+  border-radius: 16px;
+  cursor: pointer;
+}
 
-  .intro img {
-    width: 160px;
-  }
+.language-tabs button:hover {
+  background-color: #d6336c;
+  color: white;
+}
 
-  .intro p {
-    font-size: 1rem;
+/* 신랑/신부 소개 슬라이드 */
+.intro-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+.intro-text {
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* 오시는 길 지도 */
+.map-container iframe {
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+  border: none;
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  #pwInput {
+    font-size: 14px;
+  }
+  .cover h1 {
+    font-size: 28px;
+  }
+  .cover p {
+    font-size: 16px;
+  }
+  .details p, .location p {
+    font-size: 14px;
+  }
+  .intro-text {
+    font-size: 14px;
   }
 }
