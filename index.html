@@ -12,130 +12,91 @@
   <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
-
-<!-- 🔐 잠금 화면 -->
-<div id="lockScreen">
-  <div class="lang-row">
-    <span>🌐</span>
-    <select id="languageSelect" onchange="updateLockScreenLang()">
-      <option value="ko">한국어</option>
-      <option value="ja">日本語</option>
-      <option value="en">English</option>
-    </select>
+  <div id="lockScreen">
+    <div class="lang-row">
+      <span>🌐</span>
+      <select id="languageSelect" onchange="updateLockScreenLang()">
+        <option value="ko">한국어</option>
+        <option value="ja">日本語</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
+    <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
   </div>
-  <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
-  <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
-</div>
 
-<!-- 🎵 배경 음악 -->
-<audio id="bgm" loop>
-  <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
-</audio>
+  <audio id="bgm" loop>
+    <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
+  </audio>
 
-<!-- 🎬 본문 -->
-<main id="mainContent">
-  <section class="slide" style="background-image: url('assets/img/1.jpg')">
-    <div class="overlay-text"
-      data-lang-ko="처음 만난 그날, 우리 기억해요."
-      data-lang-ja="初めて出会った日、覚えてる？"
-      data-lang-en="We remember the day we first met.">
-      처음 만난 그날, 우리 기억해요.
-    </div>
-  </section>
+  <main id="mainContent">
+    <section class="slide" style="background-image: url('assets/img/1.jpg')">
+      <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요." data-lang-ja="初めて出会った日、覚えてる？" data-lang-en="We remember the day we first met.">처음 만난 그날, 우리 기억해요.</div>
+    </section>
 
-  <section class="slide" style="background-image: url('assets/img/2.jpg')">
-    <div class="overlay-text"
-      data-lang-ko="같은 방향을 바라보기 시작했고,"
-      data-lang-ja="同じ方向を見つめ始めて、"
-      data-lang-en="We started looking in the same direction.">
-      같은 방향을 바라보기 시작했고,
-    </div>
-  </section>
+    <section class="slide" style="background-image: url('assets/img/2.jpg')">
+      <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고," data-lang-ja="同じ方向を見つめ始めて、" data-lang-en="We started looking in the same direction.">같은 방향을 바라보기 시작했고,</div>
+    </section>
 
-  <section class="slide" style="background-image: url('assets/img/3.jpg')">
-    <div class="overlay-text"
-      data-lang-ko="함께 걷는 길이 익숙해졌죠."
-      data-lang-ja="一緒に歩く道が、当たり前になった。"
-      data-lang-en="Walking together became natural.">
-      함께 걷는 길이 익숙해졌죠.
-    </div>
-  </section>
+    <section class="slide" style="background-image: url('assets/img/3.jpg')">
+      <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">함께 걷는 길이 익숙해졌죠.</div>
+    </section>
 
-  <section class="slide intro">
-    <div class="couple-intro">
-      <div class="groom">
-        <img src="assets/img/groom.jpg" alt="신랑" />
-        <p data-lang-ko="그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나."
-           data-lang-ja="彼女を初めて見た日、すぐに分かりました。<br>この人だと。"
-           data-lang-en="The day I first saw her, I just knew.<br>She was the one.">
-          그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.
-        </p>
+    <section class="slide intro">
+      <div class="couple-intro">
+        <div class="groom">
+          <img src="assets/img/groom.jpg" alt="신랑" />
+          <p data-lang-ko="그녀를 처음 본 날, 그냥 알 수 있었어요.\n이 사람이구나." data-lang-ja="彼女を初めて見た日、すぐに分かりました。\nこの人だと。" data-lang-en="The day I first saw her, I just knew.\nShe was the one.">그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.</p>
+        </div>
+        <div class="bride">
+          <img src="assets/img/bride.jpg" alt="신부" />
+          <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.\n그게 시작이었죠." data-lang-ja="彼が笑ってくれたとき、世界が少し温かくなりました。\nそれが始まりでした。" data-lang-en="When he smiled at me, the world felt warmer.\nThat was the beginning.">그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.</p>
+        </div>
       </div>
-      <div class="bride">
-        <img src="assets/img/bride.jpg" alt="신부" />
-        <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠."
-           data-lang-ja="彼が笑ってくれたとき、世界が少し温かくなりました。<br>それが始まりでした。"
-           data-lang-en="When he smiled at me, the world felt warmer.<br>That was the beginning.">
-          그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.
-        </p>
+    </section>
+
+    <section class="slide" style="background-image: url('assets/img/5.jpg')">
+      <div class="overlay-text" data-lang-ko="2025년 9월 20일\n화성 라비돌 리조트에서\n만나뵈어요." data-lang-ja="2025年9月20日、\n華城ラビドルリゾートで\nお会いしましょう。" data-lang-en="September 20, 2025\nat Laviedor Resort\nWe hope to see you there.">2025년 9월 20일<br>화성 라비돌 리조트에서<br>만나뵈어요.</div>
+    </section>
+
+    <section class="slide info">
+      <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
+      <p data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33\n🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50\n\n🗺️ 카카오맵:" data-lang-ja="📍 京畿道華城市東灘面 ラビドル1ギル 33\n🚌 水原駅6-3番 / 餅店駅35-1・35-3・50番\n\n🗺️ Google地図:" data-lang-en="📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si, Korea\n🚌 Suwon St. 6-3 / Byeongjeom St. 35-1, 35-3, 50\n\n🗺️ Google Maps:">📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50<br><br>🗺️ <a href="https://map.kakao.com/link/search/라비돌 리조트" target="_blank">카카오맵으로 열기</a></p>
+    </section>
+
+    <section class="slide calendar-slide">
+      <h2>📅 결혼식은 이 날이에요</h2>
+      <div class="calendar">
+        <div class="month">2025년 9월</div>
+        <div class="days">
+          <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span>1</span>
+          <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+          <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+          <span>16</span><span>17</span><span>18</span><span>19</span><span class="highlight">20</span><span>21</span><span>22</span>
+          <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
+          <span>30</span>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="slide" style="background-image: url('assets/img/5.jpg')">
-    <div class="overlay-text"
-      data-lang-ko="2025년 9월 20일<br>화성 라비돌 리조트에서<br>만나뵈어요."
-      data-lang-ja="2025年9月20日、<br>華城ラビドルリゾートで<br>お会いしましょう。"
-      data-lang-en="September 20, 2025<br>at Laviedor Resort<br>We hope to see you there.">
-      2025년 9월 20일<br>화성 라비돌 리조트에서<br>만나뵈어요.
-    </div>
-  </section>
+    <section class="slide" id="final"></section>
+  </main>
 
-  <section class="slide info">
-    <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-    <p data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50<br><br>🗺️ 카카오맵:"
-       data-lang-ja="📍 京畿道華城市東灘面 ラビドル1ギル 33<br>🚌 水原駅6-3番 / 餅店駅35-1・35-3・50番<br><br>🗺️ カカオ地図:"
-       data-lang-en="📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si, Korea<br>🚌 Suwon St. 6-3 / Byeongjeom St. 35-1, 35-3, 50<br><br>🗺️ KakaoMap:">
-      📍 경기도 화성시 동탄면 라비돌1길 33<br>
-      🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50<br><br>
-      🗺️ <a href="https://map.kakao.com/link/search/라비돌 리조트" target="_blank">카카오맵으로 열기</a>
-    </p>
-  </section>
-</main>
-
-<!-- 🔧 스크립트 연결 -->
-<script src="script.js"></script>
-
-<section class="map-calendar-section">
-  <h2>오시는 길</h2>
-  <div id="kakaoMap" style="width:100%;height:300px;border-radius: 10px;"></div>
-
-  <h2 style="margin-top: 2rem;">📅 결혼식은 이 날이에요</h2>
-  <div class="calendar">
-    <div class="month">2025년 9월</div>
-    <div class="days">
-      <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
-      <!-- 1일은 월요일 -->
-      <span></span><span></span><span></span><span></span><span></span><span></span><span>1</span>
-      <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
-      <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
-      <span>16</span><span>17</span><span>18</span><span>19</span><span class="highlight">20</span><span>21</span><span>22</span>
-      <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
-      <span>30</span>
-    </div>
-  </div>
-</section>
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=여기에_카카오_API_키를_입력하세요"></script>
-<script>
-  var container = document.getElementById('kakaoMap');
-  var options = {
-    center: new kakao.maps.LatLng(37.226954, 127.071089), // 라비돌리조트 좌표
-    level: 3
-  };
-  var map = new kakao.maps.Map(container, options);
-  var marker = new kakao.maps.Marker({ position: options.center });
-  marker.setMap(map);
-</script>  
+  <script src="script.js"></script>
+  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=여기에_카카오_API_키를_입력하세요"></script>
+  <script>
+    const lang = document.getElementById("languageSelect")?.value || "ko";
+    const mapContainer = document.getElementById("kakaoMap");
+    if (lang === "ko" && mapContainer) {
+      const mapOptions = {
+        center: new kakao.maps.LatLng(37.226954, 127.071089),
+        level: 3
+      };
+      const map = new kakao.maps.Map(mapContainer, mapOptions);
+      const marker = new kakao.maps.Marker({ position: mapOptions.center });
+      marker.setMap(map);
+    }
+  </script>
 </body>
 </html>
