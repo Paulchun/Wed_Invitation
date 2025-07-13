@@ -13,16 +13,18 @@
 </head>
 <body>
   <div id="lockScreen">
-    <div class="lang-row">
-      <span>🌐</span>
-      <select id="languageSelect" onchange="updateLockScreenLang()">
-        <option value="ko">한국어</option>
-        <option value="ja">日本語</option>
-        <option value="en">English</option>
-      </select>
+    <div style="text-align: center; padding: 30px;">
+      <div style="margin-bottom: 15px;">
+        <select id="languageSelect" onchange="updateLockScreenLang()">
+          <option value="ko">한국어</option>
+          <option value="ja">日本語</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" style="padding: 10px; width: 80%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px;" />
+      <br><br>
+      <button id="unlockBtn" onclick="unlock()" style="padding: 10px 20px; font-size: 1rem;">청첩장 열기</button>
     </div>
-    <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
-    <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
   </div>
 
   <audio id="bgm" loop autoplay muted>
@@ -40,6 +42,7 @@
       <section class="slide" style="background-image: url('assets/img/3.jpg')">
         <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">함께 걷는 길이 익숙해졌죠.</div>
       </section>
+
       <section class="slide intro">
         <div class="couple-intro">
           <div class="groom">
@@ -51,17 +54,6 @@
             <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠." data-lang-ja="彼が笑ってくれたとき、世界が少し温かくなりました。<br>それが始まりでした。" data-lang-en="When he smiled at me, the world felt warmer.<br>That was the beginning.">그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.</p>
           </div>
         </div>
-      </section>
-
-      <section class="slide info">
-        <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-        <p id="mapText"
-           data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 네이버 지도에서 보기:"
-           data-lang-ja="📍 京畿道華城市東灘面 ラビドル1ギル 33<br>🚌 水原駅6-3番 / 餅店駅35-1, 35-3, 50番<br>🗺️ Googleマップで見る:"
-           data-lang-en="📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Google Maps:">
-          📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
-          🗺️ <a id="mapLink" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
-        </p>
       </section>
 
       <section class="slide calendar">
@@ -78,8 +70,44 @@
           </div>
         </div>
       </section>
+
+      <section class="slide info">
+        <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
+        <p id="mapText"
+           data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 아래 버튼을 눌러 지도를 확인해 주세요."
+           data-lang-ja="📍 京畿道華城市東灘面 ラビドル1ギル 33<br>🚌 水原駅6-3番 / 餅店駅35-1, 35-3, 50番<br>🗺️ 地図を確認するにはボタンを押してください。"
+           data-lang-en="📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ Click the button below to view the map.">
+          📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
+        </p>
+        <a id="mapLink" href="https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9" target="_blank" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #333; color: #fff; text-decoration: none; border-radius: 5px;">지도 열기</a>
+
+        <form id="rsvpForm" style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+          <h3>참석 의사가 있으신 분은 아래 양식을 작성해 주세요</h3>
+          <input name="name" placeholder="성함" required style="padding: 8px; width: 80%; max-width: 300px;">
+          <textarea name="message" placeholder="특이 사항 (예: 숙박이 필요합니다)" style="padding: 8px; width: 80%; max-width: 300px;"></textarea>
+          <button type="submit" style="padding: 10px 20px; background-color: #555; color: #fff; border: none; border-radius: 5px;">제출</button>
+        </form>
+        <p style="font-size: 0.8rem; color: gray; margin-top: 10px;">※ 실제 저장 기능은 Google Script와 연동 시 동작합니다.</p>
+      </section>
     </div>
   </main>
+
+  <script>
+    document.getElementById("rsvpForm")?.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        message: form.message.value
+      };
+      fetch("https://script.google.com/macros/s/___YOUR_SCRIPT_ID___/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(() => alert("제출되었습니다! 감사합니다."))
+      .catch(() => alert("제출 중 오류가 발생했습니다. 다시 시도해 주세요."));
+    });
+  </script>
 
   <script src="script.js" defer></script>
 </body>
