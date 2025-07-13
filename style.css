@@ -1,52 +1,37 @@
-/* Reset */
-* {
+/* Reset & Global */
+body, html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  overflow-x: hidden;
+  color: #000;
 }
 
-html, body {
-  font-family: "Noto Sans KR", sans-serif;
-  height: 100%;
-  overflow: hidden;
+a {
+  color: #000;
+  text-decoration: underline;
 }
 
-body {
-  background: #000;
-  color: #fff;
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
 }
 
-/* Lock screen */
+/* Lock Screen */
 #lockScreen {
   position: fixed;
-  z-index: 9999;
-  width: 100vw;
-  height: 100vh;
-  background: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-}
-
-#lockScreen input,
-#lockScreen button {
-  margin: 10px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-#lockScreen input {
-  width: 240px;
-}
-
-#lockScreen button {
-  background-color: #222;
-  color: white;
-  cursor: pointer;
 }
 
 .lang-row {
@@ -55,190 +40,168 @@ body {
   right: 20px;
 }
 
-/* Scroll slides */
+#pwInput {
+  margin: 10px 0;
+  padding: 10px;
+  width: 200px;
+  font-size: 16px;
+}
+
+#unlockBtn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Scroll Container */
 .scroll-container {
-  height: 100vh;
-  overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  overflow-y: scroll;
+  height: 100vh;
 }
 
 .slide {
-  scroll-snap-align: start;
   height: 100vh;
+  width: 100%;
   position: relative;
+  scroll-snap-align: start;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  flex-direction: column;
   background-size: cover;
   background-position: center;
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
+  padding: 20px;
 }
 
-/* Overlay text on photo slides */
+.fade {
+  animation: fadeEffect 1.5s ease-in-out;
+}
+
+@keyframes fadeEffect {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Overlay Text */
 .overlay-text {
-  font-size: 1.8rem;
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 12px 20px;
-  border-radius: 12px;
-  max-width: 90%;
   position: absolute;
-  bottom: 60px;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 24px;
   color: white;
+  text-shadow: 1px 1px 4px black;
+  white-space: pre-line;
 }
 
-/* Fade animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Individual Groom/Bride Slide */
-.person-slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Intro */
+.intro-block {
   text-align: center;
 }
 
-.person-slide img {
-  width: 160px;
-  height: 160px;
+.intro-block img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
   object-fit: cover;
-  border-radius: 16px;
-  margin-bottom: 20px;
-  border: 4px solid #fff;
+  margin-bottom: 10px;
 }
 
-.person-slide p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 12px;
+.intro-block p {
+  font-size: 20px;
+  background-color: rgba(255,255,255,0.7);
+  padding: 10px;
   border-radius: 10px;
-  max-width: 80%;
-  color: #fff;
+  color: black;
 }
 
 /* Calendar */
-.calendar {
-  background-color: #f0f0f0;
-  color: #111;
-  flex-direction: column;
-}
-
-.calendar-title {
-  font-size: 1.6rem;
-  margin-bottom: 16px;
-  color: #111;
+.calendar h2,
+.info h2,
+.rsvp h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: black;
 }
 
 .calendar-box {
-  background-color: white;
+  background: rgba(255,255,255,0.8);
+  padding: 20px;
   border-radius: 12px;
-  padding: 16px;
   color: black;
-  margin-top: 10px;
 }
 
 .month {
-  font-weight: bold;
-  margin-bottom: 12px;
+  font-size: 20px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
 .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
   text-align: center;
-  font-size: 0.95rem;
 }
 
 .days span {
-  padding: 6px;
+  padding: 8px;
 }
 
-.highlight {
-  background-color: #ff7b7b;
-  color: white;
-  border-radius: 6px;
+.days .highlight {
+  background: gold;
+  border-radius: 8px;
+  font-weight: bold;
 }
 
-/* Map Info */
-.slide.info {
-  background-color: #eee;
-  color: #000;
-  flex-direction: column;
-}
-
-.slide.info p {
+/* Info */
+.info p {
+  font-size: 18px;
   line-height: 1.6;
-}
-
-.slide.info a {
-  color: #0077cc;
-  text-decoration: underline;
+  text-align: center;
+  color: black;
 }
 
 /* RSVP */
-form {
+#rsvpForm {
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 80%;
   max-width: 400px;
-  margin: 0 auto;
 }
 
-form input,
-form textarea {
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
+#rsvpForm input,
+#rsvpForm textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #aaa;
   border-radius: 6px;
 }
 
-form textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-form button {
-  background-color: #333;
+#submitBtn {
+  padding: 12px;
+  font-size: 16px;
+  background: black;
   color: white;
   border: none;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 6px;
   cursor: pointer;
 }
 
-#rsvpStatus {
+#formStatus {
   margin-top: 10px;
-  font-weight: bold;
-  text-align: center;
+  font-size: 14px;
+  color: green;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+@media screen and (max-width: 600px) {
   .overlay-text {
-    font-size: 1.2rem;
-    bottom: 40px;
+    font-size: 18px;
   }
 
-  .person-slide img {
-    width: 120px;
-    height: 120px;
-  }
-
-  .person-slide p {
-    font-size: 1rem;
-  }
-
-  .calendar-title {
-    font-size: 1.3rem;
+  .intro-block img {
+    width: 100%;
   }
 }
