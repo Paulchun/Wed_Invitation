@@ -1,140 +1,155 @@
-const password = "0920";
-
-const translations = {
+// Multilingual dictionary
+const langData = {
   ko: {
-    pwPlaceholder: "초대 코드를 입력하세요",
-    unlockBtn: "청첩장 열기",
+    enterCode: "초대 코드를 입력하세요",
+    openInvite: "청첩장 열기",
     rsvpTitle: "참석 의사가 있으신 분은 아래에 남겨주세요",
-    nameLabel: "성함",
-    messageLabel: "남기실 말씀",
-    submitBtn: "제출",
-    submitSuccess: "참석 의사가 성공적으로 전달되었습니다. 감사합니다!",
-    submitError: "제출 중 오류가 발생했습니다. 다시 시도해주세요.",
-    calendarTitle: "📅 결혼식은 이 날이에요",
-    mapText: "📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 네이버 지도에서 보기:",
-    mapLink: "https://naver.me/GNWkr4t4"
-  },
-  ja: {
-    pwPlaceholder: "招待コードを入力してください",
-    unlockBtn: "招待状を開く",
-    rsvpTitle: "ご出席の方は、以下にご記入ください",
-    nameLabel: "お名前",
-    messageLabel: "メッセージ",
-    submitBtn: "送信",
-    submitSuccess: "出席の意思が送信されました。ありがとうございます！",
-    submitError: "送信中にエラーが発生しました。もう一度お試しください。",
-    calendarTitle: "📅 結婚式の日",
-    mapText: "📍 京畿道華城市東灘面 ラビドル1ギル 33<br>🚌 水原駅6-3番 / 餅店駅35-1, 35-3, 50番<br>🗺️ Googleマップで見る:",
-    mapLink: "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9"
+    name: "성함",
+    message: "남기실 말씀",
+    send: "전송하기",
+    success: "전송되었습니다. 감사합니다!"
   },
   en: {
-    pwPlaceholder: "Enter invitation code",
-    unlockBtn: "Open Invitation",
-    rsvpTitle: "If you would like to attend, please leave your name below",
-    nameLabel: "Name",
-    messageLabel: "Message",
-    submitBtn: "Submit",
-    submitSuccess: "Your attendance has been submitted. Thank you!",
-    submitError: "Error occurred while submitting. Please try again.",
-    calendarTitle: "📅 The Wedding Day",
-    mapText: "📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Google Maps:",
-    mapLink: "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9"
+    enterCode: "Enter invitation code",
+    openInvite: "Open Invitation",
+    rsvpTitle: "Please leave your RSVP message below",
+    name: "Name",
+    message: "Message",
+    send: "Submit",
+    success: "Submitted. Thank you!"
+  },
+  ja: {
+    enterCode: "招待コードを入力してください",
+    openInvite: "招待状を開く",
+    rsvpTitle: "ご出席の方は下記にご記入ください",
+    name: "お名前",
+    message: "メッセージ",
+    send: "送信する",
+    success: "送信されました。ありがとうございます！"
   }
 };
 
-function updateLockScreenLang() {
-  const lang = document.getElementById("languageSelect").value;
-  const t = translations[lang];
-  document.getElementById("pwInput").placeholder = t.pwPlaceholder;
-  document.getElementById("unlockBtn").innerText = t.unlockBtn;
-}
+let currentLang = "ko";
 
-function unlock() {
-  const pw = document.getElementById("pwInput").value;
-  if (pw === password) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-    const audio = document.getElementById("bgm");
-    audio.currentTime = 0;
-    audio.muted = false;
-    audio.play();
-  } else {
-    alert("초대 코드가 틀렸습니다.");
-  }
-}
+function updateTexts() {
+  const dict = langData[currentLang];
+  if (!dict) return;
 
-function applyLanguage() {
-  const lang = document.getElementById("languageSelect").value;
-  document.querySelectorAll("[data-lang-ko]").forEach((el) => {
-    el.innerHTML = el.getAttribute(`data-lang-${lang}`) || el.innerHTML;
+  // Static text replacements
+  document.getElementById("pwInput").placeholder = dict.enterCode;
+  document.getElementById("unlockBtn").innerText = dict.openInvite;
+  document.getElementById("rsvpTitle").innerText = dict.rsvpTitle;
+  document.getElementById("nameInput").placeholder = dict.name;
+  document.getElementById("messageInput").placeholder = dict.message;
+  document.getElementById("submitBtn").innerText = dict.send;
+
+  // Lang-specific elements
+  document.querySelectorAll("[data-lang-ko], [data-lang-en], [data-lang-ja]").forEach(el => {
+    const txt = el.dataset[`lang${currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`];
+    if (txt) el.innerHTML = txt;
   });
 
-  // RSVP 라벨 번역
-  document.querySelector(".rsvp h2").innerText = translations[lang].rsvpTitle;
-  document.querySelector("#name").placeholder = translations[lang].nameLabel;
-  document.querySelector("#message").placeholder = translations[lang].messageLabel;
-  document.querySelector("#submitBtn").innerText = translations[lang].submitBtn;
-
-  // 지도 텍스트 및 링크
-  const mapText = document.getElementById("mapText");
-  mapText.innerHTML = translations[lang].mapText;
+  // Map link switching
   const mapLink = document.getElementById("mapLink");
-  mapLink.href = translations[lang].mapLink;
-
-  // 달력 타이틀 번역
-  const calendarTitle = document.querySelector(".calendar h2");
-  if (calendarTitle) calendarTitle.innerText = translations[lang].calendarTitle;
-
-  updateLockScreenLang();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  applyLanguage();
-
-  document.getElementById("languageSelect").addEventListener("change", () => {
-    applyLanguage();
-  });
-
-  // RSVP 제출
-  const rsvpForm = document.getElementById("rsvpForm");
-  if (rsvpForm) {
-    rsvpForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const lang = document.getElementById("languageSelect").value;
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
-
-      try {
-        const response = await fetch(
-          "https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({ name, message }),
-          }
-        );
-        if (response.ok) {
-          alert(translations[lang].submitSuccess);
-          document.getElementById("rsvpForm").reset();
-        } else {
-          alert(translations[lang].submitError);
-        }
-      } catch (err) {
-        console.error(err);
-        alert(translations[lang].submitError);
-      }
-    });
+  if (mapLink) {
+    if (currentLang === "ko") {
+      mapLink.href = "https://naver.me/GNWkr4t4";
+      mapLink.innerText = "네이버 지도 열기";
+    } else {
+      mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
+      mapLink.innerText = "Open Google Maps";
+    }
   }
 
-  // 슬라이드 페이드 효과
-  const slides = document.querySelectorAll(".slide");
-  let options = { threshold: 0.4 };
-  let observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in");
-      }
+  // Calendar month text
+  const monthText = {
+    ko: "2025년 9월",
+    en: "September 2025",
+    ja: "2025年9月"
+  };
+  const weekdays = {
+    ko: ["일", "월", "화", "수", "목", "금", "토"],
+    en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    ja: ["日", "月", "火", "水", "木", "金", "土"]
+  };
+
+  const monthEl = document.querySelector(".month");
+  if (monthEl) monthEl.innerText = monthText[currentLang] || monthText["ko"];
+
+  const daysEl = document.querySelector(".days");
+  if (daysEl) {
+    const allDays = [
+      "", "1", "2", "3", "4", "5", "6",
+      "7", "8", "9", "10", "11", "12", "13",
+      "14", "15", "16", "17", "18", "19", "20",
+      "21", "22", "23", "24", "25", "26", "27",
+      "28", "29", "30"
+    ];
+    daysEl.innerHTML = weekdays[currentLang].map(day => `<span>${day}</span>`).join('') +
+      allDays.map((d, i) => `<span${d === "20" ? ' class="highlight"' : ""}>${d}</span>`).join('');
+  }
+}
+
+// Language selection
+document.getElementById("languageSelect").addEventListener("change", function () {
+  currentLang = this.value;
+  updateTexts();
+});
+
+// Unlock invitation
+function unlock() {
+  const input = document.getElementById("pwInput").value.trim();
+  if (input === "0920") {
+    document.getElementById("lockScreen").style.display = "none";
+    document.body.style.overflow = "auto";
+    document.getElementById("bgm").currentTime = 0;
+    document.getElementById("bgm").muted = false;
+    document.getElementById("bgm").play();
+  } else {
+    alert("잘못된 초대 코드입니다.");
+  }
+}
+
+// RSVP Submit
+document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const name = document.getElementById("nameInput").value.trim();
+  const message = document.getElementById("messageInput").value.trim();
+  const status = document.getElementById("rsvpStatus");
+
+  if (!name || !message) {
+    status.innerText = "모든 항목을 입력해 주세요.";
+    return;
+  }
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `name=${encodeURIComponent(name)}&message=${encodeURIComponent(message)}`
     });
-  }, options);
-  slides.forEach((slide) => observer.observe(slide));
+    const result = await response.text();
+    status.innerText = result.includes("Success") ? langData[currentLang].success : "오류가 발생했습니다.";
+    document.getElementById("rsvpForm").reset();
+  } catch (err) {
+    status.innerText = "네트워크 오류가 발생했습니다.";
+  }
+});
+
+// Fade on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("fade");
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll(".slide").forEach(slide => {
+  observer.observe(slide);
+});
+
+// Auto-initialize language
+document.addEventListener("DOMContentLoaded", () => {
+  updateTexts();
 });
