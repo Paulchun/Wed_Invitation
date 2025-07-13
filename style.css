@@ -1,16 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* style.css */
 
-body, html {
-  width: 100%;
-  height: 100%;
-  font-family: 'Helvetica Neue', sans-serif;
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
   background-color: #fff;
-  scroll-behavior: smooth;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #lockScreen {
@@ -19,122 +13,106 @@ body, html {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #fff;
-  z-index: 9999;
+  background: #fff;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 20px;
-}
-
-.lang-row {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  align-items: center;
+  z-index: 9999;
 }
 
 .scroll-container {
-  height: 100vh;
-  overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  overflow-y: scroll;
+  height: 100vh;
 }
 
 .slide {
-  height: 100vh;
   scroll-snap-align: start;
+  height: 100vh;
   background-size: cover;
   background-position: center;
   position: relative;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.slide.active {
-  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
 }
 
 .overlay-text {
-  position: absolute;
-  bottom: 15%;
-  left: 5%;
-  right: 5%;
-  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
   font-size: 1.5rem;
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
-  text-align: center;
+  line-height: 1.6;
 }
 
 .couple-intro {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
-  padding: 0 5%;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.couple-intro .groom,
+.couple-intro .bride {
+  text-align: center;
 }
 
 .couple-intro img {
   width: 120px;
   height: 120px;
-  border-radius: 100%;
-  border: 4px solid white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-}
-
-.couple-intro p {
-  margin-top: 10px;
-  font-size: 1rem;
-  text-align: center;
-  color: white;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-}
-
-.info, .calendar {
-  background: linear-gradient(to bottom, #fdfcfb, #e2d1c3);
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.info h2, .calendar h2 {
-  margin-bottom: 20px;
-  font-size: 1.6rem;
-}
-
-#mapText {
-  line-height: 1.6;
-  font-size: 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 
 .calendar-box {
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  background: #fff;
   padding: 20px;
-  background-color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 350px;
+  margin: auto;
+  color: #333;
 }
 
 .calendar-box .month {
   font-weight: bold;
   margin-bottom: 10px;
+  font-size: 1.2rem;
 }
 
 .calendar-box .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
-  font-size: 0.9rem;
+}
+
+.calendar-box .days span {
+  text-align: center;
+  padding: 5px 0;
 }
 
 .calendar-box .highlight {
-  background-color: #ff9999;
+  background: #f77;
+  color: #fff;
   border-radius: 50%;
-  padding: 5px;
-  font-weight: bold;
+}
+
+.info {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: 1rem;
 }
