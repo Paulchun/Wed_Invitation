@@ -34,6 +34,17 @@ function setLanguage(lang) {
     el.innerHTML = el.getAttribute(`data-lang-${lang}`);
   });
   updateLockScreenLang(lang);
+
+  const mapLink = document.getElementById("mapLink");
+  const mapText = document.getElementById("mapText");
+
+  if (lang === "ko") {
+    mapLink.href = "https://naver.me/GNWkr4t4";
+    mapLink.innerText = "네이버 지도 열기";
+  } else {
+    mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
+    mapLink.innerText = lang === "ja" ? "Googleマップを開く" : "Open in Google Maps";
+  }
 }
 
 function updateLockScreenLang(lang) {
@@ -53,36 +64,5 @@ function updateLockScreenLang(lang) {
   } else if (lang === "en") {
     pwInput.placeholder = "Enter invitation code";
     unlockBtn.innerText = "Open Invitation";
-  }
-}
-
-// 스크롤 중 가로 이동 방지
-document.addEventListener("touchmove", function (e) {
-  if (Math.abs(e.touches[0].clientX - (this.lastTouchX || 0)) > 10) {
-    e.preventDefault();
-  }
-  this.lastTouchX = e.touches[0].clientX;
-}, { passive: false });
-
-// 스크롤 효과 개선
-let lastScroll = 0;
-document.addEventListener("wheel", function (e) {
-  const slides = document.querySelectorAll(".slide");
-  let currentIndex = Math.round(window.scrollY / window.innerHeight);
-
-  if (e.deltaY > 0 && currentIndex < slides.length - 1) {
-    scrollToSlide(currentIndex + 1);
-  } else if (e.deltaY < 0 && currentIndex > 0) {
-    scrollToSlide(currentIndex - 1);
-  }
-}, { passive: false });
-
-function scrollToSlide(index) {
-  const target = document.querySelectorAll(".slide")[index];
-  if (target) {
-    window.scrollTo({
-      top: target.offsetTop,
-      behavior: "smooth"
-    });
   }
 }
