@@ -1,98 +1,60 @@
-const correctPassword = "ggh2025";
-
-document.getElementById("pwInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") unlock();
-});
+const correctPassword = "0920";
+const lockScreen = document.getElementById("lockScreen");
+const mainContent = document.getElementById("mainContent");
+const bgm = document.getElementById("bgm");
+const pwInput = document.getElementById("pwInput");
+const mapLink = document.getElementById("mapLink");
+const mapText = document.getElementById("mapText");
 
 function unlock() {
-  const input = document.getElementById("pwInput").value;
-  const lang = document.getElementById("languageSelect").value;
-
+  const input = pwInput.value.trim();
   if (input === correctPassword) {
-    document.activeElement.blur(); // ✅ 커서 포커스 해제
-
-    document.getElementById("lockScreen").style.display = "none";
-    document.body.style.overflow = "auto";
-    setLanguage(lang);
-
-    // 맨 위 슬라이드로 이동
-    window.scrollTo({ top: 0, behavior: "auto" });
-
-    // BGM 재생
-    const bgm = document.getElementById("bgm");
-    if (bgm) {
-      bgm.load();
-      bgm.muted = false;
-      bgm.volume = 0.8;
-      bgm.play().catch(err => console.log("BGM 재생 실패:", err));
-    }
-
-    // 초기 슬라이드 애니메이션 실행
-    setTimeout(handleSlideAnimation, 100);
+    document.activeElement.blur(); // 포커스 해제
+    lockScreen.style.display = "none";
+    mainContent.style.display = "block";
+    bgm.muted = false;
+    bgm.play();
   } else {
-    alert(
-      lang === "ja"
-        ? "招待コードが間違っています。"
-        : lang === "en"
-        ? "Invitation code is incorrect."
-        : "초대 코드가 틀렸습니다."
-    );
+    alert("초대 코드가 올바르지 않습니다.");
   }
 }
 
-function setLanguage(lang) {
-  document.querySelectorAll("[data-lang-ko]").forEach((el) => {
-    el.innerHTML = el.getAttribute(`data-lang-${lang}`);
+function updateLanguage(lang) {
+  document.querySelectorAll("[data-lang-ko]").forEach(el => {
+    const text = el.getAttribute(`data-lang-${lang}`);
+    if (text) el.innerHTML = text;
   });
 
-  updateLockScreenLang(lang);
-
-  const mapLink = document.getElementById("mapLink");
+  // 지도 링크 업데이트
   if (lang === "ko") {
     mapLink.href = "https://naver.me/GNWkr4t4";
     mapLink.innerText = "네이버 지도 열기";
   } else {
     mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
-    mapLink.innerText = lang === "ja" ? "Googleマップを開く" : "Open in Google Maps";
+    mapLink.innerText = "Open in Google Maps";
   }
 }
 
-function updateLockScreenLang(lang) {
-  const pwInput = document.getElementById("pwInput");
-  const unlockBtn = document.getElementById("unlockBtn");
-
-  if (!lang) {
-    lang = document.getElementById("languageSelect").value;
-  }
-
-  if (lang === "ko") {
-    pwInput.placeholder = "초대 코드를 입력하세요";
-    unlockBtn.innerText = "청첩장 열기";
-  } else if (lang === "ja") {
-    pwInput.placeholder = "招待コードを入力してください";
-    unlockBtn.innerText = "招待状を開く";
-  } else if (lang === "en") {
-    pwInput.placeholder = "Enter invitation code";
-    unlockBtn.innerText = "Open Invitation";
-  }
+function updateLockScreenLang() {
+  const lang = document.getElementById("languageSelect").value;
+  updateLanguage(lang);
 }
 
-// 슬라이드 페이드 인 효과
-function handleSlideAnimation() {
+function handleSlideFade() {
   const slides = document.querySelectorAll(".slide");
-  const windowHeight = window.innerHeight;
-
   slides.forEach((slide) => {
     const rect = slide.getBoundingClientRect();
-    const top = rect.top;
-
-    if (top >= 0 && top < windowHeight * 0.8) {
-      slide.classList.add("active");
-    } else {
-      slide.classList.remove("active");
-    }
+    const isVisible = rect.top >= -window.innerHeight / 3 && rect.top <= window.innerHeight / 2;
+    slide.classList.toggle("active", isVisible);
   });
 }
 
-window.addEventListener("scroll", handleSlideAnimation);
-window.addEventListener("load", handleSlideAnimation);
+// 초기화
+document.addEventListener("DOMContentLoaded", () => {
+  mainContent.style.display = "none";
+  updateLanguage("ko"); // 기본 언어 설정
+  handleSlideFade(); // 첫 화면 페이드 활성화
+});
+
+// 스크롤 이벤트로 슬라이드 페이드 처리
+document.querySelector(".scroll-container").addEventListener("scroll", handleSlideFade);
