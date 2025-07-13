@@ -9,6 +9,8 @@ function unlock() {
   const lang = document.getElementById("languageSelect").value;
 
   if (input === correctPassword) {
+    document.activeElement.blur(); // ✅ 커서 포커스 해제
+
     document.getElementById("lockScreen").style.display = "none";
     document.body.style.overflow = "auto";
     setLanguage(lang);
