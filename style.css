@@ -1,223 +1,199 @@
-/* 전체 초기화 */
-* {
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body, html {
-  font-family: "Apple SD Gothic Neo", sans-serif;
+  font-family: 'Apple SD Gothic Neo', sans-serif;
   background: #fff;
   overflow: hidden;
 }
 
-/* 잠금 화면 */
 #lockScreen {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #fdfcf9;
+  width: 100%;
+  height: 100%;
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
   padding: 20px;
-  gap: 15px;
+}
+
+#lockScreen input,
+#lockScreen button {
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  width: 80%;
+  max-width: 300px;
 }
 
 .lang-row {
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 20px;
 }
 
-#lockScreen input,
-#lockScreen button,
-#languageSelect {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #aaa;
-  border-radius: 5px;
-  background: #fff;
-}
-
-#lockScreen button {
-  background-color: #333;
-  color: white;
-  cursor: pointer;
-}
-
-/* 메인 콘텐츠 */
-#mainContent {
-  height: 100vh;
-  width: 100vw;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  -webkit-overflow-scrolling: touch;
+main {
+  display: none;
 }
 
 .scroll-container {
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .slide {
-  position: relative;
-  height: 100vh;
-  width: 100vw;
   scroll-snap-align: start;
+  height: 100vh;
+  position: relative;
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 30px;
-  text-align: center;
-  color: #fff;
+  align-items: flex-end;
+  padding: 20px;
+  transition: opacity 1s ease-in-out;
 }
 
 .fade {
-  animation: fadeEffect 1s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeEffect {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .overlay-text {
-  font-size: 22px;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 10px 20px;
-  border-radius: 10px;
-  line-height: 1.6;
-}
-
-.overlay-text.bottom {
-  position: absolute;
-  bottom: 40px;
-}
-
-/* 신랑 신부 소개 */
-.couple-intro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  color: #000;
-}
-
-.groom, .bride {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-}
-
-.groom img, .bride img {
-  width: 180px;
-  height: 240px;
-  border-radius: 20px;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-.groom p, .bride p {
-  font-size: 16px;
-  background-color: #ffffffcc;
-  color: #000;
-  padding: 10px;
-  border-radius: 8px;
+  color: white;
+  font-size: 24px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  margin-bottom: 10%;
   text-align: center;
 }
 
-/* 달력 */
-.calendar-box {
-  background: #ffffffcc;
-  padding: 20px;
-  border-radius: 10px;
-  color: #000;
+.intro .couple-intro {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+}
+
+.person {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.person img {
+  width: 80%;
   max-width: 300px;
-  margin: auto;
+  border-radius: 20px;
+}
+
+.person p {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.calendar {
+  background: #f0f0f0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 40px;
+}
+
+.calendar-title {
+  color: #000;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.calendar-box {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
 }
 
 .calendar-box .month {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .calendar-box .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  font-size: 14px;
-  text-align: center;
+  gap: 5px;
+}
+
+.calendar-box .days span {
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .calendar-box .highlight {
-  background-color: #ffcb05;
-  color: #000;
-  border-radius: 50%;
-  padding: 4px;
+  background-color: #ff6b6b;
+  color: white;
+  font-weight: bold;
 }
 
-/* 오시는 길 */
-.info {
-  background: #f4f4f4;
-  color: #000;
+.info p {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: black;
+  text-align: center;
 }
 
 .info a {
-  color: #0078ff;
   text-decoration: underline;
+  color: #007BFF;
 }
 
-/* RSVP */
-form#rsvpForm {
+.rsvp {
+  background: #f8f8f8;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 30px;
+}
+
+#rsvpForm {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+  align-items: center;
   width: 80%;
   max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-form#rsvpForm input,
-form#rsvpForm textarea {
+#rsvpForm input,
+#rsvpForm textarea {
+  width: 100%;
+  margin-bottom: 10px;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #aaa;
-  border-radius: 6px;
-  resize: vertical;
 }
 
-form#rsvpForm button {
+#submitBtn {
   padding: 10px;
+  width: 100%;
   font-size: 16px;
-  background-color: #333;
+  background-color: #007BFF;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
-}
-
-/* 반응형 */
-@media screen and (max-width: 600px) {
-  .overlay-text {
-    font-size: 18px;
-  }
-
-  .groom img, .bride img {
-    width: 140px;
-    height: 180px;
-  }
-
-  .calendar-box {
-    width: 90%;
-  }
 }
