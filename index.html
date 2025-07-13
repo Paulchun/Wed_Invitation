@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -12,11 +11,10 @@
   <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
-  <!-- 초대 코드 잠금 화면 -->
   <div id="lockScreen">
     <div class="lang-row">
       <span>🌐</span>
-      <select id="languageSelect" onchange="updateLockScreenLang()">
+      <select id="languageSelect">
         <option value="ko">한국어</option>
         <option value="ja">日本語</option>
         <option value="en">English</option>
@@ -26,98 +24,65 @@
     <button id="unlockBtn" onclick="unlock()">청첩장 열기</button>
   </div>
 
-  <!-- 배경 음악 -->
   <audio id="bgm" loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- 본문 -->
   <main id="mainContent">
-    <div class="scroll-container slides-container">
-      <!-- 슬라이드 1 -->
+    <div class="scroll-container">
       <section class="slide fade" style="background-image: url('assets/img/1.jpg')">
-        <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요."
-             data-lang-ja="初めて出会った日、覚えてる？"
-             data-lang-en="We remember the day we first met.">처음 만난 그날, 우리 기억해요.</div>
+        <div class="overlay-text">처음 만난 그날, 우리 기억해요.</div>
       </section>
-
-      <!-- 슬라이드 2 -->
       <section class="slide fade" style="background-image: url('assets/img/2.jpg')">
-        <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고,"
-             data-lang-ja="同じ方向を見つめ始めて、"
-             data-lang-en="We started looking in the same direction.">같은 방향을 바라보기 시작했고,</div>
+        <div class="overlay-text">같은 방향을 바라보기 시작했고,</div>
       </section>
-
-      <!-- 슬라이드 3 -->
       <section class="slide fade" style="background-image: url('assets/img/3.jpg')">
-        <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠."
-             data-lang-ja="一緒に歩く道が、当たり前になった。"
-             data-lang-en="Walking together became natural.">함께 걷는 길이 익숙해졌죠.</div>
+        <div class="overlay-text">함께 걷는 길이 익숙해졌죠.</div>
       </section>
 
-      <!-- 슬라이드 4: 신랑 신부 소개 -->
-      <section class="slide intro fade">
-        <div class="couple-intro">
-          <div class="groom horizontal">
-            <img src="assets/img/groom.jpg" alt="신랑" />
-            <p data-lang-ko="그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나."
-               data-lang-ja="彼女を初めて見た日、すぐに分かりました。<br>この人だと。"
-               data-lang-en="The day I first saw her, I just knew.<br>She was the one.">그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.</p>
-          </div>
-          <div class="bride horizontal">
-            <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠."
-               data-lang-ja="彼が笑ってくれたとき、世界が少し温かくなりました。<br>それが始まりでした。"
-               data-lang-en="When he smiled at me, the world felt warmer.<br>That was the beginning.">그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.</p>
-            <img src="assets/img/bride.jpg" alt="신부" />
-          </div>
+      <section class="slide fade intro">
+        <div class="person-intro">
+          <img src="assets/img/groom.jpg" alt="신랑" />
+          <p>그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.</p>
+        </div>
+      </section>
+      <section class="slide fade intro">
+        <div class="person-intro">
+          <img src="assets/img/bride.jpg" alt="신부" />
+          <p>그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.</p>
         </div>
       </section>
 
-      <!-- 슬라이드 5: 달력 -->
-      <section class="slide calendar fade">
-        <h2 class="calendar-title"
-            data-lang-ko="📅 결혼식은 이 날이에요"
-            data-lang-ja="📅 結婚式の日"
-            data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
+      <section class="slide fade calendar">
+        <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式の日" data-lang-en="📅 The Wedding Day">
+          📅 결혼식은 이 날이에요
+        </h2>
         <div class="calendar-box">
-          <div class="month" id="calendarMonth">2025년 9월</div>
-          <div class="days" id="calendarDays">
-            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
-            <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
-            <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
-            <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span class="highlight">20</span>
-            <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span>
-            <span>28</span><span>29</span><span>30</span>
-          </div>
+          <div class="month">2025년 9월</div>
+          <div class="days"></div>
         </div>
       </section>
 
-      <!-- 슬라이드 6: 오시는 길 -->
-      <section class="slide info fade">
+      <section class="slide fade info">
         <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
         <p id="mapText"
-           data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 네이버 지도에서 보기:"
-           data-lang-ja="📍 京畿道華城市東灘面 ラビドル1ギル 33<br>🚌 水原駅6-3番 / 餅店駅35-1, 35-3, 50番<br>🗺️ Googleマップで見る:"
-           data-lang-en="📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Google Maps:">
-          📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
+           data-lang-ko="📍 경기도 화성시 동탄면 라비돌1길 33<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 지도 보기:"
+           data-lang-ja="📍 京畿道華城市東灘面 ラビドル1ギル 33<br>🚌 水原駅6-3番 / 餅店駅35-1, 35-3, 50番<br>🗺️ 地図を見る:"
+           data-lang-en="📍 33, Laviedor 1-gil, Dongtan-myeon, Hwaseong-si<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View Map:">
+          📍 경기도 화성시 동탄면 라비돌1길 33<br>
+          🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
           🗺️ <a id="mapLink" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
         </p>
       </section>
 
-      <!-- 슬라이드 7: RSVP -->
-      <section class="slide fade">
-        <h2 id="rsvpTitle" data-lang-ko="참석 의사를 알려주세요"
-            data-lang-ja="ご出席の意思を教えてください"
-            data-lang-en="Let us know if you can join us">참석 의사를 알려주세요</h2>
+      <section class="slide fade rsvp">
+        <h2 id="rsvpTitle">참석 의사가 있으신 분은 아래에 남겨주세요</h2>
         <form id="rsvpForm">
-          <input type="text" id="nameInput" name="name"
-                 data-lang-ko="성함" data-lang-ja="お名前" data-lang-en="Name" placeholder="성함" required />
-          <textarea id="messageInput" name="message"
-                    data-lang-ko="남기실 말씀" data-lang-ja="メッセージ" data-lang-en="Message" placeholder="남기실 말씀" required></textarea>
-          <button type="submit" id="submitBtn"
-                  data-lang-ko="보내기" data-lang-ja="送信" data-lang-en="Submit">보내기</button>
+          <input type="text" id="nameInput" placeholder="성함" required />
+          <textarea id="messageInput" placeholder="남기실 말씀" required></textarea>
+          <button type="submit" id="submitBtn">전송하기</button>
+          <p id="rsvpStatus"></p>
         </form>
-        <div id="rsvpStatus"></div>
       </section>
     </div>
   </main>
