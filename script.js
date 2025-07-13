@@ -1,24 +1,37 @@
+/* ───────── Core Variables ───────── */
 const invitationCode = "0920";
+const bgm           = document.getElementById("bgm");
+const lockScreen    = document.getElementById("lockScreen");
+const mainContent   = document.getElementById("mainContent");
+const languageSel   = document.getElementById("languageSelect");
 
+/* ───────── Init ───────── */
 document.addEventListener("DOMContentLoaded", () => {
-  const bgm = document.getElementById("bgm");
-  const languageSelect = document.getElementById("languageSelect");
-  const pwInput = document.getElementById("pwInput");
-  const unlockBtn = document.getElementById("unlockBtn");
+  /* Lock-screen actions */
+  document.getElementById("unlockBtn").onclick = unlock;
+  languageSel.onchange = () => updateLanguage(languageSel.value);
+  updateLanguage(languageSel.value);
 
-  unlockBtn.addEventListener("click", unlock);
-  languageSelect.addEventListener("change", updateLockScreenLang);
+  /* Fade-in slides on view */
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => e.target.classList.toggle("show", e.isIntersecting)),
+    { threshold: 0.4 }
+  );
+  document.querySelectorAll(".slide").forEach(slide => observer.observe(slide));
 
-  updateLanguage(languageSelect.value);
+  /* RSVP */
+  document.getElementById("rsvpForm").addEventListener("submit", submitRSVP);
+
+  /* Prevent horizontal scroll */
+  document.documentElement.style.overflowX = "hidden";
 });
 
+/* ───────── Unlock ───────── */
 function unlock() {
-  const inputCode = document.getElementById("pwInput").value;
-  if (inputCode === invitationCode) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-
-    const bgm = document.getElementById("bgm");
+  const code = document.getElementById("pwInput").value.trim();
+  if (code === invitationCode) {
+    lockScreen.style.display = "none";
+    mainContent.style.display = "block";
     bgm.currentTime = 0;
     bgm.muted = false;
     bgm.play();
@@ -27,37 +40,14 @@ function unlock() {
   }
 }
 
-function updateLockScreenLang() {
-  const lang = document.getElementById("languageSelect").value;
-  const pwInput = document.getElementById("pwInput");
-  const unlockBtn = document.getElementById("unlockBtn");
-
-  switch (lang) {
-    case "ko":
-      pwInput.placeholder = "초대 코드를 입력하세요";
-      unlockBtn.textContent = "청첩장 열기";
-      break;
-    case "ja":
-      pwInput.placeholder = "招待コードを入力してください";
-      unlockBtn.textContent = "招待状を開く";
-      break;
-    case "en":
-      pwInput.placeholder = "Enter invitation code";
-      unlockBtn.textContent = "Open Invitation";
-      break;
-  }
-
-  updateLanguage(lang);
-}
-
+/* ───────── Language / Map / RSVP placeholders ───────── */
 function updateLanguage(lang) {
   document.querySelectorAll("[data-lang-ko]").forEach(el => {
-    const text = el.getAttribute(`data-lang-${lang}`);
-    if (text) el.innerHTML = text;
-    else el.innerHTML = el.getAttribute("data-lang-ko");
+    const txt = el.getAttribute(`data-lang-${lang}`) || el.getAttribute("data-lang-ko");
+    el.innerHTML = txt;
   });
 
-  // 지도 링크 전환
+  /* Map link */
   const mapLink = document.getElementById("mapLink");
   if (mapLink) {
     if (lang === "ko") {
@@ -69,64 +59,57 @@ function updateLanguage(lang) {
     }
   }
 
-  // RSVP 폼 번역
-  const nameInput = document.getElementById("rsvpName");
-  const messageInput = document.getElementById("rsvpMessage");
-  const rsvpButton = document.getElementById("rsvpSubmit");
-  const statusDiv = document.getElementById("rsvpStatus");
+  /* RSVP placeholders */
+  const nameI  = document.getElementById("rsvpName");
+  const msgI   = document.getElementById("rsvpMessage");
+  const btn    = document.getElementById("rsvpSubmit");
+  if (!nameI) return;
 
-  if (nameInput && messageInput && rsvpButton) {
-    switch (lang) {
-      case "ko":
-        nameInput.placeholder = "성함";
-        messageInput.placeholder = "특이 사항 (예: 숙박이 필요합니다)";
-        rsvpButton.textContent = "보내기";
-        break;
-      case "ja":
-        nameInput.placeholder = "お名前";
-        messageInput.placeholder = "備考 (例：宿泊が必要です)";
-        rsvpButton.textContent = "送信";
-        break;
-      case "en":
-        nameInput.placeholder = "Name";
-        messageInput.placeholder = "Special notes (e.g. need accommodation)";
-        rsvpButton.textContent = "Submit";
-        break;
-    }
-    statusDiv.textContent = "";
+  if (lang === "ko") {
+    nameI.placeholder = "성함";
+    msgI.placeholder  = "남기실 말씀 (예: 숙박이 필요합니다)";
+    btn.textContent   = "보내기";
+  } else if (lang === "ja") {
+    nameI.placeholder = "お名前";
+    msgI.placeholder  = "備考 (例：宿泊が必要です)";
+    btn.textContent   = "送信";
+  } else {
+    nameI.placeholder = "Name";
+    msgI.placeholder  = "Special notes (e.g. need accommodation)";
+    btn.textContent   = "Submit";
   }
 }
 
-// RSVP
-async function submitRSVP() {
-  const name = document.getElementById("rsvpName").value;
-  const message = document.getElementById("rsvpMessage").value;
+/* ───────── RSVP Submit ───────── */
+async function submitRSVP(e) {
+  e.preventDefault();                               // 페이지 리셋 방지
+  const name   = document.getElementById("rsvpName").value.trim();
+  const msg    = document.getElementById("rsvpMessage").value.trim();
   const status = document.getElementById("rsvpStatus");
 
-  if (!name || !message) {
+  if (!name || !msg) {
     status.textContent = "모든 항목을 입력해주세요.";
     return;
   }
 
+  status.textContent = "전송 중…";
+
   try {
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec",
+    const res = await fetch(
+      "https://script.google.com/macros/s/AKfycbyiCbBK4ZFkT4KfgirhsUm7L7tosdLdYF9SSpr-RSD5T5JNyIi1oNr6RHx-w98fZbRgOA/exec",
       {
-        method: "POST",
+        method : "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ name, message }),
+        body   : new URLSearchParams({ name, message: msg })
       }
     );
 
-    const resultText = await response.text();
-
-    if (response.ok && resultText === "Success") {
+    const text = await res.text();
+    if (res.ok && text === "Success") {
       status.textContent = "정상적으로 접수되었습니다. 감사합니다!";
       document.getElementById("rsvpForm").reset();
-    } else {
-      throw new Error("전송 실패");
-    }
-  } catch (error) {
+    } else throw new Error();
+  } catch {
     status.textContent = "전송 중 오류가 발생했습니다. 다시 시도해주세요.";
   }
 }
