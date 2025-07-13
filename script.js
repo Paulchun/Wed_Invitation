@@ -1,132 +1,131 @@
-const invitationCode = "0920";
+let currentLang = 'ko';
 
-document.addEventListener("DOMContentLoaded", () => {
-  const bgm = document.getElementById("bgm");
-  const languageSelect = document.getElementById("languageSelect");
-  const pwInput = document.getElementById("pwInput");
-  const unlockBtn = document.getElementById("unlockBtn");
-
-  unlockBtn.addEventListener("click", unlock);
-  languageSelect.addEventListener("change", updateLockScreenLang);
-
-  updateLanguage(languageSelect.value);
-});
-
-function unlock() {
-  const inputCode = document.getElementById("pwInput").value;
-  if (inputCode === invitationCode) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-
-    const bgm = document.getElementById("bgm");
-    bgm.currentTime = 0;
-    bgm.muted = false;
-    bgm.play();
-  } else {
-    alert("초대 코드가 잘못되었습니다.");
+const translations = {
+  ko: {
+    codePlaceholder: '초대 코드를 입력하세요',
+    unlockButton: '청첩장 열기',
+    rsvpTitle: '참석 의사를 알려주세요',
+    namePlaceholder: '성함',
+    messagePlaceholder: '전하고 싶은 말',
+    submitButton: '보내기',
+    successMessage: '전송되었습니다!',
+    errorMessage: '전송 중 오류가 발생했습니다.',
+    calendarTitle: '📅 결혼식은 이 날이에요',
+    directionsTitle: '오시는 길'
+  },
+  ja: {
+    codePlaceholder: '招待コードを入力してください',
+    unlockButton: '招待状を開く',
+    rsvpTitle: '出席のご意向をお知らせください',
+    namePlaceholder: 'お名前',
+    messagePlaceholder: 'メッセージ',
+    submitButton: '送信',
+    successMessage: '送信されました！',
+    errorMessage: '送信中にエラーが発生しました。',
+    calendarTitle: '📅 結婚式の日',
+    directionsTitle: 'アクセス'
+  },
+  en: {
+    codePlaceholder: 'Enter invitation code',
+    unlockButton: 'Open Invitation',
+    rsvpTitle: 'Let us know if you will attend',
+    namePlaceholder: 'Your Name',
+    messagePlaceholder: 'Message',
+    submitButton: 'Submit',
+    successMessage: 'Submitted successfully!',
+    errorMessage: 'An error occurred while submitting.',
+    calendarTitle: '📅 The Wedding Day',
+    directionsTitle: 'How to Get There'
   }
-}
+};
 
 function updateLockScreenLang() {
-  const lang = document.getElementById("languageSelect").value;
-  const pwInput = document.getElementById("pwInput");
-  const unlockBtn = document.getElementById("unlockBtn");
-
-  switch (lang) {
-    case "ko":
-      pwInput.placeholder = "초대 코드를 입력하세요";
-      unlockBtn.textContent = "청첩장 열기";
-      break;
-    case "ja":
-      pwInput.placeholder = "招待コードを入力してください";
-      unlockBtn.textContent = "招待状を開く";
-      break;
-    case "en":
-      pwInput.placeholder = "Enter invitation code";
-      unlockBtn.textContent = "Open Invitation";
-      break;
-  }
-
-  updateLanguage(lang);
+  currentLang = document.getElementById('languageSelect').value;
+  const t = translations[currentLang];
+  document.getElementById('pwInput').placeholder = t.codePlaceholder;
+  document.getElementById('unlockBtn').innerText = t.unlockButton;
 }
 
-function updateLanguage(lang) {
-  document.querySelectorAll("[data-lang-ko]").forEach(el => {
-    const text = el.getAttribute(`data-lang-${lang}`);
-    if (text) el.innerHTML = text;
-    else el.innerHTML = el.getAttribute("data-lang-ko");
+function unlock() {
+  const pw = document.getElementById('pwInput').value;
+  if (pw === '0920') {
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('bgm').currentTime = 0;
+    document.getElementById('bgm').play();
+  } else {
+    alert('초대 코드가 올바르지 않습니다.');
+  }
+}
+
+function updateLanguage() {
+  document.querySelectorAll('[data-lang-ko]').forEach(el => {
+    el.innerHTML = el.getAttribute(`data-lang-${currentLang}`) || el.innerHTML;
   });
 
-  // 지도 링크 전환
-  const mapLink = document.getElementById("mapLink");
-  if (mapLink) {
-    if (lang === "ko") {
-      mapLink.href = "https://naver.me/GNWkr4t4";
-      mapLink.textContent = "네이버 지도 열기";
-    } else {
-      mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
-      mapLink.textContent = "Open in Google Maps";
-    }
-  }
+  const t = translations[currentLang];
+  document.querySelector('.rsvp h2').innerText = t.rsvpTitle;
+  document.getElementById('nameInput').placeholder = t.namePlaceholder;
+  document.getElementById('messageInput').placeholder = t.messagePlaceholder;
+  document.getElementById('submitBtn').innerText = t.submitButton;
+  document.getElementById('calendarTitle').innerText = t.calendarTitle;
+  document.getElementById('directionsTitle').innerText = t.directionsTitle;
 
-  // RSVP 폼 번역
-  const nameInput = document.getElementById("rsvpName");
-  const messageInput = document.getElementById("rsvpMessage");
-  const rsvpButton = document.getElementById("rsvpSubmit");
-  const statusDiv = document.getElementById("rsvpStatus");
-
-  if (nameInput && messageInput && rsvpButton) {
-    switch (lang) {
-      case "ko":
-        nameInput.placeholder = "성함";
-        messageInput.placeholder = "특이 사항 (예: 숙박이 필요합니다)";
-        rsvpButton.textContent = "보내기";
-        break;
-      case "ja":
-        nameInput.placeholder = "お名前";
-        messageInput.placeholder = "備考 (例：宿泊が必要です)";
-        rsvpButton.textContent = "送信";
-        break;
-      case "en":
-        nameInput.placeholder = "Name";
-        messageInput.placeholder = "Special notes (e.g. need accommodation)";
-        rsvpButton.textContent = "Submit";
-        break;
-    }
-    statusDiv.textContent = "";
+  const mapLink = document.getElementById('mapLink');
+  if (currentLang === 'ko') {
+    mapLink.href = "https://naver.me/GNWkr4t4";
+    mapLink.innerText = "네이버 지도 열기";
+  } else {
+    mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
+    mapLink.innerText = "Open in Google Maps";
   }
 }
 
-// RSVP
-async function submitRSVP() {
-  const name = document.getElementById("rsvpName").value;
-  const message = document.getElementById("rsvpMessage").value;
-  const status = document.getElementById("rsvpStatus");
+document.getElementById('languageSelect').addEventListener('change', () => {
+  updateLockScreenLang();
+  updateLanguage();
+});
 
-  if (!name || !message) {
-    status.textContent = "모든 항목을 입력해주세요.";
-    return;
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  updateLockScreenLang();
+  updateLanguage();
+  applyFadeOnScroll();
+});
+
+document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('nameInput').value;
+  const message = document.getElementById('messageInput').value;
+  const status = document.getElementById('formStatus');
+  const t = translations[currentLang];
 
   try {
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ name, message }),
-      }
-    );
-
-    const resultText = await response.text();
-
-    if (response.ok && resultText === "Success") {
-      status.textContent = "정상적으로 접수되었습니다. 감사합니다!";
-      document.getElementById("rsvpForm").reset();
-    } else {
-      throw new Error("전송 실패");
-    }
+    const res = await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `name=${encodeURIComponent(name)}&message=${encodeURIComponent(message)}`
+    });
+    status.innerText = t.successMessage;
+    // Stay on current screen
   } catch (error) {
-    status.textContent = "전송 중 오류가 발생했습니다. 다시 시도해주세요.";
+    status.innerText = t.errorMessage;
   }
+});
+
+// Apply fade animation
+function applyFadeOnScroll() {
+  const slides = document.querySelectorAll('.slide');
+  const options = {
+    threshold: 0.3
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade');
+      }
+    });
+  }, options);
+  slides.forEach(slide => observer.observe(slide));
 }
