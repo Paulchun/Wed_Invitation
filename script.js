@@ -1,113 +1,132 @@
-const lang = navigator.language.includes("ja")
-  ? "ja"
-  : navigator.language.includes("en")
-  ? "en"
-  : "ko";
+const invitationCode = "0920";
 
-const i18n = {
-  ko: {
-    lockMessage: "초대 코드를 입력하세요",
-    unlockBtn: "청첩장 열기",
-    slide1Text: "결혼합니다",
-    slide2Text: "소중한 날 함께해 주세요",
-    slide3Text: "감사합니다",
-    groomIntro: "신랑 소개: 정헤성입니다.",
-    brideIntro: "신부 소개: 누구누구입니다.",
-    calendarTitle: "결혼은 이떄입니다",
-    locationTitle: "오시는 길",
-    howToCome: "서울특별시 종로구 어딘가입니다.",
-    rsvpTitle: "RSVP",
-    rsvpPrompt: "참석 의사가 있으신 분은 아래에 남겨주세요",
-    submitBtn: "제출",
-    namePlaceholder: "이름",
-    messagePlaceholder: "메시지",
-  },
-  ja: {
-    lockMessage: "招待コードを入力してください",
-    unlockBtn: "招待状を開く",
-    slide1Text: "結婚します",
-    slide2Text: "大切な日にご一緒してください",
-    slide3Text: "ありがとうございます",
-    groomIntro: "新郎: ジョン・ヘソンです。",
-    brideIntro: "新婦: 誰々です。",
-    calendarTitle: "結婚式の日程",
-    locationTitle: "会場のご案内",
-    howToCome: "ソウル特別市鍾路区のどこかです。",
-    rsvpTitle: "出欠連絡",
-    rsvpPrompt: "ご参加いただける方は、以下にご記入ください。",
-    submitBtn: "送信",
-    namePlaceholder: "お名前",
-    messagePlaceholder: "メッセージ",
-  },
-  en: {
-    lockMessage: "Enter invitation code",
-    unlockBtn: "Open Invitation",
-    slide1Text: "We are getting married",
-    slide2Text: "Please join us on our special day",
-    slide3Text: "Thank you",
-    groomIntro: "Groom: I'm Hyesung Chun.",
-    brideIntro: "Bride: I'm someone special.",
-    calendarTitle: "Wedding Date",
-    locationTitle: "How to Get There",
-    howToCome: "Somewhere in Jongno-gu, Seoul.",
-    rsvpTitle: "RSVP",
-    rsvpPrompt: "Please leave your RSVP below",
-    submitBtn: "Submit",
-    namePlaceholder: "Your Name",
-    messagePlaceholder: "Your Message",
-  },
-};
+document.addEventListener("DOMContentLoaded", () => {
+  const bgm = document.getElementById("bgm");
+  const languageSelect = document.getElementById("languageSelect");
+  const pwInput = document.getElementById("pwInput");
+  const unlockBtn = document.getElementById("unlockBtn");
 
-window.onload = () => {
-  Object.keys(i18n[lang]).forEach((key) => {
-    const el = document.querySelector(`[data-lang-key="${key}"]`);
-    if (el) el.innerText = i18n[lang][key];
-  });
+  unlockBtn.addEventListener("click", unlock);
+  languageSelect.addEventListener("change", updateLockScreenLang);
 
-  document.getElementById("lock-message").innerText = i18n[lang].lockMessage;
-  document.querySelector("button").innerText = i18n[lang].unlockBtn;
-  document.querySelector("#invitation-code").placeholder =
-    i18n[lang].lockMessage;
-  document.querySelector('[name="name"]').placeholder =
-    i18n[lang].namePlaceholder;
-  document.querySelector('[name="message"]').placeholder =
-    i18n[lang].messagePlaceholder;
+  updateLanguage(languageSelect.value);
+});
 
-  document.getElementById("googleMapBtn").href =
-    "https://www.google.com/maps?q=서울특별시 종로구";
-  document.getElementById("naverMapBtn").href =
-    "https://map.naver.com/v5/search/서울특별시 종로구";
-};
+function unlock() {
+  const inputCode = document.getElementById("pwInput").value;
+  if (inputCode === invitationCode) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
 
-function unlockInvitation() {
-  const code = document.getElementById("invitation-code").value;
-  if (code === "1009") {
-    document.getElementById("invitation-lock").classList.add("hidden");
-    document.getElementById("invitation").classList.remove("hidden");
+    const bgm = document.getElementById("bgm");
+    bgm.currentTime = 0;
+    bgm.muted = false;
+    bgm.play();
   } else {
-    alert("코드가 올바르지 않습니다");
+    alert("초대 코드가 잘못되었습니다.");
   }
 }
 
-document
-  .getElementById("rsvp-form")
-  .addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const message = form.message.value;
+function updateLockScreenLang() {
+  const lang = document.getElementById("languageSelect").value;
+  const pwInput = document.getElementById("pwInput");
+  const unlockBtn = document.getElementById("unlockBtn");
 
-    const res = await fetch(
-      "https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tI-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec",
+  switch (lang) {
+    case "ko":
+      pwInput.placeholder = "초대 코드를 입력하세요";
+      unlockBtn.textContent = "청첩장 열기";
+      break;
+    case "ja":
+      pwInput.placeholder = "招待コードを入力してください";
+      unlockBtn.textContent = "招待状を開く";
+      break;
+    case "en":
+      pwInput.placeholder = "Enter invitation code";
+      unlockBtn.textContent = "Open Invitation";
+      break;
+  }
+
+  updateLanguage(lang);
+}
+
+function updateLanguage(lang) {
+  document.querySelectorAll("[data-lang-ko]").forEach(el => {
+    const text = el.getAttribute(`data-lang-${lang}`);
+    if (text) el.innerHTML = text;
+    else el.innerHTML = el.getAttribute("data-lang-ko");
+  });
+
+  // 지도 링크 전환
+  const mapLink = document.getElementById("mapLink");
+  if (mapLink) {
+    if (lang === "ko") {
+      mapLink.href = "https://naver.me/GNWkr4t4";
+      mapLink.textContent = "네이버 지도 열기";
+    } else {
+      mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
+      mapLink.textContent = "Open in Google Maps";
+    }
+  }
+
+  // RSVP 폼 번역
+  const nameInput = document.getElementById("rsvpName");
+  const messageInput = document.getElementById("rsvpMessage");
+  const rsvpButton = document.getElementById("rsvpSubmit");
+  const statusDiv = document.getElementById("rsvpStatus");
+
+  if (nameInput && messageInput && rsvpButton) {
+    switch (lang) {
+      case "ko":
+        nameInput.placeholder = "성함";
+        messageInput.placeholder = "특이 사항 (예: 숙박이 필요합니다)";
+        rsvpButton.textContent = "보내기";
+        break;
+      case "ja":
+        nameInput.placeholder = "お名前";
+        messageInput.placeholder = "備考 (例：宿泊が必要です)";
+        rsvpButton.textContent = "送信";
+        break;
+      case "en":
+        nameInput.placeholder = "Name";
+        messageInput.placeholder = "Special notes (e.g. need accommodation)";
+        rsvpButton.textContent = "Submit";
+        break;
+    }
+    statusDiv.textContent = "";
+  }
+}
+
+// RSVP
+async function submitRSVP() {
+  const name = document.getElementById("rsvpName").value;
+  const message = document.getElementById("rsvpMessage").value;
+  const status = document.getElementById("rsvpStatus");
+
+  if (!name || !message) {
+    status.textContent = "모든 항목을 입력해주세요.";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, message }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ name, message }),
       }
     );
 
-    const data = await res.json();
-    document.getElementById("form-result").innerText = data.result === "Success" ? "감사합니다!" : "에러가 발생했습니다.";
-  });
+    const resultText = await response.text();
+
+    if (response.ok && resultText === "Success") {
+      status.textContent = "정상적으로 접수되었습니다. 감사합니다!";
+      document.getElementById("rsvpForm").reset();
+    } else {
+      throw new Error("전송 실패");
+    }
+  } catch (error) {
+    status.textContent = "전송 중 오류가 발생했습니다. 다시 시도해주세요.";
+  }
+}
