@@ -1,155 +1,132 @@
-// Multilingual dictionary
-const langData = {
-  ko: {
-    enterCode: "초대 코드를 입력하세요",
-    openInvite: "청첩장 열기",
-    rsvpTitle: "참석 의사가 있으신 분은 아래에 남겨주세요",
-    name: "성함",
-    message: "남기실 말씀",
-    send: "전송하기",
-    success: "전송되었습니다. 감사합니다!"
-  },
-  en: {
-    enterCode: "Enter invitation code",
-    openInvite: "Open Invitation",
-    rsvpTitle: "Please leave your RSVP message below",
-    name: "Name",
-    message: "Message",
-    send: "Submit",
-    success: "Submitted. Thank you!"
-  },
-  ja: {
-    enterCode: "招待コードを入力してください",
-    openInvite: "招待状を開く",
-    rsvpTitle: "ご出席の方は下記にご記入ください",
-    name: "お名前",
-    message: "メッセージ",
-    send: "送信する",
-    success: "送信されました。ありがとうございます！"
+const invitationCode = "0920";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bgm = document.getElementById("bgm");
+  const languageSelect = document.getElementById("languageSelect");
+  const pwInput = document.getElementById("pwInput");
+  const unlockBtn = document.getElementById("unlockBtn");
+
+  unlockBtn.addEventListener("click", unlock);
+  languageSelect.addEventListener("change", updateLockScreenLang);
+
+  updateLanguage(languageSelect.value);
+});
+
+function unlock() {
+  const inputCode = document.getElementById("pwInput").value;
+  if (inputCode === invitationCode) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+
+    const bgm = document.getElementById("bgm");
+    bgm.currentTime = 0;
+    bgm.muted = false;
+    bgm.play();
+  } else {
+    alert("초대 코드가 잘못되었습니다.");
   }
-};
+}
 
-let currentLang = "ko";
+function updateLockScreenLang() {
+  const lang = document.getElementById("languageSelect").value;
+  const pwInput = document.getElementById("pwInput");
+  const unlockBtn = document.getElementById("unlockBtn");
 
-function updateTexts() {
-  const dict = langData[currentLang];
-  if (!dict) return;
+  switch (lang) {
+    case "ko":
+      pwInput.placeholder = "초대 코드를 입력하세요";
+      unlockBtn.textContent = "청첩장 열기";
+      break;
+    case "ja":
+      pwInput.placeholder = "招待コードを入力してください";
+      unlockBtn.textContent = "招待状を開く";
+      break;
+    case "en":
+      pwInput.placeholder = "Enter invitation code";
+      unlockBtn.textContent = "Open Invitation";
+      break;
+  }
 
-  // Static text replacements
-  document.getElementById("pwInput").placeholder = dict.enterCode;
-  document.getElementById("unlockBtn").innerText = dict.openInvite;
-  document.getElementById("rsvpTitle").innerText = dict.rsvpTitle;
-  document.getElementById("nameInput").placeholder = dict.name;
-  document.getElementById("messageInput").placeholder = dict.message;
-  document.getElementById("submitBtn").innerText = dict.send;
+  updateLanguage(lang);
+}
 
-  // Lang-specific elements
-  document.querySelectorAll("[data-lang-ko], [data-lang-en], [data-lang-ja]").forEach(el => {
-    const txt = el.dataset[`lang${currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`];
-    if (txt) el.innerHTML = txt;
+function updateLanguage(lang) {
+  document.querySelectorAll("[data-lang-ko]").forEach(el => {
+    const text = el.getAttribute(`data-lang-${lang}`);
+    if (text) el.innerHTML = text;
+    else el.innerHTML = el.getAttribute("data-lang-ko");
   });
 
-  // Map link switching
+  // 지도 링크 전환
   const mapLink = document.getElementById("mapLink");
   if (mapLink) {
-    if (currentLang === "ko") {
+    if (lang === "ko") {
       mapLink.href = "https://naver.me/GNWkr4t4";
-      mapLink.innerText = "네이버 지도 열기";
+      mapLink.textContent = "네이버 지도 열기";
     } else {
       mapLink.href = "https://maps.app.goo.gl/zsKjMWQDjUWT4pEo9";
-      mapLink.innerText = "Open Google Maps";
+      mapLink.textContent = "Open in Google Maps";
     }
   }
 
-  // Calendar month text
-  const monthText = {
-    ko: "2025년 9월",
-    en: "September 2025",
-    ja: "2025年9月"
-  };
-  const weekdays = {
-    ko: ["일", "월", "화", "수", "목", "금", "토"],
-    en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    ja: ["日", "月", "火", "水", "木", "金", "土"]
-  };
+  // RSVP 폼 번역
+  const nameInput = document.getElementById("rsvpName");
+  const messageInput = document.getElementById("rsvpMessage");
+  const rsvpButton = document.getElementById("rsvpSubmit");
+  const statusDiv = document.getElementById("rsvpStatus");
 
-  const monthEl = document.querySelector(".month");
-  if (monthEl) monthEl.innerText = monthText[currentLang] || monthText["ko"];
-
-  const daysEl = document.querySelector(".days");
-  if (daysEl) {
-    const allDays = [
-      "", "1", "2", "3", "4", "5", "6",
-      "7", "8", "9", "10", "11", "12", "13",
-      "14", "15", "16", "17", "18", "19", "20",
-      "21", "22", "23", "24", "25", "26", "27",
-      "28", "29", "30"
-    ];
-    daysEl.innerHTML = weekdays[currentLang].map(day => `<span>${day}</span>`).join('') +
-      allDays.map((d, i) => `<span${d === "20" ? ' class="highlight"' : ""}>${d}</span>`).join('');
+  if (nameInput && messageInput && rsvpButton) {
+    switch (lang) {
+      case "ko":
+        nameInput.placeholder = "성함";
+        messageInput.placeholder = "특이 사항 (예: 숙박이 필요합니다)";
+        rsvpButton.textContent = "보내기";
+        break;
+      case "ja":
+        nameInput.placeholder = "お名前";
+        messageInput.placeholder = "備考 (例：宿泊が必要です)";
+        rsvpButton.textContent = "送信";
+        break;
+      case "en":
+        nameInput.placeholder = "Name";
+        messageInput.placeholder = "Special notes (e.g. need accommodation)";
+        rsvpButton.textContent = "Submit";
+        break;
+    }
+    statusDiv.textContent = "";
   }
 }
 
-// Language selection
-document.getElementById("languageSelect").addEventListener("change", function () {
-  currentLang = this.value;
-  updateTexts();
-});
-
-// Unlock invitation
-function unlock() {
-  const input = document.getElementById("pwInput").value.trim();
-  if (input === "0920") {
-    document.getElementById("lockScreen").style.display = "none";
-    document.body.style.overflow = "auto";
-    document.getElementById("bgm").currentTime = 0;
-    document.getElementById("bgm").muted = false;
-    document.getElementById("bgm").play();
-  } else {
-    alert("잘못된 초대 코드입니다.");
-  }
-}
-
-// RSVP Submit
-document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const name = document.getElementById("nameInput").value.trim();
-  const message = document.getElementById("messageInput").value.trim();
+// RSVP
+async function submitRSVP() {
+  const name = document.getElementById("rsvpName").value;
+  const message = document.getElementById("rsvpMessage").value;
   const status = document.getElementById("rsvpStatus");
 
   if (!name || !message) {
-    status.innerText = "모든 항목을 입력해 주세요.";
+    status.textContent = "모든 항목을 입력해주세요.";
     return;
   }
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `name=${encodeURIComponent(name)}&message=${encodeURIComponent(message)}`
-    });
-    const result = await response.text();
-    status.innerText = result.includes("Success") ? langData[currentLang].success : "오류가 발생했습니다.";
-    document.getElementById("rsvpForm").reset();
-  } catch (err) {
-    status.innerText = "네트워크 오류가 발생했습니다.";
-  }
-});
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ name, message }),
+      }
+    );
 
-// Fade on scroll
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("fade");
+    const resultText = await response.text();
+
+    if (response.ok && resultText === "Success") {
+      status.textContent = "정상적으로 접수되었습니다. 감사합니다!";
+      document.getElementById("rsvpForm").reset();
+    } else {
+      throw new Error("전송 실패");
     }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll(".slide").forEach(slide => {
-  observer.observe(slide);
-});
-
-// Auto-initialize language
-document.addEventListener("DOMContentLoaded", () => {
-  updateTexts();
-});
+  } catch (error) {
+    status.textContent = "전송 중 오류가 발생했습니다. 다시 시도해주세요.";
+  }
+}
