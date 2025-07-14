@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Paul &amp; Paulwaifu Wedding Invitation</title>
-  <link rel="stylesheet" href="./style.css" />
+  <title>Paul & Paulwaifu Wedding Invitation</title>
 
-  <!-- SNS 공유 태그 (경로 수정됨) -->
-  <meta property="og:title" content="Paul &amp; Paulwaifu Wedding Invitation" />
+  <!-- CSS 경로 절대 지정 -->
+  <link rel="stylesheet" href="/Wed_Invitation/style.css" />
+
+  <!-- SNS 미리보기 태그 -->
+  <meta property="og:title" content="Paul & Paulwaifu Wedding Invitation" />
   <meta property="og:description" content="2025년 9월 20일 라비돌 리조트에서 결혼합니다" />
   <meta property="og:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.png" />
   <meta property="og:url" content="https://paulchun.github.io/Wed_Invitation/" />
@@ -26,12 +28,12 @@
     </div>
     <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
     <button id="unlockBtn">청첩장 열기</button>
-    <div id="version">버전&nbsp;4</div>
+    <div id="version">버전 4</div>
   </div>
 
   <!-- 🔊 BGM -->
   <audio id="bgm" loop muted>
-    <source src="./assets/audio/bgm.mp3" type="audio/mpeg" />
+    <source src="/Wed_Invitation/assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
   <!-- 📄 Slides -->
@@ -39,17 +41,17 @@
     <div class="scroll-container">
 
       <!-- 사진 슬라이드 1~3 -->
-      <section class="slide fade" style="background-image:url('./assets/img/1.jpg')">
+      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
         <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요." data-lang-ja="初めて出会った日、覚えてる？" data-lang-en="We remember the day we first met.">
           처음 만난 그날, 우리 기억해요.
         </div>
       </section>
-      <section class="slide fade" style="background-image:url('./assets/img/2.jpg')">
+      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/2.jpg')">
         <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고," data-lang-ja="同じ方向を見つめ始めて、" data-lang-en="We started looking in the same direction.">
           같은 방향을 바라보기 시작했고,
         </div>
       </section>
-      <section class="slide fade" style="background-image:url('./assets/img/3.jpg')">
+      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/3.jpg')">
         <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">
           함께 걷는 길이 익숙해졌죠.
         </div>
@@ -58,7 +60,7 @@
       <!-- 신랑 · 신부 슬라이드 -->
       <section class="slide person fade">
         <div class="person-block groom">
-          <img src="./assets/img/groom.jpg" alt="신랑" />
+          <img src="/Wed_Invitation/assets/img/groom.jpg" alt="신랑" />
           <p data-lang-ko="그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나." data-lang-ja="彼女を初めて見た日、すぐに分かりました。<br>この人だと。" data-lang-en="The day I first saw her, I just knew.<br>She was the one.">
             그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.
           </p>
@@ -66,7 +68,7 @@
       </section>
       <section class="slide person fade">
         <div class="person-block bride">
-          <img src="./assets/img/bride.jpg" alt="신부" />
+          <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
           <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠." data-lang-ja="彼が笑ってくれたとき、世界が少し温かくなりました。<br>それが始まりでした。" data-lang-en="When he smiled at me, the world felt warmer.<br>That was the beginning.">
             그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.
           </p>
@@ -79,7 +81,7 @@
           📅 결혼식은 이 날이에요
         </h2>
         <div class="calendar-box">
-          <div class="month" id="calendarMonth">2025년&nbsp;9월</div>
+          <div class="month" id="calendarMonth">2025년 9월</div>
           <div class="days" id="calendarDays">
             <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
             <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
@@ -102,7 +104,7 @@
           🗺️ <span id="mapLinks">
             <a href="https://naver.me/GNWkr4t4" data-lang="ko" target="_blank">지도 열기</a>
             <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="ja" target="_blank">地図を見る</a>
-            <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="en" target="_blank">View&nbsp;Map</a>
+            <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="en" target="_blank">View Map</a>
           </span>
         </p>
       </section>
@@ -122,7 +124,7 @@
     </div>
   </main>
 
-  <!-- 🔧 스크립트 경로도 수정 -->
-  <script src="./script.js"></script>
+  <!-- JS 파일 절대 경로로 수정 -->
+  <script src="/Wed_Invitation/script.js"></script>
 </body>
 </html>
