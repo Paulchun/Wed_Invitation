@@ -1,130 +1,141 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Paul & Paulwaifu Wedding Invitation</title>
+/* global gsap (if you previously added fade/scroll libraries) */
+(() => {
+  const $langSel = document.getElementById('languageSelect');
+  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+  const $mapLinksSpan = document.getElementById('mapLinks');
+  const $laviedorLink = document.getElementById('laviedorLink');
+  const $pwInput = document.getElementById('pwInput');
+  const $unlockBtn = document.getElementById('unlockBtn');
+  const $lockScreen = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
+  const $bgm = document.getElementById('bgm');
 
-  <!-- CSS 경로 절대 지정 -->
-  <link rel="stylesheet" href="/Wed_Invitation/style.css" />
+  let currentLang = 'ko';
 
-  <!-- SNS 미리보기 태그 -->
-  <meta property="og:title" content="Paul & Paulwaifu Wedding Invitation" />
-  <meta property="og:description" content="2025년 9월 20일 라비돌 리조트에서 결혼합니다" />
-  <meta property="og:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.png" />
-  <meta property="og:url" content="https://paulchun.github.io/Wed_Invitation/" />
-  <meta name="twitter:card" content="summary_large_image" />
-</head>
-<body>
-  <!-- 🔒 Lock Screen -->
-  <div id="lockScreen">
-    <div class="lang-row">
-      <span>🌐</span>
-      <select id="languageSelect">
-        <option value="ko">한국어</option>
-        <option value="ja">日本語</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-    <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
-    <button id="unlockBtn">청첩장 열기</button>
-    <div id="version">버전 4</div>
-  </div>
+  function applyLang(lang) {
+    currentLang = lang;
 
-  <!-- 🔊 BGM -->
-  <audio id="bgm" loop muted>
-    <source src="/Wed_Invitation/assets/audio/bgm.mp3" type="audio/mpeg" />
-  </audio>
+    // 일반 텍스트
+    $allTransEls.forEach(el => {
+      const txt = el.getAttribute(`data-lang-${lang}`);
+      if (txt !== null) el.innerHTML = txt;
+    });
 
-  <!-- 📄 Slides -->
-  <main id="mainContent" style="display:none">
-    <div class="scroll-container">
+    // 지도 링크 표시
+    [...$mapLinksSpan.children].forEach(a => {
+      a.style.display = a.getAttribute('data-lang') === lang ? 'inline' : 'none';
+    });
 
-      <!-- 사진 슬라이드 1~3 -->
-      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
-        <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요." data-lang-ja="初めて出会った日、覚えてる？" data-lang-en="We remember the day we first met.">
-          처음 만난 그날, 우리 기억해요.
-        </div>
-      </section>
-      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/2.jpg')">
-        <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고," data-lang-ja="同じ方向を見つめ始めて、" data-lang-en="We started looking in the same direction.">
-          같은 방향을 바라보기 시작했고,
-        </div>
-      </section>
-      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/3.jpg')">
-        <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">
-          함께 걷는 길이 익숙해졌죠.
-        </div>
-      </section>
+    // 라비돌 링크 표시 여부
+    if (lang === 'ko') {
+      $laviedorLink.innerHTML = '<a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 공식 홈페이지</a>';
+    } else {
+      $laviedorLink.innerHTML = '';
+    }
 
-      <!-- 신랑 · 신부 슬라이드 -->
-      <section class="slide person fade">
-        <div class="person-block groom">
-          <img src="/Wed_Invitation/assets/img/groom.jpg" alt="신랑" />
-          <p data-lang-ko="그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나." data-lang-ja="彼女を初めて見た日、すぐに分かりました。<br>この人だと。" data-lang-en="The day I first saw her, I just knew.<br>She was the one.">
-            그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.
-          </p>
-        </div>
-      </section>
-      <section class="slide person fade">
-        <div class="person-block bride">
-          <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
-          <p data-lang-ko="그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠." data-lang-ja="彼が笑ってくれたとき、世界が少し温かくなりました。<br>それが始まりでした。" data-lang-en="When he smiled at me, the world felt warmer.<br>That was the beginning.">
-            그가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.
-          </p>
-        </div>
-      </section>
+    // input placeholders
+    document.getElementById('rsvpName').placeholder = {
+      ko: '성함',
+      ja: 'お名前',
+      en: 'Your name'
+    }[lang];
 
-      <!-- 📅 Calendar Slide -->
-      <section class="slide calendar fade">
-        <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">
-          📅 결혼식은 이 날이에요
-        </h2>
-        <div class="calendar-box">
-          <div class="month" id="calendarMonth">2025년 9월</div>
-          <div class="days" id="calendarDays">
-            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
-            <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
-            <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
-            <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span class="highlight">20</span>
-            <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span>
-            <span>28</span><span>29</span><span>30</span>
-          </div>
-        </div>
-      </section>
+    document.getElementById('rsvpMessage').placeholder = {
+      ko: '남기실 말씀 (예: 숙박이 필요합니다)',
+      ja: 'メッセージ (例: 宿泊が必要です)',
+      en: 'Message (e.g. need accommodation)'
+    }[lang];
 
-      <!-- 🗺️ Map Slide -->
-      <section class="slide info fade">
-        <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-        <p id="mapText"
-           data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 지도에서 보기:"
-           data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br>🗺️ 地図で見る:"
-           data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Map:">
-          📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
-          🗺️ <span id="mapLinks">
-            <a href="https://naver.me/GNWkr4t4" data-lang="ko" target="_blank">지도 열기</a>
-            <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="ja" target="_blank">地図を見る</a>
-            <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="en" target="_blank">View Map</a>
-          </span>
-        </p>
-      </section>
+    $unlockBtn.textContent = {
+      ko: '청첩장 열기',
+      ja: '招待状を開く',
+      en: 'Open Invitation'
+    }[lang];
 
-      <!-- ✉️ RSVP Slide -->
-      <section class="slide rsvp fade">
-        <h2 data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요" data-lang-ja="ご参加をご希望の方は、以下にご記入ください" data-lang-en="Please leave your RSVP below">
-          참석 의사가 있으신 분은 아래에 남겨주세요
-        </h2>
-        <form id="rsvpForm">
-          <input type="text" id="rsvpName" name="name" placeholder="성함" />
-          <textarea id="rsvpMessage" name="message" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
-          <button type="submit" id="rsvpSubmit">보내기</button>
-          <p id="rsvpStatus"></p>
-        </form>
-      </section>
-    </div>
-  </main>
+    $pwInput.placeholder = {
+      ko: '초대 코드를 입력하세요',
+      ja: '招待コードを入力',
+      en: 'Enter invitation code'
+    }[lang];
+  }
 
-  <!-- JS 파일 절대 경로로 수정 -->
-  <script src="/Wed_Invitation/script.js"></script>
-</body>
-</html>
+  $langSel.addEventListener('change', e => applyLang(e.target.value));
+  applyLang('ko');
+
+  // 🔓 잠금 해제
+  const INVITE_CODE = '0920';
+  $unlockBtn.addEventListener('click', () => {
+    if ($pwInput.value.trim() === INVITE_CODE) {
+      $lockScreen.style.display = 'none';
+      $mainContent.style.display = 'block';
+      $bgm.muted = false;
+      $bgm.currentTime = 0;
+      $bgm.play().catch(() => {});
+    } else {
+      alert({
+        ko: '코드가 틀립니다.',
+        ja: 'コードが違います。',
+        en: 'Wrong code.'
+      }[currentLang]);
+    }
+  });
+
+  // ✉️ RSVP 처리
+  const $form = document.getElementById('rsvpForm');
+  const $status = document.getElementById('rsvpStatus');
+
+  const messages = {
+    ko: {
+      sending: '전송 중입니다...',
+      success: '감사합니다! 잘 전달되었어요.',
+      error: '오류가 발생했습니다. 다시 시도해주세요.'
+    },
+    ja: {
+      sending: '送信中です...',
+      success: 'ありがとうございます！正常に送信されました。',
+      error: 'エラーが発生しました。もう一度お試しください。'
+    },
+    en: {
+      sending: 'Sending...',
+      success: 'Thank you! Your message has been sent.',
+      error: 'An error occurred. Please try again.'
+    }
+  };
+
+  $form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('rsvpName').value.trim();
+    const message = document.getElementById('rsvpMessage').value.trim();
+    if (!name) return;
+
+    $status.textContent = messages[currentLang].sending;
+
+    fetch('https://script.google.com/macros/s/AKfycbyiCbBK4ZFkT4KfgirhsUm7L7tosdLdYF9SSpr-RSD5T5JNyIi1oNr6RHx-w98fZbRgOA/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ name, message })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.result === 'Success') {
+          $status.textContent = messages[currentLang].success;
+          $form.reset();
+        } else {
+          throw new Error('Invalid response');
+        }
+      })
+      .catch(() => {
+        $status.textContent = messages[currentLang].error;
+      });
+  });
+
+  // 🎬 슬라이드 페이드 인
+  const slides = document.querySelectorAll('.slide');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.2 });
+
+  slides.forEach(slide => observer.observe(slide));
+})();
