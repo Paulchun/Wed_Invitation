@@ -1,5 +1,5 @@
 /* === Core === */
-const INVITE_CODE = "0920";
+const INVITE_CODE = "09201";
 const bgm       = document.getElementById("bgm");
 const lockScr   = document.getElementById("lockScreen");
 const mainCont  = document.getElementById("mainContent");
