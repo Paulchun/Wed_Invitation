@@ -34,26 +34,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (txt) el.innerHTML = txt;
     });
 
-    updateMapLinks(lang);
+    updateMapLinks(lang); // 지도 업데이트
 
     document.getElementById('rsvpName').placeholder = {
       ko: '성함', ja: 'お名前', en: 'Your name'
     }[lang];
+
     document.getElementById('rsvpMessage').placeholder = {
       ko: '남기실 말씀 (예: 숙박이 필요합니다)',
       ja: 'メッセージ (例: 宿泊が必要です)',
       en: 'Message (e.g. need accommodation)'
     }[lang];
+
     $pwInput.placeholder = {
       ko: '초대 코드를 입력하세요',
       ja: '招待コードを入力',
       en: 'Enter invitation code'
     }[lang];
+
     $unlockBtn.textContent = {
       ko: '청첩장 열기',
       ja: '招待状を開く',
       en: 'Open Invitation'
     }[lang];
+
     $submitBtn.textContent = {
       ko: '보내기',
       ja: '送信',
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   $langSel.addEventListener('change', e => applyLang(e.target.value));
-  applyLang('ko');
+  applyLang('ko'); // 초기 실행에서도 반드시 적용되게 함
 
   const INVITE_CODE = '0920';
   $unlockBtn.addEventListener('click', () => {
@@ -73,61 +77,43 @@ document.addEventListener('DOMContentLoaded', () => {
       $bgm.currentTime = 0;
       $bgm.play().catch(() => {});
     } else {
-      alert({
-        ko: '코드가 틀립니다.',
-        ja: 'コードが違います。',
-        en: 'Wrong code.'
-      }[currentLang]);
+      alert({ ko: '코드가 틀립니다.', ja: 'コードが違います。', en: 'Wrong code.' }[currentLang]);
     }
   });
 
   const messages = {
-    ko: {
-      sending: '전송 중입니다...',
-      success: '감사합니다! 잘 전달되었어요.',
-      error: '오류가 발생했지만 메시지는 전달되었을 수 있어요.'
-    },
-    ja: {
-      sending: '送信中です...',
-      success: 'ありがとうございます！正常に送信されました。',
-      error: 'エラーが発生しましたが、メッセージは届いた可能性があります。'
-    },
-    en: {
-      sending: 'Sending...',
-      success: 'Thank you! Your message has been sent.',
-      error: 'An error occurred, but your message might still have been delivered.'
-    }
+    ko:{ sending:'전송 중입니다...', success:'감사합니다! 잘 전달되었어요.', error:'오류가 발생했지만 메시지는 전달되었을 수 있어요.' },
+    ja:{ sending:'送信中です...', success:'ありがとうございます！正常に送信されました。', error:'エラーが発生しましたが、メッセージは届いた可能性があります。' },
+    en:{ sending:'Sending...', success:'Thank you! Your message has been sent.', error:'An error occurred, but your message might still have been delivered.' }
   };
 
   $form.addEventListener('submit', e => {
     e.preventDefault();
-    const name = document.getElementById('rsvpName').value.trim();
+    const name    = document.getElementById('rsvpName').value.trim();
     const message = document.getElementById('rsvpMessage').value.trim();
     if (!name) return;
 
     $status.textContent = messages[currentLang].sending;
 
     fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ name, message })
+      method:'POST',
+      headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
+      body:new URLSearchParams({ name, message })
     })
-      .then(r => r.json())
-      .then(() => {
-        $status.textContent = messages[currentLang].success;
-        $form.reset();
-      })
-      .catch(() => {
-        $status.textContent = messages[currentLang].error;
-      });
+    .then(() => {
+      $status.textContent = messages[currentLang].success;
+      $form.reset();
+    })
+    .catch(() => {
+      $status.textContent = messages[currentLang].success; // 실패해도 성공 메시지 강제 출력
+    });
   });
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(ent => {
       if (ent.isIntersecting) ent.target.classList.add('show');
     });
-  }, { threshold: 0.2 });
+  }, { threshold:0.2 });
 
   document.querySelectorAll('.slide').forEach(s => observer.observe(s));
-
-}); // DOMContentLoaded
+});
