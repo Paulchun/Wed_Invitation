@@ -1,12 +1,13 @@
 /* ───────── Reset & Base ───────── */
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;overflow:hidden;font-family:"Noto Sans KR",sans-serif}
-body{background:#000;color:#fff}
+html,body{height:100%;overflow:hidden;font-family:"Dancing Script", "Noto Sans KR",sans-serif}
+body{background:#fdfdfd;color:#000}
 
 /* ───────── Lock Screen ───────── */
 #lockScreen{position:fixed;z-index:9999;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#fff;padding:20px}
 #lockScreen input,#lockScreen button{margin:10px;padding:12px 20px;font-size:1rem;border:1px solid #ccc;border-radius:6px}
-#lockScreen button{background:#222;color:#fff;cursor:pointer}
+#lockScreen button{background:#222;color:#fff;cursor:pointer;transition:background 0.3s ease}
+#lockScreen button:hover{background:#444}
 .lang-row{position:absolute;top:20px;right:20px}
 
 /* ───────── Scroll Container ───────── */
@@ -19,13 +20,16 @@ body{background:#000;color:#fff}
 .slide.show{opacity:1}
 
 /* ───────── Overlay Text ───────── */
-.overlay-text{position:absolute;bottom:60px;max-width:90%;padding:12px 20px;font-size:1.8rem;font-weight:bold;background:rgba(0,0,0,.4);border-radius:12px}
+.overlay-text{position:absolute;bottom:60px;max-width:90%;padding:12px 20px;font-size:1.8rem;font-weight:bold;background:rgba(0,0,0,.4);border-radius:12px;color:#fff}
 
 /* ───────── Groom / Bride Slide ───────── */
 .person {
   background-color: #fff;
   color: #000;
   flex-direction: column;
+  background-image: url('https://yourusername.github.io/your-repo/assets/img/bg-leaf.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .person-block {
@@ -58,8 +62,10 @@ body{background:#000;color:#fff}
 
 .person-block .person-label {
   position: absolute;
-  top: 0;
-  left: 20px;
+  top: -40px;
+  left: 0;
+  right: 0;
+  text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
   color: #000;
@@ -84,20 +90,30 @@ body{background:#000;color:#fff}
   margin-bottom: 16px;
   text-align: center;
   font-weight: bold;
-  color: #fff;
+  color: #000;
 }
 .rsvp-header {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 12px;
   text-align: center;
-  color: #fff;
+  color: #000;
 }
 .rsvp form{display:flex;flex-direction:column;gap:10px;width:80%;max-width:400px;margin:0 auto}
 .rsvp input,.rsvp textarea{padding:12px;font-size:1rem;border:1px solid #ccc;border-radius:6px}
 .rsvp textarea{resize:vertical;min-height:100px}
-.rsvp button{background:#333;color:#fff;border:none;padding:12px;font-size:1rem;border-radius:6px;cursor:pointer}
-#rsvpStatus{margin-top:10px;font-weight:bold;text-align:center}
+.rsvp button{
+  background:#333;
+  color:#fff;
+  border:none;
+  padding:12px;
+  font-size:1rem;
+  border-radius:6px;
+  cursor:pointer;
+  transition: background 0.3s ease;
+}
+.rsvp button:hover{background:#555}
+#rsvpStatus{margin-top:10px;font-weight:bold;text-align:center;color:#000}
 
 /* ───────── Mobile ───────── */
 @media(max-width:768px){
@@ -105,3 +121,4 @@ body{background:#000;color:#fff}
   .person-block img{max-width:260px}
   .person-block p{font-size:1rem}
 }
+"""
