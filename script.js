@@ -18,10 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = {
       ko: `
         <a href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a><br>
-        <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">구글 지도 열기</a>
       `,
-      ja: `<a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">Googleマップを見る</a>`,
-      en: `<a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">View on Google Maps</a>`
+      ja: `<a href="https://naver.me/GNWkr4t4" target="_blank">Naverマップを見る</a>`,
+      en: `<a href="https://naver.me/GNWkr4t4" target="_blank">View on Naver Map</a>`
     };
     if ($mapLinks) $mapLinks.innerHTML = links[lang] || '';
   }
