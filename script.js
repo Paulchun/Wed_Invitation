@@ -18,7 +18,13 @@
       if (txt) el.innerHTML = txt;
     });
     [...$mapLinksSpan.children].forEach(a => {
-      a.style.display = a.getAttribute('data-lang') === lang ? 'inline' : 'none';
+      if (a.getAttribute('data-lang') === lang) {
+        a.style.display = 'inline';
+        a.style.pointerEvents = 'auto';
+      } else {
+        a.style.display = 'none';
+        a.style.pointerEvents = 'none';
+      }
     });
     if ($laviedor) $laviedor.innerHTML = $laviedor.getAttribute(`data-lang-${lang}`) || '';
     document.getElementById('rsvpName').placeholder = {
@@ -74,19 +80,23 @@
     if (!name) return;
     $status.textContent = messages[currentLang].sending;
 
-    fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    fetch("https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ name, message })
     })
-      .then(res => res.json())
-      .then(() => {
+    .then(res => res.json())
+    .then(data => {
+      if (data.result === "Success") {
         $status.textContent = messages[currentLang].success;
         $form.reset();
-      })
-      .catch(() => {
-        $status.textContent = messages[currentLang].error;
-      });
+      } else {
+        throw new Error("Submission failed");
+      }
+    })
+    .catch(() => {
+      $status.textContent = messages[currentLang].error;
+    });
   });
 
   const slides = document.querySelectorAll('.slide');
