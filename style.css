@@ -22,38 +22,49 @@ body{background:#000;color:#fff}
 .overlay-text{position:absolute;bottom:60px;max-width:90%;padding:12px 20px;font-size:1.8rem;font-weight:bold;background:rgba(0,0,0,.4);border-radius:12px}
 
 /* ───────── Groom / Bride Slide ───────── */
-.slide.person {
-  background: #fff !important;
+.person {
+  background-color: #fff;
   color: #000;
+  flex-direction: column;
 }
-.slide.person h2 {
-  color: #000;
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
+
 .person-block {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 20px;
+  padding-top: 40px;
+  position: relative;
 }
+
 .person-block img {
   width: 80vw;
   max-width: 350px;
   height: auto;
   border-radius: 24px;
-  border: 4px solid #fff;
+  border: 4px solid #000;
   object-fit: cover;
+  z-index: 1;
 }
+
 .person-block p {
   font-size: 1.2rem;
   line-height: 1.6;
-  background: rgba(255, 255, 255, 0.7);
-  color: #000;
   padding: 12px;
   border-radius: 10px;
   max-width: 90%;
+  background: none;
+  color: #000;
+}
+
+.person-block .person-label {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
 }
 
 /* ───────── Calendar ───────── */
@@ -67,9 +78,16 @@ body{background:#000;color:#fff}
 
 /* ───────── Map Info ───────── */
 .slide.info{background:#eee;color:#000;flex-direction:column;gap:20px}
-.slide.info a{color:#0077cc;text-decoration:underline}
+.slide.info a{color:#0077cc;text-decoration:underline;display:inline-block;margin-top:4px}
 
 /* ───────── RSVP ───────── */
+.rsvp h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+}
 .rsvp form{display:flex;flex-direction:column;gap:10px;width:80%;max-width:400px;margin:0 auto}
 .rsvp input,.rsvp textarea{padding:12px;font-size:1rem;border:1px solid #ccc;border-radius:6px}
 .rsvp textarea{resize:vertical;min-height:100px}
