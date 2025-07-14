@@ -16,20 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- 국제화 ---------- */
   let currentLang = 'ko';
 
-  function updateMapLinks(lang) {
-    const links = {
-      ko: `
-        <a href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a><br>
-        <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">구글 지도 열기</a>
-      `,
-      ja: `<a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">地図を見る</a>`,
-      en: `<a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">View Map</a>`
-    };
-    $mapLinks.innerHTML = links[lang] || '';
-  }
-
-  function applyLang(lang) {
-    currentLang = lang;
+function updateMapLinks(lang) {
+  const links = {
+    ko: `
+      <a href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a><br>
+      <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">구글 지도 열기</a>
+    `,
+    ja: `<a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">Googleマップを見る</a>`,
+    en: `<a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">View on Google Maps</a>`
+  };
+  const $mapLinks = document.getElementById('mapLinks');
+  if ($mapLinks) $mapLinks.innerHTML = links[lang] || '';
+}
 
     /* 1) 데이터 속성 번역 */
     $allTransEls.forEach(el => {
