@@ -21,10 +21,40 @@ body{background:#000;color:#fff}
 /* ───────── Overlay Text ───────── */
 .overlay-text{position:absolute;bottom:60px;max-width:90%;padding:12px 20px;font-size:1.8rem;font-weight:bold;background:rgba(0,0,0,.4);border-radius:12px}
 
-/* ───────── Groom / Bride ───────── */
-.person-block{display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
-.person-block img{width:80vw;max-width:350px;height:auto;border-radius:24px;border:4px solid #fff;object-fit:cover}
-.person-block p{font-size:1.2rem;line-height:1.6;background:rgba(0,0,0,.3);padding:12px;border-radius:10px;max-width:90%}
+/* ───────── Groom / Bride Slide ───────── */
+.slide.person {
+  background: #fff !important;
+  color: #000;
+}
+.slide.person h2 {
+  color: #000;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.person-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+.person-block img {
+  width: 80vw;
+  max-width: 350px;
+  height: auto;
+  border-radius: 24px;
+  border: 4px solid #fff;
+  object-fit: cover;
+}
+.person-block p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.7);
+  color: #000;
+  padding: 12px;
+  border-radius: 10px;
+  max-width: 90%;
+}
 
 /* ───────── Calendar ───────── */
 .calendar{color:#111;background:#f0f0f0;flex-direction:column}
