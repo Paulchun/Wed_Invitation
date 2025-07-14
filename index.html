@@ -4,12 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Paul & Paulwaifu Wedding Invitation</title>
-  <link rel="stylesheet" href="/Wed_Invitation/style.css" />
-  <meta property="og:title" content="Paul & Paulwaifu Wedding Invitation" />
-  <meta property="og:description" content="2025년 9월 20일 라비돌 리조트에서 결혼합니다" />
-  <meta property="og:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.png" />
-  <meta property="og:url" content="https://paulchun.github.io/Wed_Invitation/" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- 🔒 Lock Screen -->
@@ -24,11 +19,12 @@
     </div>
     <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
     <button id="unlockBtn">청첩장 열기</button>
+    <div id="version">버전&nbsp;4</div>
   </div>
 
   <!-- 🔊 BGM -->
   <audio id="bgm" loop muted>
-    <source src="/Wed_Invitation/assets/audio/bgm.mp3" type="audio/mpeg" />
+    <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
   <!-- 📄 Slides -->
@@ -37,18 +33,18 @@
 
       <!-- 사진 슬라이드 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
-        <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요." data-lang-ja="初めて出会った日、覚えてる？" data-lang-en="We remember the day we first met.">
-          처음 만난 그날, 우리 기억해요.
+        <div class="overlay-text" data-lang-ko="아니 이 사람이다 싶었죠" data-lang-ja="ああ、この人だと思った" data-lang-en="Ah, this must be the one">
+          아니 이 사람이다 싶었죠
         </div>
       </section>
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/2.jpg')">
-        <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고," data-lang-ja="同じ方向を見つめ始めて、" data-lang-en="We started looking in the same direction.">
-          같은 방향을 바라보기 시작했고,
+        <div class="overlay-text" data-lang-ko="서로의 삶에 스며들며<br>하나가 되어갑니다" data-lang-ja="お互いの人生に染み込みながら<br>一つになっていきます" data-lang-en="Blending into each other's lives,<br>we become one">
+          서로의 삶에 스며들며<br>하나가 되어갑니다
         </div>
       </section>
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/3.jpg')">
-        <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">
-          함께 걷는 길이 익숙해졌죠.
+        <div class="overlay-text" data-lang-ko="따뜻한 응원과 축복으로<br>함께해 주세요" data-lang-ja="温かい応援と祝福で<br>共にいてください" data-lang-en="Please join us<br>with warm support and blessings">
+          따뜻한 응원과 축복으로<br>함께해 주세요
         </div>
       </section>
 
@@ -70,13 +66,11 @@
         </div>
       </section>
 
-      <!-- 📅 Calendar -->
+      <!-- 📅 달력 -->
       <section class="slide calendar fade">
-        <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">
-          📅 결혼식은 이 날이에요
-        </h2>
+        <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
-          <div class="month" id="calendarMonth">2025년 9월</div>
+          <div class="month" id="calendarMonth">2025년&nbsp;9월</div>
           <div class="days" id="calendarDays">
             <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
             <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
@@ -88,28 +82,20 @@
         </div>
       </section>
 
-      <!-- 🗺️ Map -->
+      <!-- 지도 -->
       <section class="slide info fade">
         <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
         <p id="mapText"
-           data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 지도에서 보기:"
+           data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>🗺️ 지도에서 보기:<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a>"
            data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br>🗺️ 地図で見る:"
            data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Map:">
           📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
-          🗺️ <span id="mapLinks">
-            <a href="https://naver.me/GNWkr4t4" data-lang="ko" target="_blank">지도 열기</a>
-            <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="ja" target="_blank">地図を見る</a>
-            <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" data-lang="en" target="_blank">View Map</a>
-          </span>
-        </p>
-        <p id="laviedorLink"
-           data-lang-ko='<a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 공식 홈페이지</a>'
-           data-lang-ja=""
-           data-lang-en="">
+          🗺️ 지도에서 보기:<br>
+          <span id="mapLinks"></span>
         </p>
       </section>
 
-      <!-- ✉️ RSVP -->
+      <!-- RSVP -->
       <section class="slide rsvp fade">
         <h2 data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요" data-lang-ja="ご参加をご希望の方は、以下にご記入ください" data-lang-en="Please leave your RSVP below">
           참석 의사가 있으신 분은 아래에 남겨주세요
@@ -121,9 +107,10 @@
           <p id="rsvpStatus"></p>
         </form>
       </section>
+
     </div>
   </main>
 
-  <script src="/Wed_Invitation/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
