@@ -104,18 +104,22 @@
   </p>
 </section>
 
-      <!-- RSVP -->
-      <section class="slide rsvp fade">
-        <h2 data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요" data-lang-ja="ご参加をご希望の方は、以下にご記入ください" data-lang-en="Please leave your RSVP below">
-          참석 의사가 있으신 분은 아래에 남겨주세요
-        </h2>
-        <form id="rsvpForm">
-          <input type="text" id="rsvpName" name="name" placeholder="성함" />
-          <textarea id="rsvpMessage" name="message" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
-          <button type="submit" id="rsvpSubmit">보내기</button>
-          <p id="rsvpStatus"></p>
-        </form>
-      </section>
+<!-- RSVP -->
+<section class="slide rsvp fade">
+  <form id="rsvpForm">
+    <p id="rsvpHeader" class="rsvp-header"
+       data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요"
+       data-lang-ja="ご参加の意思がある方は下にご記入ください"
+       data-lang-en="If you plan to attend, please leave a message below">
+       참석 의사가 있으신 분은 아래에 남겨주세요
+    </p>
+
+    <input type="text" id="rsvpName" placeholder="성함" />
+    <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
+    <button type="submit" id="rsvpSubmit">보내기</button>
+    <div id="rsvpStatus"></div>
+  </form>
+</section>
 
     </div>
   </main>
