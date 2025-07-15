@@ -29,11 +29,11 @@
     left:10px;
     width:80px;
     height:80px;
-    background:url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png") no-repeat center/contain;
+    background:url("'/Wed_Invitation/assets/img/title.png'") no-repeat center/contain;
     opacity:0.4;
   }
   #lockScreen::after{
-    content:'"청첩장에 오신 것을 환영합니다"';
+    content:'"Wedding Invitation"';
     font-size:1.1rem;
     font-weight:600;
     color:#2a2a2a;
@@ -55,7 +55,14 @@
   .person{flex-direction:column;gap:20px;background:#ffffffd9;color:#1e1e1e}
   .person h2{font-family:"Dancing Script",cursive;font-size:2.2rem;margin-bottom:6px}
   .person-block{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding-top:40px;z-index:1}
-  .person-block img{width:80vw;max-width:340px;border-radius:18px;box-shadow:0 4px 10px rgba(0,0,0,.15);object-fit:cover}
+.person-block img {
+  width: 80vw;
+  max-width: 280px; /* 기존보다 작게 */
+  height: auto;
+  object-fit: cover;
+  z-index: 1;
+  margin-top: 10px; /* 위쪽 여백 줘서 헤더 겹침 방지 */
+}
   .person-block p{font-size:1.1rem;line-height:1.6;background:rgba(255,255,255,.75);padding:12px 16px;border-radius:12px}
 
   .calendar{flex-direction:column;background:#f5faf4;color:#1e1e1e;font-family:"Nanum Gothic", sans-serif}
@@ -65,7 +72,30 @@
   .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.95rem}
   .days span{text-align:center;padding:6px 0;border-radius:6px}
   .highlight{background:#4b6b4f;color:#fff;font-weight:700}
-
+.calendar::before, .calendar::after,
+.slide.info::before, .slide.info::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+.calendar::before,
+.slide.info::before {
+  top: -30px;
+  left: -30px;
+  background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png");
+}
+.calendar::after,
+.slide.info::after {
+  bottom: -30px;
+  right: -30px;
+  background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_br.png");
+}
   .slide.info{background:#ecf3ec;flex-direction:column;gap:20px}
   .slide.info h2{font-family:"Dancing Script",cursive;font-size:2rem}
   .slide.info p{font-size:1rem;line-height:1.5;text-align:center}
@@ -98,13 +128,12 @@
     </div>
     <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
     <button id="unlockBtn">청첩장 열기</button>
-    <div id="version">버전&nbsp;6</div>
   </div>
 
   <audio id="bgm" loop muted>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
-  <div id="bgmInfo" data-lang-ko="🎵 그 비스크 돌은 사랑을 한다 - ありがとう" data-lang-ja="🎵 ビスク・ドールは恋をする - ありがとう" data-lang-en="🎵 My Dress-Up Darling - Arigato">🎵 그 비스크 돌은 사랑을 한다 - ありがとう</div>
+<div id="bgmInfo" class="only-slide-1"🎵 그 비스크 돌은 사랑을 한다 - ありがとう" data-lang-ja="🎵 ビスク・ドールは恋をする - ありがとう" data-lang-en="🎵 My Dress-Up Darling - Arigato">🎵 그 비스크 돌은 사랑을 한다 - ありがとう</div>
 
   <main id="mainContent" style="display:none">
     <div class="scroll-container">
@@ -216,12 +245,14 @@
       const $lockScreen  = document.getElementById('lockScreen');
       const $mainContent = document.getElementById('mainContent');
       const $bgm         = document.getElementById('bgm');
-      const $bgmInfo     = document.getElementById('bgmInfo');
+      const bgmInfo  = document.getElementById('bgmInfo');
+      const slides   = document.querySelectorAll('.slide');
       const $submitBtn   = document.getElementById('rsvpSubmit');
       const $form        = document.getElementById('rsvpForm');
       const $status      = document.getElementById('rsvpStatus');
       const $nameInput   = document.getElementById('rsvpName');
       const $msgInput    = document.getElementById('rsvpMessage');
+      
 
       let currentLang = 'ko';
 
@@ -307,13 +338,22 @@
       });
 
       const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('show');
-        });
-      }, { threshold: 0.25 });
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
 
-      document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
+        // 🎵 첫 슬라이드(인덱스 0)일 때만 BGM 정보 표시
+        if (entry.target === slides[0]) {
+          bgmInfo.style.display = 'flex';
+        } else {
+          bgmInfo.style.display = 'none';
+        }
+      }
     });
+  }, { threshold: 0.25 });
+
+  slides.forEach(slide => observer.observe(slide));
+});
   </script>
 </body>
 </html>
