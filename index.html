@@ -5,66 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Hyesung & Hyo‑Eun Wedding Invitation</title>
 
-  <!-- ==================== Google Fonts ==================== -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Noto+Sans+KR:wght@400;700&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
-  <!-- ==================== Main stylesheet ==================== -->
   <style>
-  /* ───────── Global Reset ───────── */
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%;font-family:"Noto Sans KR", sans-serif;overflow:hidden;background:#f8fbf7}
-  body{color:#2a2a2a}
+  html,body{height:100%;font-family:"Nanum Gothic", "Noto Sans KR", sans-serif;overflow:hidden;background:#f8fbf7}
+  body::before{content:"";position:fixed;inset:0;background:url("https://images.unsplash.com/photo-1553532074-6cba7d5926cb?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;opacity:0.06;pointer-events:none}
 
-  /* =============== Water‑colour leaf background =============== */
-  body::before{
-    content:"";
-    position:fixed;inset:0;
-    background:url("https://images.unsplash.com/photo-1553532074-6cba7d5926cb?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat; /* very faint pattern */
-    opacity:0.06;pointer-events:none;
-  }
-
-  /* =============== Lock Screen =============== */
   #lockScreen{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px)}
   .lang-row{position:absolute;top:18px;right:18px;display:flex;align-items:center;gap:4px;font-size:1.2rem}
   .lang-row select{padding:6px;border-radius:6px;border:1px solid #cbd5d1}
-  #pwInput,#unlockBtn{width:260px;margin-top:14px;padding:12px 16px;font-size:1rem;border-radius:8px;border:1px solid #cbd5d1;outline:none}
+  #pwInput,#unlockBtn{width:260px;margin-top:10px;padding:12px 16px;font-size:1rem;border-radius:8px;border:1px solid #cbd5d1;outline:none}
   #unlockBtn{background:#4b6b4f;color:#fff;border:none;cursor:pointer;transition:.25s}
   #unlockBtn:hover{background:#38543c}
   #version{margin-top:8px;font-size:.85rem;color:#6b7280}
+  #lockScreen::before{
+    content:"";
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:80px;
+    height:80px;
+    background:url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png") no-repeat center/contain;
+    opacity:0.4;
+  }
+  #lockScreen::after{
+    content:'"청첩장에 오신 것을 환영합니다"';
+    font-size:1.1rem;
+    font-weight:600;
+    color:#2a2a2a;
+    margin-top:20px;
+  }
 
-  /* 🎵 BGM info (top‑right) */
   #bgmInfo{position:fixed;top:12px;right:12px;font-size:.9rem;display:flex;align-items:center;gap:4px;z-index:200;color:#2a2a2a;background:rgba(255,255,255,.8);padding:6px 10px;border-radius:18px;backdrop-filter:blur(4px)}
 
-  /* =============== Scrolling container =============== */
-  .scroll-container{height:100vh;overflow-y:scroll;scroll-behavior:smooth;scroll-snap-type:y mandatory}
-
-  /* =============== Slide base =============== */
-  .slide{position:relative;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;padding:24px;scroll-snap-align:start;opacity:0;transition:opacity .9s ease}
+  .scroll-container{height:100vh;overflow-y:scroll;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  .slide{position:relative;height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;padding:24px;scroll-snap-align:start;opacity:0;transition:opacity .9s ease;flex-shrink:0;background-size:cover;background-position:center;background-repeat:no-repeat}
   .slide.show{opacity:1}
+  .slide::before,.slide::after{content:"";position:absolute;width:280px;height:280px;pointer-events:none;opacity:.7;background-size:contain;background-repeat:no-repeat;z-index:0}
+  .slide::before{top:-40px;left:-40px;background-image:url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png")}
+  .slide::after{bottom:-40px;right:-40px;background-image:url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_br.png")}
 
-  /* decorative watercolor leaves on each slide */
-  .slide::before,.slide::after{
-    content:"";position:absolute;width:280px;height:280px;pointer-events:none;opacity:.7;background-size:contain;background-repeat:no-repeat;z-index:0}
-  .slide::before{top:-40px;left:-40px;background-image:url("/Wed_Invitation/assets/img/title.png")}
-  .slide::after{bottom:-40px;right:-40px;background-image:url("/Wed_Invitation/assets/img/bottom.png")}
-
-  /* overlay text (photo slides) */
   .overlay-text{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.45);color:#fff;padding:14px 22px;border-radius:14px;font-size:1.4rem;font-weight:700;max-width:90%;text-align:center;line-height:1.45;z-index:1}
-
-  /* Welcome header (first slide) */
   .welcome-header{position:absolute;top:18%;left:50%;transform:translateX(-50%);font-family:"Dancing Script",cursive;font-size:2.8rem;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.3)}
 
-  /* person slides */
   .person{flex-direction:column;gap:20px;background:#ffffffd9;color:#1e1e1e}
   .person h2{font-family:"Dancing Script",cursive;font-size:2.2rem;margin-bottom:6px}
   .person-block{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding-top:40px;z-index:1}
   .person-block img{width:80vw;max-width:340px;border-radius:18px;box-shadow:0 4px 10px rgba(0,0,0,.15);object-fit:cover}
   .person-block p{font-size:1.1rem;line-height:1.6;background:rgba(255,255,255,.75);padding:12px 16px;border-radius:12px}
 
-  /* calendar slide */
-  .calendar{flex-direction:column;background:#f5faf4;color:#1e1e1e}
+  .calendar{flex-direction:column;background:#f5faf4;color:#1e1e1e;font-family:"Nanum Gothic", sans-serif}
   .calendar h2{font-family:"Dancing Script",cursive;font-size:2.1rem;margin-bottom:12px}
   .calendar-box{background:#fff;border-radius:16px;padding:18px 16px;box-shadow:0 3px 6px rgba(0,0,0,.08)}
   .month{text-align:center;font-weight:700;margin-bottom:12px;font-size:1.1rem}
@@ -72,13 +66,11 @@
   .days span{text-align:center;padding:6px 0;border-radius:6px}
   .highlight{background:#4b6b4f;color:#fff;font-weight:700}
 
-  /* info slide */
   .slide.info{background:#ecf3ec;flex-direction:column;gap:20px}
   .slide.info h2{font-family:"Dancing Script",cursive;font-size:2rem}
   .slide.info p{font-size:1rem;line-height:1.5;text-align:center}
   .slide.info a{color:#357652;text-decoration:underline}
 
-  /* rsvp */
   .rsvp{background:#f0f5f0;flex-direction:column;gap:14px}
   .rsvp h2{font-family:"Dancing Script",cursive;font-size:2rem}
   .rsvp-header{font-size:1.1rem;margin-bottom:8px;font-weight:600;text-align:center}
@@ -89,13 +81,6 @@
   .rsvp button:hover{background:#38543c}
   #rsvpStatus{font-weight:600;text-align:center;margin-top:6px}
 
-  /* ============ Fade‑in Animation aid for Safari ============ */
-  @supports (-webkit-touch-callout: none) {
-    .slide{transition:opacity .9s ease,transform .9s ease;transform:translateY(3%)}
-    .slide.show{transform:translateY(0)}
-  }
-
-  /* ───────── Responsive ───────── */
   @media(max-width:768px){
     .overlay-text{font-size:1.05rem;bottom:46px}
     .welcome-header{font-size:2.2rem}
@@ -103,7 +88,6 @@
   </style>
 </head>
 <body>
-  <!-- 🔒 Lock Screen -->
   <div id="lockScreen">
     <div class="lang-row">
       🌐<select id="languageSelect">
@@ -114,33 +98,37 @@
     </div>
     <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
     <button id="unlockBtn">청첩장 열기</button>
-    <div id="version">버전&nbsp;5</div>
+    <div id="version">버전&nbsp;6</div>
   </div>
 
-  <!-- 🔊 BGM -->
   <audio id="bgm" loop muted>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
-  <!-- 🎵 BGM Info -->
-  <div id="bgmInfo">🎵 그 비스크 돌은 사랑을 한다 ‑ ありがとう</div>
+  <div id="bgmInfo" data-lang-ko="🎵 그 비스크 돌은 사랑을 한다 - ありがとう" data-lang-ja="🎵 ビスク・ドールは恋をする - ありがとう" data-lang-en="🎵 My Dress-Up Darling - Arigato">🎵 그 비스크 돌은 사랑을 한다 - ありがとう</div>
 
-  <!-- 📜 Main Content -->
   <main id="mainContent" style="display:none">
     <div class="scroll-container">
-      <!-- Slide 1 (photo background) -->
+
+      <!-- Slide 1 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
-        <div class="welcome-header">We’re getting married<br>Hyesung & Hyo Eun</div>
-        <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요." data-lang-ja="初めて出会った日、覚えてる？" data-lang-en="We remember the day we first met.">처음 만난 그날, 우리 기억해요.</div>
+        <div class="welcome-header">We’re getting married<br>Hyesung & Hyo Eun</div>
+        <div class="overlay-text" data-lang-ko="처음 만난 그날, 우리 기억해요." data-lang-ja="初めて出会った日、覚えてる？" data-lang-en="We remember the day we first met.">
+          처음 만난 그날, 우리 기억해요.
+        </div>
       </section>
 
       <!-- Slide 2 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/2.jpg')">
-        <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고," data-lang-ja="同じ方向を見つめ始めて、" data-lang-en="We started looking in the same direction.">같은 방향을 바라보기 시작했고,</div>
+        <div class="overlay-text" data-lang-ko="같은 방향을 바라보기 시작했고," data-lang-ja="同じ方向を見つめ始めて、" data-lang-en="We started looking in the same direction.">
+          같은 방향을 바라보기 시작했고,
+        </div>
       </section>
 
       <!-- Slide 3 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/3.jpg')">
-        <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">함께 걷는 길이 익숙해졌죠.</div>
+        <div class="overlay-text" data-lang-ko="함께 걷는 길이 익숙해졌죠." data-lang-ja="一緒に歩く道が、当たり前になった。" data-lang-en="Walking together became natural.">
+          함께 걷는 길이 익숙해졌죠.
+        </div>
       </section>
 
       <!-- Groom -->
@@ -148,7 +136,11 @@
         <h2 data-lang-ko="신랑" data-lang-ja="新郎" data-lang-en="Groom">신랑</h2>
         <div class="person-block groom">
           <img src="/Wed_Invitation/assets/img/groom.jpg" alt="신랑" />
-          <p data-lang-ko="그녀를 처음 본 날,<br>그냥 알 수 있었어요.<br>이 사람이구나." data-lang-ja="彼女を初めて見た日<br>すぐに分かりました。<br>この人だと。" data-lang-en="The day I first saw her,<br>I just knew.<br>She was the one.">그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.</p>
+          <p data-lang-ko="그녀를 처음 본 날,<br>그냥 알 수 있었어요.<br>이 사람이구나."
+             data-lang-ja="彼女を初めて見た日<br>すぐに分かりました。<br>この人だと。"
+             data-lang-en="The day I first saw her,<br>I just knew.<br>She was the one.">
+             그녀를 처음 본 날, 그냥 알 수 있었어요.<br>이 사람이구나.
+          </p>
         </div>
       </section>
 
@@ -157,7 +149,11 @@
         <h2 data-lang-ko="신부" data-lang-ja="新婦" data-lang-en="Bride">신부</h2>
         <div class="person-block bride">
           <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
-          <p data-lang-ko="오빠가 웃어줄 때,<br>세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠." data-lang-ja="彼が笑ってくれたとき<br>世界が少し温かくなりました。<br>それが始まりでした。" data-lang-en="When he smiled at me,<br>the world felt warmer.<br>That was the beginning.">오빠가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.</p>
+          <p data-lang-ko="오빠가 웃어줄 때,<br>세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠."
+             data-lang-ja="彼が笑ってくれたとき<br>世界が少し温かくなりました。<br>それが始まりでした。"
+             data-lang-en="When he smiled at me,<br>the world felt warmer.<br>That was the beginning.">
+             오빠가 웃어줄 때, 세상이 조금 더 따뜻해졌어요.<br>그게 시작이었죠.
+          </p>
         </div>
       </section>
 
@@ -165,7 +161,7 @@
       <section class="slide calendar fade">
         <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
-          <div class="month" id="calendarMonth">2025년 9월</div>
+          <div class="month" id="calendarMonth">2025년 9월</div>
           <div class="days" id="calendarDays">
             <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
             <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
@@ -180,13 +176,27 @@
       <!-- Location -->
       <section class="slide info fade">
         <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-        <p id="mapText" data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6‑3번 / 병점역 35‑1, 35‑3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a><br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>구글 지도 열기</a>" data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6‑3番 / 餅店駅 35‑1, 35‑3, 50番<br><br>🗺️ 地図:<br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>Googleマップを見る</a>" data-lang-en="📍 286, Sejaro, Jeongnam‑myeon, Hwaseong‑si, Gyeonggi‑do<br>🚌 Suwon Sta. 6‑3 / Byeongjeom Sta. 35‑1, 35‑3, 50<br><br>🗺️ View on map:<br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>Open Google Maps</a>">📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6‑3번 / 병점역 35‑1, 35‑3, 50번<br><a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a><br><a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">구글 지도 열기</a></p>
+        <p id="mapText"
+          data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a><br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>구글 지도 열기</a>"
+          data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br>🗺️ 地図で見る:<br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>Googleマップを見る</a>"
+          data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Map:<br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>View on Google Maps</a>">
+          📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
+          <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
+          🗺️ 지도에서 보기:<br>
+          <a href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a><br>
+          <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">구글 지도 열기</a>
+        </p>
       </section>
 
       <!-- RSVP -->
       <section class="slide rsvp fade">
         <h2>RSVP</h2>
-        <p id="rsvpHeader" class="rsvp-header" data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요" data-lang-ja="ご参加の意思がある方は下にご記入ください" data-lang-en="If you plan to attend, please leave a message below">참석 의사가 있으신 분은 아래에 남겨주세요</p>
+        <p id="rsvpHeader" class="rsvp-header"
+           data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요"
+           data-lang-ja="ご参加の意思がある方は下にご記入ください"
+           data-lang-en="If you plan to attend, please leave a message below">
+           참석 의사가 있으신 분은 아래에 남겨주세요
+        </p>
         <form id="rsvpForm">
           <input type="text" id="rsvpName" placeholder="성함" />
           <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
@@ -197,75 +207,113 @@
     </div>
   </main>
 
-  <!-- ==================== Script ==================== -->
   <script>
-  document.addEventListener('DOMContentLoaded',()=>{
-    const $langSel=document.getElementById('languageSelect');
-    const $allTransEls=document.querySelectorAll('[data-lang-ko]');
-    const $pwInput=document.getElementById('pwInput');
-    const $unlockBtn=document.getElementById('unlockBtn');
-    const $lockScreen=document.getElementById('lockScreen');
-    const $mainContent=document.getElementById('mainContent');
-    const $bgm=document.getElementById('bgm');
-    const $submitBtn=document.getElementById('rsvpSubmit');
-    const $form=document.getElementById('rsvpForm');
-    const $status=document.getElementById('rsvpStatus');
-    const $nameInput=document.getElementById('rsvpName');
-    const $msgInput=document.getElementById('rsvpMessage');
+    document.addEventListener('DOMContentLoaded', () => {
+      const $langSel     = document.getElementById('languageSelect');
+      const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+      const $pwInput     = document.getElementById('pwInput');
+      const $unlockBtn   = document.getElementById('unlockBtn');
+      const $lockScreen  = document.getElementById('lockScreen');
+      const $mainContent = document.getElementById('mainContent');
+      const $bgm         = document.getElementById('bgm');
+      const $bgmInfo     = document.getElementById('bgmInfo');
+      const $submitBtn   = document.getElementById('rsvpSubmit');
+      const $form        = document.getElementById('rsvpForm');
+      const $status      = document.getElementById('rsvpStatus');
+      const $nameInput   = document.getElementById('rsvpName');
+      const $msgInput    = document.getElementById('rsvpMessage');
 
-    let currentLang='ko';
-    function applyLang(lang){
-      currentLang=lang;
-      $allTransEls.forEach(el=>{
-        const txt=el.getAttribute(`data-lang-${lang}`);
-        if(txt)el.innerHTML=txt;
-      });
-      const Ph={ko:['성함','남기실 말씀 (예: 숙박이 필요합니다)','초대 코드를 입력하세요','청첩장 열기','보내기'],
-                ja:['お名前','メッセージ (例: 宿泊が必要です)','招待コードを入力','招待状を開く','送信'],
-                en:['Your name','Message (e.g. need accommodation)','Enter invitation code','Open Invitation','Send']};
-      $nameInput.placeholder=Ph[lang][0];
-      $msgInput.placeholder=Ph[lang][1];
-      $pwInput.placeholder=Ph[lang][2];
-      $unlockBtn.textContent=Ph[lang][3];
-      $submitBtn.textContent=Ph[lang][4];
-    }
-    $langSel.addEventListener('change',e=>applyLang(e.target.value));
-    applyLang(currentLang);
+      let currentLang = 'ko';
 
-    /* ---------- Unlock ---------- */
-    const INVITE_CODE='0920';
-    $unlockBtn.addEventListener('click',()=>{
-      if($pwInput.value.trim()===INVITE_CODE){
-        $lockScreen.style.display='none';
-        $mainContent.style.display='block';
-        $bgm.muted=false;$bgm.currentTime=0;$bgm.play().catch(()=>{});
-      }else{
-        alert({ko:'코드가 틀립니다.',ja:'コードが違います。',en:'Wrong code.'}[currentLang]);
+      function applyLang(lang) {
+        currentLang = lang;
+        $allTransEls.forEach(el => {
+          const txt = el.getAttribute(`data-lang-${lang}`);
+          if (txt) el.innerHTML = txt;
+        });
+
+        const langMap = {
+          ko: ['성함', '남기실 말씀 (예: 숙박이 필요합니다)', '초대 코드를 입력하세요', '청첩장 열기', '보내기', '🎵 그 비스크 돌은 사랑을 한다 - ありがとう'],
+          ja: ['お名前', 'メッセージ (例: 宿泊が必要です)', '招待コードを入力', '招待状を開く', '送信', '🎵 ビスク・ドールは恋をする - ありがとう'],
+          en: ['Your name', 'Message (e.g. need accommodation)', 'Enter invitation code', 'Open Invitation', 'Send', '🎵 My Dress-Up Darling - Arigato']
+        };
+
+        $nameInput.placeholder = langMap[lang][0];
+        $msgInput.placeholder = langMap[lang][1];
+        $pwInput.placeholder = langMap[lang][2];
+        $unlockBtn.textContent = langMap[lang][3];
+        $submitBtn.textContent = langMap[lang][4];
+        $bgmInfo.textContent = langMap[lang][5];
       }
-    });
 
-    /* ---------- RSVP ---------- */
-    const messages={ko:{sending:'전송 중입니다...',success:'감사합니다! 잘 전달되었어요.',error:'오류가 발생했지만 메시지는 전달되었을 수 있어요.'},
-                    ja:{sending:'送信中です...',success:'ありがとうございます！正常に送信されました。',error:'エラーが発生しましたが、メッセージは届いた可能性があります。'},
-                    en:{sending:'Sending...',success:'Thank you! Your message has been sent.',error:'An error occurred, but your message might still have been delivered.'}};
-    $form.addEventListener('submit',e=>{
-      e.preventDefault();
-      const name=$nameInput.value.trim();
-      const message=$msgInput.value.trim();
-      if(!name)return;
-      $status.textContent=messages[currentLang].sending;
-      fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec',{
-        method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({name,message})})
-        .then(()=>{$status.textContent=messages[currentLang].success;$form.reset();})
-        .catch(()=>{$status.textContent=messages[currentLang].success;});
-    });
+      $langSel.addEventListener('change', e => applyLang(e.target.value));
+      applyLang(currentLang);
 
-    /* ---------- Fade‑in on scroll ---------- */
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('show');});
-    },{threshold:0.25});
-    document.querySelectorAll('.slide').forEach(s=>observer.observe(s));
-  });
+      const INVITE_CODE = '0920';
+      $unlockBtn.addEventListener('click', () => {
+        if ($pwInput.value.trim() === INVITE_CODE) {
+          $lockScreen.style.display = 'none';
+          $mainContent.style.display = 'block';
+          $bgm.muted = false;
+          $bgm.currentTime = 0;
+          $bgm.play().catch(() => {});
+        } else {
+          alert({
+            ko: '코드가 틀립니다.',
+            ja: 'コードが違います。',
+            en: 'Wrong code.'
+          }[currentLang]);
+        }
+      });
+
+      const messages = {
+        ko: {
+          sending: '전송 중입니다...',
+          success: '감사합니다! 잘 전달되었어요.',
+          error: '오류가 발생했지만 메시지는 전달되었을 수 있어요.'
+        },
+        ja: {
+          sending: '送信中です...',
+          success: 'ありがとうございます！正常に送信されました。',
+          error: 'エラーが発生しましたが、メッセージは届いた可能性があります。'
+        },
+        en: {
+          sending: 'Sending...',
+          success: 'Thank you! Your message has been sent.',
+          error: 'An error occurred, but your message might still have been delivered.'
+        }
+      };
+
+      $form.addEventListener('submit', e => {
+        e.preventDefault();
+        const name = $nameInput.value.trim();
+        const message = $msgInput.value.trim();
+        if (!name) return;
+
+        $status.textContent = messages[currentLang].sending;
+
+        fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ name, message })
+        })
+          .then(() => {
+            $status.textContent = messages[currentLang].success;
+            $form.reset();
+          })
+          .catch(() => {
+            $status.textContent = messages[currentLang].success;
+          });
+      });
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+      }, { threshold: 0.25 });
+
+      document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
+    });
   </script>
 </body>
 </html>
