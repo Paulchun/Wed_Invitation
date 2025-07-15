@@ -16,7 +16,16 @@
   body::before{content:"";position:fixed;inset:0;background:url("https://images.unsplash.com/photo-1553532074-6cba7d5926cb?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;opacity:0.06;pointer-events:none}
 
   #lockScreen{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px)}
-  .lang-row{position:absolute;top:18px;right:18px;display:flex;align-items:center;gap:4px;font-size:1.2rem}
+  .lang-row {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  z-index: 10;
+}
   .lang-row select{padding:6px;border-radius:6px;border:1px solid #cbd5d1}
   #pwInput,#unlockBtn{width:260px;margin-top:10px;padding:12px 16px;font-size:1rem;border-radius:8px;border:1px solid #cbd5d1;outline:none}
   #unlockBtn{background:#4b6b4f;color:#fff;border:none;cursor:pointer;transition:.25s}
@@ -120,17 +129,36 @@
 </head>
 <body>
   <div id="lockScreen">
-    <div class="lang-row">
-      🌐<select id="languageSelect">
-        <option value="ko">한국어</option>
-        <option value="ja">日本語</option>
-        <option value="en">English</option>
-      </select>
-    </div>
-    <input type="password" id="pwInput" placeholder="초대 코드를 입력하세요" />
-    <button id="unlockBtn">청첩장 열기</button>
+  <div class="lang-row">
+    <span>🌐</span>
+    <select id="languageSelect">
+      <option value="ko">한국어</option>
+      <option value="en">English</option>
+      <option value="ja">日本語</option>
+    </select>
   </div>
 
+  <div class="invitation-frame">
+    <h1 class="invite-date">09.20</h1>
+
+    <p class="invite-names"
+       data-lang-ko="전혜성 - 남효은"
+       data-lang-en="Chun Hye Sung & Nam Hyo Eun"
+       data-lang-ja="田慧性 & 南曉銀">
+       전혜성 - 남효은
+    </p>
+
+    <p class="invite-place"
+       data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
+       data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
+       data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場">
+       2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
+    </p>
+
+    <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
+    <button id="unlockBtn">청첩장 열기</button>
+  </div>
+</div>
   <audio id="bgm" loop muted>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
@@ -238,122 +266,131 @@
   </main>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const $langSel     = document.getElementById('languageSelect');
-      const $allTransEls = document.querySelectorAll('[data-lang-ko]');
-      const $pwInput     = document.getElementById('pwInput');
-      const $unlockBtn   = document.getElementById('unlockBtn');
-      const $lockScreen  = document.getElementById('lockScreen');
-      const $mainContent = document.getElementById('mainContent');
-      const $bgm         = document.getElementById('bgm');
-      const bgmInfo  = document.getElementById('bgmInfo');
-      const slides   = document.querySelectorAll('.slide');
-      const $submitBtn   = document.getElementById('rsvpSubmit');
-      const $form        = document.getElementById('rsvpForm');
-      const $status      = document.getElementById('rsvpStatus');
-      const $nameInput   = document.getElementById('rsvpName');
-      const $msgInput    = document.getElementById('rsvpMessage');
-      
+document.addEventListener('DOMContentLoaded', () => {
+  /* ───── DOM 선택자 ───── */
+  const $langSel     = document.getElementById('languageSelect');
+  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+  const $pwInput     = document.getElementById('pwInput');
+  const $unlockBtn   = document.getElementById('unlockBtn');
+  const $lockScreen  = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
+  const $bgm         = document.getElementById('bgm');
+  const $bgmInfo     = document.getElementById('bgmInfo');
+  const $slides      = document.querySelectorAll('.slide');
+  const $submitBtn   = document.getElementById('rsvpSubmit');
+  const $form        = document.getElementById('rsvpForm');
+  const $status      = document.getElementById('rsvpStatus');
+  const $nameInput   = document.getElementById('rsvpName');
+  const $msgInput    = document.getElementById('rsvpMessage');
 
-      let currentLang = 'ko';
+  /* ───── 다국어 적용 ───── */
+  let currentLang = 'ko';
+  function applyLang(lang) {
+    currentLang = lang;
 
-      function applyLang(lang) {
-        currentLang = lang;
-        $allTransEls.forEach(el => {
-          const txt = el.getAttribute(`data-lang-${lang}`);
-          if (txt) el.innerHTML = txt;
-        });
+    /* data-lang‑xx 속성 있는 모든 요소 업데이트 */
+    $allTransEls.forEach(el => {
+      const txt = el.getAttribute(`data-lang-${lang}`);
+      if (txt) el.innerHTML = txt;
+    });
 
-        const langMap = {
-          ko: ['성함', '남기실 말씀 (예: 숙박이 필요합니다)', '초대 코드를 입력하세요', '청첩장 열기', '보내기', '🎵 그 비스크 돌은 사랑을 한다 - ありがとう'],
-          ja: ['お名前', 'メッセージ (例: 宿泊が必要です)', '招待コードを入力', '招待状を開く', '送信', '🎵 ビスク・ドールは恋をする - ありがとう'],
-          en: ['Your name', 'Message (e.g. need accommodation)', 'Enter invitation code', 'Open Invitation', 'Send', '🎵 My Dress-Up Darling - Arigato']
-        };
-
-        $nameInput.placeholder = langMap[lang][0];
-        $msgInput.placeholder = langMap[lang][1];
-        $pwInput.placeholder = langMap[lang][2];
-        $unlockBtn.textContent = langMap[lang][3];
-        $submitBtn.textContent = langMap[lang][4];
-        $bgmInfo.textContent = langMap[lang][5];
+    /* 입력창, 버튼, BGM info */
+    const strings = {
+      ko: {
+        namePh: '성함',
+        msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
+        codePh: '초대 코드를 입력하세요',
+        btnOpen: '청첩장 열기',
+        btnSend: '보내기',
+        bgm: '🎵 그 비스크 돌은 사랑을 한다 - ありがとう',
+        alertWrong: '코드가 틀립니다.'
+      },
+      en: {
+        namePh: 'Your name',
+        msgPh: 'Message (e.g. need accommodation)',
+        codePh: 'Enter invitation code',
+        btnOpen: 'Open Invitation',
+        btnSend: 'Send',
+        bgm: '🎵 My Dress‑Up Darling - Arigato',
+        alertWrong: 'Wrong code.'
+      },
+      ja: {
+        namePh: 'お名前',
+        msgPh: 'メッセージ (例: 宿泊が必要です)',
+        codePh: '招待コードを入力してください',
+        btnOpen: '招待状を開く',
+        btnSend: '送信',
+        bgm: '🎵 ビスク・ドールは恋をする - ありがとう',
+        alertWrong: 'コードが違います。'
       }
+    };
 
-      $langSel.addEventListener('change', e => applyLang(e.target.value));
-      applyLang(currentLang);
+    const L = strings[lang];
+    $nameInput.placeholder = L.namePh;
+    $msgInput.placeholder  = L.msgPh;
+    $pwInput.placeholder   = L.codePh;
+    $unlockBtn.textContent = L.btnOpen;
+    $submitBtn.textContent = L.btnSend;
+    $bgmInfo.textContent   = L.bgm;
+  }
+  $langSel.addEventListener('change', e => applyLang(e.target.value));
+  applyLang(currentLang);
 
-      const INVITE_CODE = '0920';
-      $unlockBtn.addEventListener('click', () => {
-        if ($pwInput.value.trim() === INVITE_CODE) {
-          $lockScreen.style.display = 'none';
-          $mainContent.style.display = 'block';
-          $bgm.muted = false;
-          $bgm.currentTime = 0;
-          $bgm.play().catch(() => {});
-        } else {
-          alert({
-            ko: '코드가 틀립니다.',
-            ja: 'コードが違います。',
-            en: 'Wrong code.'
-          }[currentLang]);
-        }
-      });
+  /* ───── 초대코드 잠금 해제 ───── */
+  const INVITE_CODE = '0920';
+  $unlockBtn.addEventListener('click', () => {
+    if ($pwInput.value.trim() === INVITE_CODE) {
+      $lockScreen.style.display = 'none';
+      $mainContent.style.display = 'block';
+      $bgm.muted = false;
+      $bgm.currentTime = 0;
+      $bgm.play().catch(() => {});
+    } else {
+      alert({
+        ko: '코드가 틀립니다.',
+        en: 'Wrong code.',
+        ja: 'コードが違います。'
+      }[currentLang]);
+    }
+  });
 
-      const messages = {
-        ko: {
-          sending: '전송 중입니다...',
-          success: '감사합니다! 잘 전달되었어요.',
-          error: '오류가 발생했지만 메시지는 전달되었을 수 있어요.'
-        },
-        ja: {
-          sending: '送信中です...',
-          success: 'ありがとうございます！正常に送信されました。',
-          error: 'エラーが発生しましたが、メッセージは届いた可能性があります。'
-        },
-        en: {
-          sending: 'Sending...',
-          success: 'Thank you! Your message has been sent.',
-          error: 'An error occurred, but your message might still have been delivered.'
-        }
-      };
+  /* ───── RSVP 전송 ───── */
+  const messages = {
+    ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
+    en: { sending: 'Sending...',         success: 'Thank you! Your message has been sent.' },
+    ja: { sending: '送信中です...',      success: 'ありがとうございます！正常に送信されました。' }
+  };
+  $form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $nameInput.value.trim();
+    if (!name) return;
+    const body = new URLSearchParams({ name, message: $msgInput.value.trim() });
 
-      $form.addEventListener('submit', e => {
-        e.preventDefault();
-        const name = $nameInput.value.trim();
-        const message = $msgInput.value.trim();
-        if (!name) return;
+    $status.textContent = messages[currentLang].sending;
+    fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    }).then(() => {
+      $status.textContent = messages[currentLang].success;
+      $form.reset();
+    }).catch(() => {
+      $status.textContent = messages[currentLang].success; // 에러 무시
+    });
+  });
 
-        $status.textContent = messages[currentLang].sending;
-
-        fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ name, message })
-        })
-          .then(() => {
-            $status.textContent = messages[currentLang].success;
-            $form.reset();
-          })
-          .catch(() => {
-            $status.textContent = messages[currentLang].success;
-          });
-      });
-
-      const observer = new IntersectionObserver(entries => {
+  /* ───── 슬라이드 페이드 + BGM info 표시 제어 ───── */
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('show');
-
-        // 🎵 첫 슬라이드(인덱스 0)일 때만 BGM 정보 표시
-        if (entry.target === slides[0]) {
-          bgmInfo.style.display = 'flex';
-        } else {
-          bgmInfo.style.display = 'none';
-        }
+        // 첫 슬라이드에서는 BGM info 나타나고, 나머지 슬라이드에서는 숨김
+        $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
       }
     });
   }, { threshold: 0.25 });
 
-  slides.forEach(slide => observer.observe(slide));
+  $slides.forEach(slide => observer.observe(slide));
 });
   </script>
 </body>
