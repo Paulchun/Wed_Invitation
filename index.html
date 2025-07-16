@@ -95,17 +95,41 @@
   color: #2a382a;
 }
   .calendar h2{font-family:"Dancing Script",cursive;font-size:2.1rem;margin-bottom:12px}
-  .calendar-box{background:#fff;border-radius:16px;padding:18px 16px;box-shadow:0 3px 6px rgba(0,0,0,.08)}
-  .month{text-align:center;font-weight:700;margin-bottom:12px;font-size:1.1rem}
-  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.95rem}
-  .days span{text-align:center;padding:6px 0;border-radius:6px}
-  .highlight {
-  background: #3a543a;
-  color: #fff;
+  .calendar-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .08);
+  transform: scale(1.15); /* 전체적으로 15% 확대 */
+}
+  .month {
+  text-align: center;
   font-weight: 700;
+  margin-bottom: 12px;
+  font-size: 1.3rem; /* 기존보다 조금 더 크게 */
+  color: #2b3e2d;
+}
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.95rem}
+  .days span {
+  text-align: center;
+  padding: 8px 0;
+  font-size: 1.05rem; /* 기존보다 약간 큼 */
+  border-radius: 6px;
+  color: #2a382a;
 }
 .calendar::before, .calendar::after,
-.slide.info::before, .slide.info::after {
+.slide.info {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: transparent;
+  padding: 24px;
+  gap: 20px; /* 기존 코드 유지 */
+}
+
+.slide.info::before, .slide.info::after,
+.calendar::before, .calendar::after {
   content: "";
   position: absolute;
   width: 180px;
@@ -116,22 +140,67 @@
   pointer-events: none;
   z-index: 0;
 }
-.calendar::before,
-.slide.info::before {
+
+.slide.info::before,
+.calendar::before {
   top: -30px;
   left: -30px;
   background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png");
 }
-.calendar::after,
-.slide.info::after {
+.slide.info::after,
+.calendar::after {
   bottom: -30px;
   right: -30px;
   background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_br.png");
 }
-  .slide.info{background:#ecf3ec;flex-direction:column;gap:20px}
-  .slide.info h2{font-family:"Dancing Script",cursive;font-size:2rem}
-  .slide.info p{font-size:1rem;line-height:1.5;text-align:center}
-  .slide.info a{color:#357652;text-decoration:underline}
+
+.slide.info h2 {
+  font-family: "Dancing Script", cursive;
+  font-size: 2.1rem;
+  margin-bottom: 14px;
+  color: #3b4d3c;
+}
+
+.slide.info .info-card {
+  background: rgba(255, 255, 255, 0.82);
+  padding: 28px 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 620px;
+  width: 90%;
+}
+
+.slide.info p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #2c2c2c;
+}
+
+.slide.info a {
+  color: #357652;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid #cde4cd;
+  transition: all 0.2s;
+}
+.slide.info a:hover {
+  color: #274d2f;
+  border-color: #274d2f;
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 6px;
+  background-color: #4b6b4f;
+  color: white !important;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.map-link:hover {
+  background-color: #38543c;
+}
 
   .rsvp{background:#f0f5f0;flex-direction:column;gap:14px}
   .rsvp h2{font-family:"Dancing Script",cursive;font-size:2rem}
@@ -255,20 +324,21 @@
         </div>
       </section>
 
-      <!-- Location -->
-      <section class="slide info fade">
-        <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-        <p id="mapText"
-          data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a><br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>구글 지도 열기</a>"
-          data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br>🗺️ 地図で見る:<br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>Googleマップを見る</a>"
-          data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br>🗺️ View on Map:<br><a href='https://maps.app.goo.gl/n6y67KMzFqBGCT3z9' target='_blank'>View on Google Maps</a>">
-          📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
-          <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
-          🗺️ 지도에서 보기:<br>
-          <a href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a><br>
-          <a href="https://maps.app.goo.gl/n6y67KMzFqBGCT3z9" target="_blank">구글 지도 열기</a>
-        </p>
-      </section>
+<!-- Location -->
+<section class="slide info fade" style="background-image: url('/Wed_Invitation/assets/img/location_bg.png'); background-size: cover; background-position: center;">
+  <div class="info-card">
+    <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
+    <p id="mapText"
+      data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a>"
+      data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>ラビドールリゾート案内</a><br><br>🗺️ 地図で見る:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>ネイバーマップを見る</a>"
+      data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>Laviedor Resort Info</a><br><br>🗺️ View on Map:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>Open Naver Map</a>">
+      📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
+      <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
+      🗺️ 지도에서 보기:<br>
+      <a class="map-link" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
+    </p>
+  </div>
+</section>
 
       <!-- RSVP -->
       <section class="slide rsvp fade">
