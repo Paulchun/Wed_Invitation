@@ -15,7 +15,19 @@
   html,body{height:100%;font-family:"Nanum Gothic", "Noto Sans KR", sans-serif;overflow:hidden;background:#f8fbf7}
   body::before{content:"";position:fixed;inset:0;background:url("https://images.unsplash.com/photo-1553532074-6cba7d5926cb?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;opacity:0.06;pointer-events:none}
 
-  #lockScreen{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px)}
+  #lockScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: url('/Wed_Invitation/assets/img/invite.png') center/cover no-repeat;
+  backdrop-filter: blur(2px);
+  text-align: center;
+}
   .lang-row {
   position: absolute;
   top: 20px;
@@ -128,7 +140,7 @@
   </style>
 </head>
 <body>
-  <div id="lockScreen">
+<div id="lockScreen">
   <div class="lang-row">
     <span>🌐</span>
     <select id="languageSelect">
@@ -138,26 +150,24 @@
     </select>
   </div>
 
-  <div class="invitation-frame">
-    <h1 class="invite-date">09.20</h1>
+  <h1 class="invite-date">09.20</h1>
 
-    <p class="invite-names"
-       data-lang-ko="전혜성 - 남효은"
-       data-lang-en="Chun Hye Sung & Nam Hyo Eun"
-       data-lang-ja="田慧性 & 南曉銀">
-       전혜성 - 남효은
-    </p>
+  <p class="invite-names"
+     data-lang-ko="전혜성 - 남효은"
+     data-lang-en="Chun Hye Sung & Nam Hyo Eun"
+     data-lang-ja="田慧性 & 南曉銀">
+     전혜성 - 남효은
+  </p>
 
-    <p class="invite-place"
-       data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
-       data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
-       data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場">
-       2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
-    </p>
+  <p class="invite-place"
+     data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
+     data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
+     data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場">
+     2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
+  </p>
 
-    <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
-    <button id="unlockBtn">청첩장 열기</button>
-  </div>
+  <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
+  <button id="unlockBtn">청첩장 열기</button>
 </div>
   <audio id="bgm" loop muted>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
