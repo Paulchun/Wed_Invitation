@@ -43,24 +43,6 @@
   #unlockBtn{background:#4b6b4f;color:#fff;border:none;cursor:pointer;transition:.25s}
   #unlockBtn:hover{background:#38543c}
   #version{margin-top:8px;font-size:.85rem;color:#6b7280}
-  #lockScreen::before{
-    content:"";
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:80px;
-    height:80px;
-    background:url("/Wed_Invitation/assets/img/title.png") no-repeat center/contain;
-    opacity:0.4;
-    pointer-events: none;
-  }
-  #lockScreen::after{
-    content:'"Wedding Invitation"';
-    font-size:1.1rem;
-    font-weight:600;
-    color:#2a2a2a;
-    margin-top:20px;
-  }
 
   #bgmInfo{position:fixed;top:12px;right:12px;font-size:.9rem;display:flex;align-items:center;gap:4px;z-index:200;color:#2a2a2a;background:rgba(255,255,255,.8);padding:6px 10px;border-radius:18px;backdrop-filter:blur(4px)}
 
@@ -150,22 +132,26 @@
     </select>
   </div>
 
-  <h1 class="invite-date">09.20</h1>
+<h1 class="invite-date" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #3b4d3c;">
+  Wedding Invitation
+</h1>
 
-  <p class="invite-names"
-     data-lang-ko="전혜성 - 남효은"
-     data-lang-en="Chun Hye Sung & Nam Hyo Eun"
-     data-lang-ja="田慧性 & 南曉銀">
-     전혜성 - 남효은
-  </p>
+<p class="invite-names"
+   data-lang-ko="전혜성 - 남효은"
+   data-lang-en="Chun Hye Sung & Nam Hyo Eun"
+   data-lang-ja="田慧性 & 南曉銀"
+   style="margin-bottom: 12px; font-size: 1.2rem;">
+   전혜성 - 남효은
+</p>
 
-  <p class="invite-place"
-     data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
-     data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
-     data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場">
-     2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
-  </p>
-
+<p class="invite-place"
+   data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
+   data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
+   data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場"
+   style="text-align: center; font-size: 1rem; line-height: 1.6;">
+   2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
+</p>
+  
   <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
   <button id="unlockBtn">청첩장 열기</button>
 </div>
