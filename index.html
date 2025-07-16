@@ -69,13 +69,41 @@
 }
   .person-block p{font-size:1.1rem;line-height:1.6;background:rgba(255,255,255,.75);padding:12px 16px;border-radius:12px}
 
-  .calendar{flex-direction:column;background:#f5faf4;color:#1e1e1e;font-family:"Nanum Gothic", sans-serif}
+  .calendar {
+  flex-direction: column;
+  background: transparent;
+  color: #2b3e2d;
+  font-family: "Nanum Gothic", sans-serif;
+}
+.calendar h2 {
+  font-family: "Dancing Script", cursive;
+  font-size: 2.1rem;
+  margin-bottom: 12px;
+  color: #3b4d3c; /* 헤더도 동일 계열 색상으로 */
+}
+.month {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #2b3e2d;
+}
+.days span {
+  text-align: center;
+  padding: 6px 0;
+  border-radius: 6px;
+  color: #2a382a;
+}
   .calendar h2{font-family:"Dancing Script",cursive;font-size:2.1rem;margin-bottom:12px}
   .calendar-box{background:#fff;border-radius:16px;padding:18px 16px;box-shadow:0 3px 6px rgba(0,0,0,.08)}
   .month{text-align:center;font-weight:700;margin-bottom:12px;font-size:1.1rem}
   .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.95rem}
   .days span{text-align:center;padding:6px 0;border-radius:6px}
-  .highlight{background:#4b6b4f;color:#fff;font-weight:700}
+  .highlight {
+  background: #3a543a;
+  color: #fff;
+  font-weight: 700;
+}
 .calendar::before, .calendar::after,
 .slide.info::before, .slide.info::after {
   content: "";
@@ -212,7 +240,7 @@
       </section>
 
       <!-- Calendar -->
-      <section class="slide calendar fade">
+      <section class="slide calendar fade" style="background-image: url('/Wed_Invitation/assets/img/calendar_bg.png'); background-size: cover; background-position: center;">
         <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
           <div class="month" id="calendarMonth">2025년 9월</div>
