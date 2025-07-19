@@ -88,7 +88,15 @@
 }
   .person{flex-direction:column;gap:20px;background:#ffffffd9;color:#1e1e1e}
   .person h2{font-family:"Dancing Script",cursive;font-size:2.2rem;margin-bottom:4px}
-  .person-block{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding-top:40px;z-index:1}
+  .person-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;            /* ✅ 줄임 */
+  padding-top: 10px;    /* ✅ 줄임 */
+  z-index: 1;
+}
 .person-block img {
   width: 80vw;
   max-width: 280px; /* 기존보다 작게 */
