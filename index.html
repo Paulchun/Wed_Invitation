@@ -432,6 +432,10 @@
   </main>
 
 <script>
+  const $scrollContainer = document.querySelector('.scroll-container');
+if($scrollContainer) {
+  $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+}
 function isMobileDevice() {
   const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   const ua = navigator.userAgent.toLowerCase();
@@ -588,17 +592,15 @@ $unlockBtn.addEventListener('click', () => {
   });
 
   /* ───── 슬라이드 페이드 + BGM info 표시 제어 ───── */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-        // 첫 슬라이드에서는 BGM info 나타나고, 나머지 슬라이드에서는 숨김
-        $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
-      }
-    });
-  }, { threshold: 0.25 });
-
-  $slides.forEach(slide => observer.observe(slide));
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
+    }
+  });
+}, { threshold: 0.25, root: document.querySelector('.scroll-container') });
+$slides.forEach(slide => observer.observe(slide));
 });
   </script>
 </body>
