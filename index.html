@@ -506,7 +506,7 @@ $allTransEls.forEach(el => {
         codePh: '초대 코드를 입력하세요',
         btnOpen: '청첩장 열기',
         btnSend: '보내기',
-        bgm: '🎵 그 비스크 돌은 사랑을 한다 - ありがとう',
+        bgm: '🎵 - ありがとう',
         alertWrong: '코드가 틀립니다.'
       },
       en: {
@@ -545,10 +545,14 @@ $allTransEls.forEach(el => {
   const $mainContent = document.getElementById('mainContent');
 $unlockBtn.addEventListener('click', () => {
   if ($pwInput.value.trim() === INVITE_CODE) {
+    $lockScreen.style.display = 'none';
     $mainContent.style.display = 'block';
       $bgm.muted = false;
       $bgm.currentTime = 0;
       $bgm.play().catch(() => {});
+        if($slides && $slides.length > 0){
+      $slides[0].classList.add('show');
+    }
     } else {
       alert({
         ko: '코드가 틀립니다.',
