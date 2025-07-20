@@ -354,7 +354,7 @@
     <button id="unlockBtn">청첩장 열기</button>
   </div>
   
-  <audio id="bgm" loop muted>
+<audio id="bgm" loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
@@ -563,25 +563,66 @@ document.addEventListener('DOMContentLoaded', () => {
     $bgmInfo.textContent = L.bgm;
   }
 
+  // ✅ 올바른 위치: applyLang 바깥에서 RSVP 등록
+  $form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = $nameInput.value.trim();
+    const message = $msgInput.value.trim();
+
+    if (!name) {
+      $status.textContent = currentLang === 'ko' ? '이름을 입력해주세요.' :
+                            currentLang === 'ja' ? 'お名前を入力してください。' :
+                            'Please enter your name.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('message', message);
+
+    try {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (res.ok) {
+        $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
+                              currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                              'Thank you! Your message has been sent.';
+        $form.reset();
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      $status.textContent = currentLang === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' :
+                            currentLang === 'ja' ? 'エラーが発生しました。もう一度お試しください。' :
+                            'An error occurred. Please try again.';
+    }
+  });
+
   $langSel.addEventListener('change', e => {
     applyLang(e.target.value);
-    renderCalendar(e.target.value); // ✅ 언어 바뀔 때 달력도 다시 렌더링
+    renderCalendar(e.target.value);
   });
 
   applyLang(currentLang);
-  renderCalendar(currentLang); // ✅ 초기 달력 렌더링
+  renderCalendar(currentLang);
+});
   
 $unlockBtn.addEventListener('click', () => {
   const entered = $pwInput.value.trim();
   if (entered === '0920') {
     $lockScreen.style.display = 'none';
     $mainContent.style.display = 'block';
-    $bgm.play();
+   $bgm.muted = false;
+    $bgm.play().catch(() => {
+      console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
+    });
   } else {
     alert(strings[currentLang].alertWrong);
   }
 });
-  // ... RSVP, unlock 등 기존 코드 유지 ...
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -594,8 +635,7 @@ $unlockBtn.addEventListener('click', () => {
 
   $slides.forEach(slide => observer.observe(slide));
 }); // ✅ 이 중괄호가 잘 닫히게 끝나야 합니다
-
-
+  
 // ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
 function renderCalendar(lang) {
   const calendarDaysEl = document.getElementById('calendarDays');
