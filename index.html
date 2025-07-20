@@ -570,7 +570,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyLang(currentLang);
   renderCalendar(currentLang); // ✅ 초기 달력 렌더링
-
+  
+$unlockBtn.addEventListener('click', () => {
+  const entered = $pwInput.value.trim();
+  if (entered === '0920') {
+    $lockScreen.style.display = 'none';
+    $mainContent.style.display = 'block';
+    $bgm.play();
+  } else {
+    alert(strings[currentLang].alertWrong);
+  }
+});
   // ... RSVP, unlock 등 기존 코드 유지 ...
 
   const observer = new IntersectionObserver(entries => {
