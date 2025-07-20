@@ -28,28 +28,29 @@
   }
 
   #lockScreen {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: url('/Wed_Invitation/assets/img/invite.png') center/cover no-repeat;
-  backdrop-filter: blur(2px);
-  text-align: center;
-}
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: url('/Wed_Invitation/assets/img/invite.png') center/cover no-repeat;
+    backdrop-filter: blur(2px);
+    text-align: center;
+  }
+  
   .lang-row {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1rem;
-  z-index: 10;
-}
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+    z-index: 10;
+  }
   .lang-row select{padding:6px;border-radius:6px;border:1px solid #cbd5d1}
   #pwInput,#unlockBtn{width:260px;margin-top:10px;padding:12px 16px;font-size:1rem;border-radius:8px;border:1px solid #cbd5d1;outline:none}
   #unlockBtn{background:#4b6b4f;color:#fff;border:none;cursor:pointer;transition:.25s}
@@ -57,7 +58,7 @@
   #version{margin-top:8px;font-size:.85rem;color:#6b7280}
 
   #bgmInfo{position:fixed;top:12px;right:12px;font-size:.9rem;display:flex;align-items:center;gap:4px;z-index:200;color:#2a2a2a;background:rgba(255,255,255,.8);padding:6px 10px;border-radius:18px;backdrop-filter:blur(4px)}
-  
+
   .scroll-container{height:100vh;overflow-y:scroll;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-behavior:smooth}
   .slide{position:relative;height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;padding:24px;scroll-snap-align:start;opacity:0;transition:opacity .9s ease;flex-shrink:0;background-size:cover;background-position:center;background-repeat:no-repeat}
   .slide.show{opacity:1}
@@ -269,13 +270,14 @@
   </style>
 </head>
 <body>
-<div id="pcBlocker" style="display:none; justify-content: center; align-items: center; flex-direction: column; text-align: center; height: 100vh;">
-    <img src="assets/img/QR.png" alt="QR 코드" width="180" />
-    <p data-lang-ko="모바일로 접속해 주세요 📱"
-       data-lang-en="Please open on your mobile 📱"
-       data-lang-ja="スマートフォンで開いてください 📱">
-       모바일로 접속해 주세요 📱
-    </p>
+  <div id="pcBlocker">
+    <div style="max-width: 300px;">
+      <div style="font-size: 4rem; margin-bottom: 20px;"></div>
+      <p data-lang-ko="모바일로 접속해 주세요📱"
+         data-lang-en="Please open on your mobile📱"
+         data-lang-ja="スマートフォンで開いてください📱">
+         모바일로 접속해 주세요
+      </p>
       <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
         QR 코드를 스캔하거나 모바일 기기로 접속하세요
       </p>
@@ -304,39 +306,37 @@
        전혜성 - 남효은
     </p>
 
-  <p class="invite-place"
-   data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
-   data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
-   data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場"
-   style="text-align: center; font-size: 1rem; line-height: 1.6;">
-   2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
-</p>
+    <p class="invite-place"
+       data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
+       data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
+       data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場"
+       style="text-align: center; font-size: 1rem; line-height: 1.6;">
+       2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
+    </p>
+      
+    <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
+    <button id="unlockBtn">청첩장 열기</button>
+  </div>
   
-  <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
-  <button id="unlockBtn">청첩장 열기</button>
-</div>
   <audio id="bgm" loop muted>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
-<div id="bgmInfo" class="only-slide-1"🎵 그 비스크 돌은 사랑을 한다 - ありがとう" data-lang-ja="🎵 ビスク・ドールは恋をする - ありがとう" data-lang-en="🎵 My Dress-Up Darling - Arigato">🎵 그 비스크 돌은 사랑을 한다 - ありがとう</div>
+
 
   <main id="mainContent" style="display:none">
     <div class="scroll-container">
 
       <!-- Slide 1 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
-        <div class="welcome-header">We’re getting married<br>Hyesung & Hyo Eun</div>
-        </div>
+        <div class="welcome-header">We're getting married<br>Hyesung & Hyo Eun</div>
       </section>
 
       <!-- Slide 2 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/2.jpg')">
-        </div>
       </section>
 
       <!-- Slide 3 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/3.jpg')">
-        </div>
       </section>
 
       <!-- Groom -->
@@ -344,9 +344,10 @@
         <h2 data-lang-ko="신랑" data-lang-ja="新郎" data-lang-en="Groom">신랑</h2>
         <div class="person-block groom">
           <img src="/Wed_Invitation/assets/img/groom.jpg" alt="신랑" />
-  <p data-lang-ko="언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼."
-       data-lang-ja="どんな時もそばにいてくれる君に、心から感謝しています。 一緒に過ごす未来が、今からとても楽しみです。"
-       data-lang-en="Thank you from the bottom of my heart for always being by my side. I’m so looking forward to our future together.">
+          <p data-lang-ko="언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼."
+             data-lang-ja="どんな時もそばにいてくれる君に、心から感謝しています。 一緒に過ごす未来が、今からとても楽しみです。"
+             data-lang-en="Thank you from the bottom of my heart for always being by my side. I'm so looking forward to our future together.">
+            언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼.
           </p>
         </div>
       </section>
@@ -356,9 +357,10 @@
         <h2 data-lang-ko="신부" data-lang-ja="新婦" data-lang-en="Bride">신부</h2>
         <div class="person-block bride">
           <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
-    <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!"
-       data-lang-ja="これからも、よく食べてよく寝て、元気でいてね。私はその隣で笑ってます！"
-       data-lang-en="Keep eating well, sleeping soundly, and staying happy, I'll be right beside you, smiling all the way.">
+          <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!"
+             data-lang-ja="これからも、よく食べてよく寝て、元気でいてね。私はその隣で笑ってます！"
+             data-lang-en="Keep eating well, sleeping soundly, and staying happy, I'll be right beside you, smiling all the way.">
+            앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!
           </p>
         </div>
       </section>
@@ -368,6 +370,15 @@
         <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
           <div class="month" id="calendarMonth">2025년 9월</div>
+          <div class="calendar-weekdays">
+  <span data-lang-ko="일" data-lang-en="Sun" data-lang-ja="日">일</span>
+  <span data-lang-ko="월" data-lang-en="Mon" data-lang-ja="月">월</span>
+  <span data-lang-ko="화" data-lang-en="Tue" data-lang-ja="火">화</span>
+  <span data-lang-ko="수" data-lang-en="Wed" data-lang-ja="水">수</span>
+  <span data-lang-ko="목" data-lang-en="Thu" data-lang-ja="木">목</span>
+  <span data-lang-ko="금" data-lang-en="Fri" data-lang-ja="金">금</span>
+  <span data-lang-ko="토" data-lang-en="Sat" data-lang-ja="土">토</span>
+</div>
           <div class="days" id="calendarDays">
             <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
             <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
@@ -379,21 +390,21 @@
         </div>
       </section>
 
-<!-- Location -->
-<section class="slide info fade" style="background-image: url('/Wed_Invitation/assets/img/location_bg.png'); background-size: cover; background-position: center;">
-  <div class="info-card">
-    <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-    <p id="mapText"
-      data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a>"
-      data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>ラビドールリゾート案内</a><br><br>🗺️ 地図で見る:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>ネイバーマップを見る</a>"
-      data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>Laviedor Resort Info</a><br><br>🗺️ View on Map:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>Open Naver Map</a>">
-      📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
-      <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
-      🗺️ 지도에서 보기:<br>
-      <a class="map-link" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
-    </p>
-  </div>
-</section>
+      <!-- Location -->
+      <section class="slide info fade" style="background-image: url('/Wed_Invitation/assets/img/location_bg.png'); background-size: cover; background-position: center;">
+        <div class="info-card">
+          <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
+          <p id="mapText"
+            data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a>"
+            data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>ラビドールリゾート案内</a><br><br>🗺️ 地図で見る:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>ネイバーマップを見る</a>"
+            data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>Laviedor Resort Info</a><br><br>🗺️ View on Map:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>Open Naver Map</a>">
+            📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
+            <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
+            🗺️ 지도에서 보기:<br>
+            <a class="map-link" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
+          </p>
+        </div>
+      </section>
 
       <!-- RSVP -->
       <section class="slide rsvp fade" style="background-image: url('/Wed_Invitation/assets/img/rsvp_bg.png'); background-size: cover; background-position: center;">
@@ -405,11 +416,11 @@
            참석 의사가 있으신 분은 아래에 남겨주세요
         </p>
         <p id="rsvpDeadline" class="rsvp-header"
-   data-lang-ko="번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다."
-   data-lang-ja="お手数をおかけいたしますが、8月15日までにご出欠のご連絡をお願いいたします。"
-   data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
-   번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
-</p>
+           data-lang-ko="번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다."
+           data-lang-ja="お手数をおかけいたしますが、8月15日までにご出欠のご連絡をお願いいたします。"
+           data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
+           번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
+        </p>
         <form id="rsvpForm">
           <input type="text" id="rsvpName" placeholder="성함" />
           <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
