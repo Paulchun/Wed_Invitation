@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,29 +16,42 @@
   html,body{height:100%;font-family:"Nanum Gothic", "Noto Sans KR", sans-serif;overflow:hidden;background:#f8fbf7}
   body::before{content:"";position:fixed;inset:0;background:url("https://images.unsplash.com/photo-1553532074-6cba7d5926cb?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;opacity:0.06;pointer-events:none}
 
+  #pcBlocker {
+    display:none; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    text-align: center; 
+    height: 100vh;
+    background: #f8fbf7;
+    font-size: 1.2rem;
+    color: #3b4d3c;
+  }
+
   #lockScreen {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: url('/Wed_Invitation/assets/img/invite.png') center/cover no-repeat;
-  backdrop-filter: blur(2px);
-  text-align: center;
-}
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+    backdrop-filter: blur(2px);
+    text-align: center;
+  }
+  
   .lang-row {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1rem;
-  z-index: 10;
-}
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+    z-index: 10;
+  }
   .lang-row select{padding:6px;border-radius:6px;border:1px solid #cbd5d1}
   #pwInput,#unlockBtn{width:260px;margin-top:10px;padding:12px 16px;font-size:1rem;border-radius:8px;border:1px solid #cbd5d1;outline:none}
   #unlockBtn{background:#4b6b4f;color:#fff;border:none;cursor:pointer;transition:.25s}
@@ -54,199 +68,191 @@
   .slide::after{bottom:-40px;right:-40px;background-image:url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_br.png")}
 
   .overlay-text {
-  position: absolute;
-  bottom: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 14px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  max-width: 85%;
-  text-align: center;
-  line-height: 1.3;
-  white-space: nowrap;         /* ✅ 줄바꿈 방지 */
-  overflow: hidden;
-  text-overflow: ellipsis;     /* ✅ 길면 말줄임 처리 */
-  z-index: 1;
-}
-.welcome-header {
-  position: absolute;
-  top: 18%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: "Dancing Script", cursive;
-  font-size: 2.2rem;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  white-space: nowrap;            /* ✅ 한 줄 유지 */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-}
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    max-width: 85%;
+    text-align: center;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 1;
+  }
+  
+  .welcome-header {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Dancing Script", cursive;
+    font-size: 2.2rem;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+  
   .person{flex-direction:column;gap:20px;background:#ffffffd9;color:#1e1e1e}
   .person h2{font-family:"Dancing Script",cursive;font-size:2.2rem;margin-bottom:4px}
   .person-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;            /* ✅ 줄임 */
-  padding-top: 10px;    /* ✅ 줄임 */
-  z-index: 1;
-}
-.person-block img {
-  width: 80vw;
-  max-width: 280px; /* 기존보다 작게 */
-  height: auto;
-  object-fit: cover;
-  z-index: 1;
-  margin-top: 10px; /* 위쪽 여백 줘서 헤더 겹침 방지 */
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding-top: 10px;
+    z-index: 1;
+  }
+  .person-block img {
+    width: 80vw;
+    max-width: 280px;
+    height: auto;
+    object-fit: cover;
+    z-index: 1;
+    margin-top: 10px;
+  }
   .person-block p{font-size:1.1rem;line-height:1.6;background:rgba(255,255,255,.75);padding:12px 16px;border-radius:12px}
 
-.calendar {
-  flex-direction: column;
-  background: #f5faf4;
-  color: #1e1e1e;
-  font-family: "Nanum Gothic", sans-serif;
-  position: relative; /* 🟢 배경 장식용 ::before/::after 위치 기준 */
-}
-.calendar h2 {
-  font-family: "Dancing Script", cursive;
-  font-size: 2.1rem;
-  margin-bottom: 12px;
-  color: #3b4d3c; /* 헤더도 동일 계열 색상으로 */
-}
-.month {
-  text-align: center;
-  font-weight: 700;
-  margin-bottom: 12px;
-  font-size: 1.1rem;
-  color: #2b3e2d;
-}
-.days span {
-  text-align: center;
-  padding: 6px 0;
-  border-radius: 6px;
-  color: #2a382a;
-}
-  .calendar h2{font-family:"Dancing Script",cursive;font-size:2.1rem;margin-bottom:12px}
-.calendar-box {
-  background: #fff;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, .08);
-  position: relative; /* 🟢 z-index 적용을 위해 필요 */
-  z-index: 1;          /* 🟢 달력 내용이 위로 보이도록 설정 */
-}
+  .calendar {
+    flex-direction: column;
+    background: #f5faf4;
+    color: #1e1e1e;
+    font-family: "Nanum Gothic", sans-serif;
+    position: relative;
+  }
+  .calendar h2 {
+    font-family: "Dancing Script", cursive;
+    font-size: 2.1rem;
+    margin-bottom: 12px;
+    color: #3b4d3c;
+  }
   .month {
-  text-align: center;
-  font-weight: 700;
-  margin-bottom: 12px;
-  font-size: 1.3rem; /* 기존보다 조금 더 크게 */
-  color: #2b3e2d;
-}
-  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.95rem}
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    color: #2b3e2d;
+  }
   .days span {
-  text-align: center;
-  padding: 8px 0;
-  font-size: 1.05rem; /* 기존보다 약간 큼 */
-  border-radius: 6px;
-  color: #2a382a;
-}
-.calendar::before, .calendar::after,
-.slide.info {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: transparent;
-  padding: 24px;
-  gap: 20px; /* 기존 코드 유지 */
-}
+    text-align: center;
+    padding: 8px 0;
+    font-size: 1.05rem;
+    border-radius: 6px;
+    color: #2a382a;
+  }
+  
+  .calendar-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .08);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.95rem}
+  
+  .calendar::before, .calendar::after,
+  .slide.info {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: transparent;
+    padding: 24px;
+    gap: 20px;
+  }
 
-.slide.info::before, .slide.info::after,
-.calendar::before, .calendar::after {
-  content: "";
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.4;
-  pointer-events: none;
-  z-index: 0;
-}
+  .slide.info::before, .slide.info::after,
+  .calendar::before, .calendar::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-.slide.info::before,
-.calendar::before {
-  top: -30px;
-  left: -30px;
-  background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png");
-}
-.slide.info::after,
-.calendar::after {
-  bottom: -30px;
-  right: -30px;
-  background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_br.png");
-}
+  .slide.info::before,
+  .calendar::before {
+    top: -30px;
+    left: -30px;
+    background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_tl.png");
+  }
+  .slide.info::after,
+  .calendar::after {
+    bottom: -30px;
+    right: -30px;
+    background-image: url("https://raw.githubusercontent.com/paul-yoon/assets/main/leaf_br.png");
+  }
 
-.slide.info h2 {
-  font-family: "Dancing Script", cursive;
-  font-size: 2.1rem;
-  margin-bottom: 14px;
-  color: #3b4d3c;
-}
+  .slide.info h2 {
+    font-family: "Dancing Script", cursive;
+    font-size: 2.1rem;
+    margin-bottom: 14px;
+    color: #3b4d3c;
+  }
 
-.slide.info .info-card {
-  background: rgba(255, 255, 255, 0.82);
-  padding: 28px 20px;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  max-width: 620px;
-  width: 90%;
-}
+  .slide.info .info-card {
+    background: rgba(255, 255, 255, 0.82);
+    padding: 28px 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 620px;
+    width: 90%;
+  }
 
-.slide.info p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #2c2c2c;
-}
+  .slide.info p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #2c2c2c;
+  }
 
-.slide.info a {
-  color: #357652;
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1px solid #cde4cd;
-  transition: all 0.2s;
-}
-.slide.info a:hover {
-  color: #274d2f;
-  border-color: #274d2f;
-}
+  .slide.info a {
+    color: #357652;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #cde4cd;
+    transition: all 0.2s;
+  }
+  .slide.info a:hover {
+    color: #274d2f;
+    border-color: #274d2f;
+  }
 
-.map-link {
-  display: inline-block;
-  margin-top: 6px;
-  background-color: #4b6b4f;
-  color: white !important;
-  padding: 8px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-.map-link:hover {
-  background-color: #38543c;
-}
+  .map-link {
+    display: inline-block;
+    margin-top: 6px;
+    background-color: #4b6b4f;
+    color: white !important;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .map-link:hover {
+    background-color: #38543c;
+  }
     
-.highlight {
-  background: #4b6b4f;
-  color: #fff;
-  font-weight: 700;
-}
+  .highlight {
+    background: #4b6b4f;
+    color: #fff;
+    font-weight: 700;
+  }
+  
   .rsvp{background:#f0f5f0;flex-direction:column;gap:14px}
   .rsvp h2{font-family:"Dancing Script",cursive;font-size:2rem}
   .rsvp-header{font-size:1.1rem;margin-bottom:8px;font-weight:600;text-align:center}
@@ -257,105 +263,112 @@
   .rsvp button:hover{background:#38543c}
   #rsvpStatus{font-weight:600;text-align:center;margin-top:6px}
 
-@media(max-width:768px){
-  .welcome-header {
-    font-size: 1.6rem;  /* ✅ 모바일에서 줄 어긋남 방지 */
+  @media(max-width:768px){
+    .welcome-header {
+      font-size: 1.6rem;
+    }
   }
-}
   </style>
 </head>
 <body>
-  <div id="pcBlocker" style="display:none; justify-content: center; align-items: center; flex-direction: column; text-align: center; height: 100vh;">
-    <img src="assets/img/QR.png" alt="QR 코드" width="180" />
-    <p data-lang-ko="모바일로 접속해 주세요 📱"
-       data-lang-en="Please open on your mobile 📱"
-       data-lang-ja="スマートフォンで開いてください 📱">
-       모바일로 접속해 주세요 📱
-    </p>
-  </div>  
-<div id="lockScreen">
-  <div class="lang-row">
-    <span>🌐</span>
-    <select id="languageSelect">
-      <option value="ko">한국어</option>
-      <option value="en">English</option>
-      <option value="ja">日本語</option>
-    </select>
+  <div id="pcBlocker">
+    <div style="max-width: 300px;">
+      <div style="font-size: 4rem; margin-bottom: 20px;">📱</div>
+      <p data-lang-ko="모바일로 접속해 주세요"
+         data-lang-en="Please open on your mobile"
+         data-lang-ja="スマートフォンで開いてください">
+         모바일로 접속해 주세요
+      </p>
+      <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+        QR 코드를 스캔하거나 모바일 기기로 접속하세요
+      </p>
+    </div>
   </div>
-
-<h1 class="invite-date" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #3b4d3c;">
-  Wedding Invitation
-</h1>
-
-<p class="invite-names"
-   data-lang-ko="전혜성 - 남효은"
-   data-lang-en="Chun Hye Sung & Nam Hyo Eun"
-   data-lang-ja="田慧性 & 南曉銀"
-   style="margin-bottom: 12px; font-size: 1.2rem;">
-   전혜성 - 남효은
-</p>
-
-<p class="invite-place"
-   data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
-   data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
-   data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場"
-   style="text-align: center; font-size: 1rem; line-height: 1.6;">
-   2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
-</p>
   
-  <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
-  <button id="unlockBtn">청첩장 열기</button>
-</div>
+  <div id="lockScreen">
+    <div class="lang-row">
+      <span>🌐</span>
+      <select id="languageSelect">
+        <option value="ko">한국어</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+      </select>
+    </div>
+
+    <h1 class="invite-date" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #3b4d3c;">
+      Wedding Invitation
+    </h1>
+
+    <p class="invite-names"
+       data-lang-ko="전혜성 - 남효은"
+       data-lang-en="Chun Hye Sung & Nam Hyo Eun"
+       data-lang-ja="田慧性 & 南曉銀"
+       style="margin-bottom: 12px; font-size: 1.2rem;">
+       전혜성 - 남효은
+    </p>
+
+    <p class="invite-place"
+       data-lang-ko="2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장"
+       data-lang-en="Saturday, September 20, 2025 at 12:00 PM<br>Laviedor Resort Outdoor Venue"
+       data-lang-ja="2025年9月20日 土曜日 午後12時<br>ラビドールリゾート 屋外挙式場"
+       style="text-align: center; font-size: 1rem; line-height: 1.6;">
+       2025년 9월 20일 토요일 오후 12시<br>라비돌 리조트 야외 예식장
+    </p>
+      
+    <input type="text" id="pwInput" placeholder="초대 코드를 입력하세요" />
+    <button id="unlockBtn">청첩장 열기</button>
+  </div>
+  
   <audio id="bgm" loop muted>
-    <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
+    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/mpeg" />
   </audio>
-<div id="bgmInfo" class="only-slide-1"🎵 그 비스크 돌은 사랑을 한다 - ありがとう" data-lang-ja="🎵 ビスク・ドールは恋をする - ありがとう" data-lang-en="🎵 My Dress-Up Darling - Arigato">🎵 그 비스크 돌은 사랑을 한다 - ありがとう</div>
+  
+  <div id="bgmInfo">🎵 그 비스크 돌은 사랑을 한다 - ありがとう</div>
 
   <main id="mainContent" style="display:none">
     <div class="scroll-container">
 
       <!-- Slide 1 -->
-      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
-        <div class="welcome-header">We’re getting married<br>Hyesung & Hyo Eun</div>
-        </div>
+      <section class="slide fade" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1500&q=80')">
+        <div class="welcome-header">We're getting married<br>Hyesung & Hyo Eun</div>
       </section>
 
       <!-- Slide 2 -->
-      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/2.jpg')">
-        </div>
+      <section class="slide fade" style="background-image:url('https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1500&q=80')">
       </section>
 
       <!-- Slide 3 -->
-      <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/3.jpg')">
-        </div>
+      <section class="slide fade" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=80')">
       </section>
 
       <!-- Groom -->
-      <section class="slide person fade" style="background-image: url('/Wed_Invitation/assets/img/groom_bg.png'); background-size: cover; background-position: center;">
+      <section class="slide person fade" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center;">
         <h2 data-lang-ko="신랑" data-lang-ja="新郎" data-lang-en="Groom">신랑</h2>
         <div class="person-block groom">
-          <img src="/Wed_Invitation/assets/img/groom.jpg" alt="신랑" />
-  <p data-lang-ko="언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼."
-       data-lang-ja="どんな時もそばにいてくれる君に、心から感謝しています。 一緒に過ごす未来が、今からとても楽しみです。"
-       data-lang-en="Thank you from the bottom of my heart for always being by my side. I’m so looking forward to our future together.">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="신랑" />
+          <p data-lang-ko="언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼."
+             data-lang-ja="どんな時もそばにいてくれる君に、心から感謝しています。 一緒に過ごす未来が、今からとても楽しみです。"
+             data-lang-en="Thank you from the bottom of my heart for always being by my side. I'm so looking forward to our future together.">
+            언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼.
           </p>
         </div>
       </section>
 
       <!-- Bride -->
-      <section class="slide person fade" style="background-image: url('/Wed_Invitation/assets/img/bride_bg.png'); background-size: cover; background-position: center;">
+      <section class="slide person fade" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center;">
         <h2 data-lang-ko="신부" data-lang-ja="新婦" data-lang-en="Bride">신부</h2>
         <div class="person-block bride">
-          <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
-    <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!"
-       data-lang-ja="これからも、よく食べてよく寝て、元気でいてね。私はその隣で笑ってます！"
-       data-lang-en="Keep eating well, sleeping soundly, and staying happy, I'll be right beside you, smiling all the way.">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80" alt="신부" />
+          <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!"
+             data-lang-ja="これからも、よく食べてよく寝て、元気でいてね。私はその隣で笑ってます！"
+             data-lang-en="Keep eating well, sleeping soundly, and staying happy, I'll be right beside you, smiling all the way.">
+            앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!
           </p>
         </div>
       </section>
 
       <!-- Calendar -->
-      <section class="slide calendar fade" style="background-image: url('/Wed_Invitation/assets/img/calendar_bg.png'); background-size: cover; background-position: center;">
+      <section class="slide calendar fade" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center;">
         <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
           <div class="month" id="calendarMonth">2025년 9월</div>
@@ -370,24 +383,24 @@
         </div>
       </section>
 
-<!-- Location -->
-<section class="slide info fade" style="background-image: url('/Wed_Invitation/assets/img/location_bg.png'); background-size: cover; background-position: center;">
-  <div class="info-card">
-    <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
-    <p id="mapText"
-      data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a>"
-      data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>ラビドールリゾート案内</a><br><br>🗺️ 地図で見る:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>ネイバーマップを見る</a>"
-      data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>Laviedor Resort Info</a><br><br>🗺️ View on Map:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>Open Naver Map</a>">
-      📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
-      <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
-      🗺️ 지도에서 보기:<br>
-      <a class="map-link" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
-    </p>
-  </div>
-</section>
+      <!-- Location -->
+      <section class="slide info fade" style="background-image: url('https://images.unsplash.com/photo-1464207687429-7505649dae38?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center;">
+        <div class="info-card">
+          <h2 data-lang-ko="오시는 길" data-lang-ja="アクセス" data-lang-en="How to Get There">오시는 길</h2>
+          <p id="mapText"
+            data-lang-ko="📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>라비돌 리조트 안내</a><br><br>🗺️ 지도에서 보기:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>네이버 지도 열기</a>"
+            data-lang-ja="📍 京畿道 華城市 正南面 世子路 286<br>🚌 水原駅 6-3番 / 餅店駅 35-1, 35-3, 50番<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>ラビドールリゾート案内</a><br><br>🗺️ 地図で見る:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>ネイバーマップを見る</a>"
+            data-lang-en="📍 286, Sejaro, Jeongnam-myeon, Hwaseong-si, Gyeonggi-do<br>🚌 Suwon Sta. 6-3 / Byeongjeom Sta. 35-1, 35-3, 50<br><a href='https://laviedor.com/mresort/about.asp?t=4' target='_blank'>Laviedor Resort Info</a><br><br>🗺️ View on Map:<br><a class='map-link' href='https://naver.me/GNWkr4t4' target='_blank'>Open Naver Map</a>">
+            📍 경기도 화성시 정남면 세자로 286<br>🚌 수원역 6-3번 / 병점역 35-1, 35-3, 50번<br>
+            <a href="https://laviedor.com/mresort/about.asp?t=4" target="_blank">라비돌 리조트 안내</a><br><br>
+            🗺️ 지도에서 보기:<br>
+            <a class="map-link" href="https://naver.me/GNWkr4t4" target="_blank">네이버 지도 열기</a>
+          </p>
+        </div>
+      </section>
 
       <!-- RSVP -->
-      <section class="slide rsvp fade" style="background-image: url('/Wed_Invitation/assets/img/rsvp_bg.png'); background-size: cover; background-position: center;">
+      <section class="slide rsvp fade" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center;">
         <h2>RSVP</h2>
         <p id="rsvpHeader" class="rsvp-header"
            data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요"
@@ -396,11 +409,11 @@
            참석 의사가 있으신 분은 아래에 남겨주세요
         </p>
         <p id="rsvpDeadline" class="rsvp-header"
-   data-lang-ko="번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다."
-   data-lang-ja="お手数をおかけいたしますが、8月15日までにご出欠のご連絡をお願いいたします。"
-   data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
-   번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
-</p>
+           data-lang-ko="번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다."
+           data-lang-ja="お手数をおかけいたしますが、8月15日までにご出欠のご連絡をお願いいたします。"
+           data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
+           번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
+        </p>
         <form id="rsvpForm">
           <input type="text" id="rsvpName" placeholder="성함" />
           <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
@@ -413,53 +426,40 @@
 
   <script>
 document.addEventListener('DOMContentLoaded', () => {
-  /* ───── DOM 선택자 ───── */
-  const $langSel     = document.getElementById('languageSelect');
-  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
-  const $pwInput     = document.getElementById('pwInput');
-  const $unlockBtn   = document.getElementById('unlockBtn');
-  const $lockScreen  = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-  const $bgm         = document.getElementById('bgm');
-  const $bgmInfo     = document.getElementById('bgmInfo');
-  const $slides      = document.querySelectorAll('.slide');
-  const $submitBtn   = document.getElementById('rsvpSubmit');
-  const $form        = document.getElementById('rsvpForm');
-  const $status      = document.getElementById('rsvpStatus');
-  const $nameInput   = document.getElementById('rsvpName');
-  const $msgInput    = document.getElementById('rsvpMessage');
-   const $pcBlocker = document.getElementById('pcBlocker');
-  const $lockScreen = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-
- const ua = navigator.userAgent || navigator.vendor || window.opera;
-  const isMobile = /android|iphone|ipad|ipod/i.test(ua.toLowerCase());
-
-  const $pcBlocker   = document.getElementById('pcBlocker');
-  const $lockScreen  = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-
-  if (!isMobile) {
-    // 데스크탑인 경우 → 차단 메시지 보여주고 나머지 숨김
-  const $pcBlocker   = document.getElementById('pcBlocker');
-  const $lockScreen  = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-
+  // PC/모바일 감지 및 차단
   function isMobileDevice() {
     const ua = navigator.userAgent.toLowerCase();
     return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
   }
 
-  const isMobile = isMobileDevice();
+  const $pcBlocker = document.getElementById('pcBlocker');
+  const $lockScreen = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
 
-  if (!isMobile) {
-    if ($pcBlocker) $pcBlocker.style.display = 'flex';
-    if ($lockScreen) $lockScreen.style.display = 'none';
-    if ($mainContent) $mainContent.style.display = 'none';
-  } else {
-    if ($pcBlocker) $pcBlocker.style.display = 'none';
-    if ($lockScreen) $lockScreen.style.display = 'block';
-    if ($mainContent) $mainContent.style.display = 'block';
+  if (!isMobileDevice()) {
+    $pcBlocker.style.display = 'flex';
+    $lockScreen.style.display = 'none';
+    return; // PC인 경우 여기서 스크립트 중단
+  }
+
+  // 모바일인 경우만 아래 코드 실행
+  $pcBlocker.style.display = 'none';
+  $lockScreen.style.display = 'flex';
+
+  // DOM 선택자
+  const $langSel = document.getElementById('languageSelect');
+  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+  const $pwInput = document.getElementById('pwInput');
+  const $unlockBtn = document.getElementById('unlockBtn');
+  const $bgm = document.getElementById('bgm');
+  const $bgmInfo = document.getElementById('bgmInfo');
+  const $slides = document.querySelectorAll('.slide');
+  const $submitBtn = document.getElementById('rsvpSubmit');
+  const $form = document.getElementById('rsvpForm');
+  const $status = document.getElementById('rsvpStatus');
+  const $nameInput = document.getElementById('rsvpName');
+  const $msgInput = document.getElementById('rsvpMessage');
+
   /* ───── 다국어 적용 ───── */
   let currentLang = 'ko';
   function applyLang(lang) {
