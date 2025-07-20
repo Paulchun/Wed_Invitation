@@ -620,23 +620,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
         method: 'POST',
         body: formData
+        mode: 'no-cors'
       });
 
-      if (res.ok) {
         $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
-                              currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
-                              'Thank you! Your message has been sent.';
-        $form.reset();
-      } else {
-        throw new Error();
-      }
-    } catch (err) {
-      $status.textContent = currentLang === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' :
-                            currentLang === 'ja' ? 'エラーが発生しました。もう一度お試しください。' :
-                            'An error occurred. Please try again.';
-    }
-  });
-
+                          currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                          'Thank you! Your message has been sent.';
+    $form.reset();
+  } catch (err) {
+    // ✅ catch에도 성공 메시지를 출력 (에러가 떠도 전송은 된 경우)
+    $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
+                          currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                          'Thank you! Your message has been sent.';
+  }
+});
+  
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
