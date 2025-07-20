@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Hye Sung & Hyo Eun Wedding Invitation.</title>
 
+<!-- Open Graph for link previews -->
+<meta property="og:title" content="Hye Sung & Hyo Eun Wedding Invitation" />
+<meta property="og:description" content="You are cordially invited to the wedding of Hye Sung and Hyo Eun, taking place on September 20, 2025, at Laviedor Resort." />
+<meta property="og:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.jpg" />
+<meta property="og:url" content="https://paulchun.github.io/Wed_Invitation/" />
+<meta property="og:type" content="website" />
+
+<!-- Twitter Card support -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Hye Sung & Hyo Eun Wedding Invitation" />
+<meta name="twitter:description" content="You are cordially invited to the wedding of Hye Sung and Hyo Eun." />
+<meta name="twitter:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.jpg" />
+  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -641,7 +654,12 @@ function renderCalendar(lang) {
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ja: ['日', '月', '火', '水', '木', '金', '土']
   };
-
+const monthNames = {
+    ko: '2025년 9월',
+    en: 'September 2025',
+    ja: '2025年9月'
+  };
+ if (calendarMonthEl) calendarMonthEl.textContent = monthNames[lang]; // ✅ 언어별 달 표기 설정
   const year = 2025;
   const month = 8;
   const firstDay = new Date(year, month, 1).getDay();
