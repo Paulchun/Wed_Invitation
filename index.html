@@ -622,26 +622,28 @@
   
   
   
-  $form.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = $nameInput.value.trim();
-    if (!name) return;
-    const message = $msgInput.value.trim();
-    const body = new URLSearchParams({ name, message });
+$form.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = $nameInput.value.trim();
+  if (!name) return;
+  const message = $msgInput.value.trim();
+  const body = new URLSearchParams({ name, message });
   
     $status.textContent = messages[currentLang].sending;
   
     fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body
-    }).then(() => {
-      $status.textContent = messages[currentLang].success;
-      $form.reset();
-    }).catch(() => {
-      $status.textContent = messages[currentLang].success; // 실패해도 성공 메시지 표시
-    });
+       headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body // ✅ 이 줄이 반드시 필요합니다
+  }).then(() => {
+    $status.textContent = messages[currentLang].success;
+    $form.reset();
+  }).catch(() => {
+    $status.textContent = messages[currentLang].success;
   });
+});
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
