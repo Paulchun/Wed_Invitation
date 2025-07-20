@@ -142,13 +142,33 @@
     font-size: 1.3rem;
     color: #2b3e2d;
   }
-  .days span {
-    text-align: center;
-    padding: 8px 0;
-    font-size: 1.05rem;
-    border-radius: 6px;
-    color: #2a382a;
-  }
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  background: #ffffff90;
+}
+
+.day {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.date {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2a382a;
+}
   
   .calendar-box {
     background: #fff;
@@ -246,11 +266,24 @@
     background-color: #38543c;
   }
     
-  .highlight {
-    background: #4b6b4f;
-    color: #fff;
-    font-weight: 700;
-  }
+.highlight {
+  background: none;
+  border: 2px solid #f87171;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.highlight::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: url('/Wed_Invitation/assets/img/heart.png') center/contain no-repeat;
+  top: -6px;
+  right: -6px;
+}
   
   .rsvp{background:#f0f5f0;flex-direction:column;gap:14px}
   .rsvp h2{font-family:"Dancing Script",cursive;font-size:2rem}
@@ -360,7 +393,7 @@
         <h2 data-lang-ko="신부" data-lang-ja="新婦" data-lang-en="Bride">신부</h2>
         <div class="person-block bride">
           <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
-          <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!"
+          <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내자. 나는 언제나 오빠 옆에서 웃고 있을게!"
              data-lang-ja="これからも、よく食べてよく寝て、元気でいてね。私はその隣で笑ってます！"
              data-lang-en="Keep eating well, sleeping soundly, and staying happy, I'll be right beside you, smiling all the way.">
             앞으로도 잘 먹고 잘 자고, 행복하게 지내줘. 나는 언제나 오빠 옆에서 웃고 있을게!
@@ -370,23 +403,10 @@
 
       <!-- Calendar -->
       <section class="slide calendar fade" style="background-image: url('/Wed_Invitation/assets/img/calendar_bg.png'); background-size: cover; background-position: center;">
-        <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
+        <h2 data-lang-ko="결혼식은 이 날이에요" data-lang-ja="結婚式はこの日です" data-lang-en="The Wedding Day"> 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
           <div class="month" id="calendarMonth">2025년 9월</div>
-  <span data-lang-ko="일" data-lang-en="Sun" data-lang-ja="日">일</span>
-  <span data-lang-ko="월" data-lang-en="Mon" data-lang-ja="月">월</span>
-  <span data-lang-ko="화" data-lang-en="Tue" data-lang-ja="火">화</span>
-  <span data-lang-ko="수" data-lang-en="Wed" data-lang-ja="水">수</span>
-  <span data-lang-ko="목" data-lang-en="Thu" data-lang-ja="木">목</span>
-  <span data-lang-ko="금" data-lang-en="Fri" data-lang-ja="金">금</span>
-  <span data-lang-ko="토" data-lang-en="Sat" data-lang-ja="土">토</span>
-</div>
           <div class="days" id="calendarDays">
-            <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
-            <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
-            <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span class="highlight">20</span>
-            <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span>
-            <span>28</span><span>29</span><span>30</span>
           </div>
         </div>
       </section>
@@ -555,7 +575,7 @@
         $bgm.currentTime = 0;
         $bgm.play().catch(() => {});
         if ($slides.length > 0) {
-          $slides[0].classList.add('show');
+          $slides.forEach(slide => slide.classList.add('show'));
         }
       } else {
         const wrongMsg = {
@@ -605,6 +625,42 @@
 
     $slides.forEach(slide => observer.observe(slide));
   });
+  const calendarDaysEl = document.getElementById('calendarDays');
+  const highlightDate = 20; // 하트 표시 날짜
+
+  const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+
+  // 2025년 9월 기준 정보
+  const year = 2025;
+  const month = 8; // JS에서 0~11 (9월은 8)
+  const firstDay = new Date(year, month, 1).getDay(); // 0: 일요일
+  const totalDays = new Date(year, month + 1, 0).getDate(); // 30
+
+  // 빈칸 채우기용
+  let cells = [];
+
+  // 앞쪽 빈칸
+  for (let i = 0; i < firstDay; i++) {
+    cells.push('');
+  }
+
+  // 실제 날짜
+  for (let i = 1; i <= totalDays; i++) {
+    cells.push(i);
+  }
+
+  // 렌더링
+  calendarDaysEl.innerHTML = cells.map((val, i) => {
+    if (val === '') return `<div class="day-cell"></div>`;
+    const dayName = weekdays[i % 7];
+    const isHighlight = val === highlightDate ? 'highlight' : '';
+    return `
+      <div class="day-cell ${isHighlight}">
+        <span class="day">${dayName}</span>
+        <span class="date">${val}</span>
+      </div>
+    `;
+  }).join('');
 </script>
 </body>
 </html>
