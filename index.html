@@ -434,175 +434,177 @@
 
 <script>
   const $scrollContainer = document.querySelector('.scroll-container');
-if($scrollContainer) {
-  $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function isMobileDevice() {
-  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const ua = navigator.userAgent.toLowerCase();
-  const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
-  const screenWidth = Math.max(window.innerWidth, window.innerHeight);
-  const isMobileScreen = screenWidth <= 1024;
-  const isMobileBrowser = /mobi|android/i.test(ua);
-  const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
-  const isTouchDevice = mediaQuery.matches;
-  return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
-}
-
-function setupResponsiveCheck() {
-  const $pcBlocker = document.getElementById('pcBlocker');
-  const $lockScreen = document.getElementById('lockScreen');
-
-  function checkDevice() {
-    if (!isMobileDevice()) {
-      $pcBlocker.style.display = 'flex';
-      $lockScreen.style.display = 'none';
-    } else {
-      $pcBlocker.style.display = 'none';
-      $lockScreen.style.display = 'flex';
-    }
+  if ($scrollContainer) {
+    $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  checkDevice(); // ✅ 초기 1회 실행
+  function isMobileDevice() {
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const ua = navigator.userAgent.toLowerCase();
+    const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+    const screenWidth = Math.max(window.innerWidth, window.innerHeight);
+    const isMobileScreen = screenWidth <= 1024;
+    const isMobileBrowser = /mobi|android/i.test(ua);
+    const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const isTouchDevice = mediaQuery.matches;
+    return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
+  }
 
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(checkDevice, 250);
-  });
+  function setupResponsiveCheck() {
+    const $pcBlocker = document.getElementById('pcBlocker');
+    const $lockScreen = document.getElementById('lockScreen');
 
-  window.addEventListener('orientationchange', () => {
-    setTimeout(checkDevice, 300);
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  setupResponsiveCheck(); // ✅ 여기서 호출
-  // DOM 선택자
-  const $langSel = document.getElementById('languageSelect');
-  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
-  const $pwInput = document.getElementById('pwInput');
-  const $unlockBtn = document.getElementById('unlockBtn');
-  const $bgm = document.getElementById('bgm');
-  const $bgmInfo = document.getElementById('bgmInfo');
-  const $slides = document.querySelectorAll('.slide');
-  const $submitBtn = document.getElementById('rsvpSubmit');
-  const $form = document.getElementById('rsvpForm');
-  const $status = document.getElementById('rsvpStatus');
-  const $nameInput = document.getElementById('rsvpName');
-  const $msgInput = document.getElementById('rsvpMessage');
-
-  /* ───── 다국어 적용 ───── */
-  let currentLang = 'ko';
-  function applyLang(lang) {
-    currentLang = lang;
-
-    /* data-lang‑xx 속성 있는 모든 요소 업데이트 */
-$allTransEls.forEach(el => {
-  const txt = el.getAttribute(`data-lang-${lang}`); // ← 템플릿 리터럴로 수정
-  if (txt) el.innerHTML = txt;
-});
-
-    /* 입력창, 버튼, BGM info */
-    const strings = {
-      ko: {
-        namePh: '성함',
-        msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
-        codePh: '초대 코드를 입력하세요',
-        btnOpen: '청첩장 열기',
-        btnSend: '보내기',
-        bgm: '🎵 - ありがとう',
-        alertWrong: '코드가 틀립니다.'
-      },
-      en: {
-        namePh: 'Your name',
-        msgPh: 'Message (e.g. need accommodation)',
-        codePh: 'Enter invitation code',
-        btnOpen: 'Open Invitation',
-        btnSend: 'Send',
-        bgm: '🎵 My Dress‑Up Darling - Arigato',
-        alertWrong: 'Wrong code.'
-      },
-      ja: {
-        namePh: 'お名前',
-        msgPh: 'メッセージ (例: 宿泊が必要です)',
-        codePh: '招待コードを入力してください',
-        btnOpen: '招待状を開く',
-        btnSend: '送信',
-        bgm: '🎵 ビスク・ドールは恋をする - ありがとう',
-        alertWrong: 'コードが違います。'
+    function checkDevice() {
+      if (!isMobileDevice()) {
+        $pcBlocker.style.display = 'flex';
+        $lockScreen.style.display = 'none';
+      } else {
+        $pcBlocker.style.display = 'none';
+        $lockScreen.style.display = 'flex';
       }
+    }
+
+    checkDevice();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkDevice, 250);
+    });
+
+    window.addEventListener('orientationchange', () => {
+      setTimeout(checkDevice, 300);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupResponsiveCheck();
+
+    const $langSel = document.getElementById('languageSelect');
+    const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+    const $pwInput = document.getElementById('pwInput');
+    const $unlockBtn = document.getElementById('unlockBtn');
+    const $bgm = document.getElementById('bgm');
+    const $bgmInfo = document.getElementById('bgmInfo');
+    const $slides = document.querySelectorAll('.slide');
+    const $submitBtn = document.getElementById('rsvpSubmit');
+    const $form = document.getElementById('rsvpForm');
+    const $status = document.getElementById('rsvpStatus');
+    const $nameInput = document.getElementById('rsvpName');
+    const $msgInput = document.getElementById('rsvpMessage');
+    const $mainContent = document.getElementById('mainContent');
+    const $lockScreen = document.getElementById('lockScreen');
+
+    let currentLang = 'ko';
+    function applyLang(lang) {
+      currentLang = lang;
+      $allTransEls.forEach(el => {
+        const txt = el.getAttribute(`data-lang-${lang}`);
+        if (txt) el.innerHTML = txt;
+      });
+
+      const strings = {
+        ko: {
+          namePh: '성함',
+          msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
+          codePh: '초대 코드를 입력하세요',
+          btnOpen: '청첩장 열기',
+          btnSend: '보내기',
+          bgm: '🎵 - ありがとう',
+          alertWrong: '코드가 틀립니다.'
+        },
+        en: {
+          namePh: 'Your name',
+          msgPh: 'Message (e.g. need accommodation)',
+          codePh: 'Enter invitation code',
+          btnOpen: 'Open Invitation',
+          btnSend: 'Send',
+          bgm: '🎵 - ありがとう',
+          alertWrong: 'Wrong code.'
+        },
+        ja: {
+          namePh: 'お名前',
+          msgPh: 'メッセージ (例: 宿泊が必要です)',
+          codePh: '招待コードを入力してください',
+          btnOpen: '招待状を開く',
+          btnSend: '送信',
+          bgm: '🎵 - ありがとう',
+          alertWrong: 'コードが違います。'
+        }
+      };
+
+      const L = strings[lang];
+      $nameInput.placeholder = L.namePh;
+      $msgInput.placeholder = L.msgPh;
+      $pwInput.placeholder = L.codePh;
+      $unlockBtn.textContent = L.btnOpen;
+      $submitBtn.textContent = L.btnSend;
+      $bgmInfo.textContent = L.bgm;
+    }
+
+    $langSel.addEventListener('change', e => applyLang(e.target.value));
+    applyLang(currentLang);
+
+    // 초대코드 해제
+    const INVITE_CODE = '0920';
+    $unlockBtn.addEventListener('click', () => {
+      if ($pwInput.value.trim() === INVITE_CODE) {
+        $lockScreen.style.display = 'none';
+        $mainContent.style.display = 'block';
+        $bgm.muted = false;
+        $bgm.currentTime = 0;
+        $bgm.play().catch(() => {});
+        if ($slides.length > 0) {
+          $slides[0].classList.add('show');
+        }
+      } else {
+        const wrongMsg = {
+          ko: '코드가 틀립니다.',
+          en: 'Wrong code.',
+          ja: 'コードが違います。'
+        };
+        alert(wrongMsg[currentLang] || wrongMsg['ko']);
+      }
+    });
+
+    // RSVP 처리
+    const messages = {
+      ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
+      en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
+      ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
     };
 
-    const L = strings[lang];
-    $nameInput.placeholder = L.namePh;
-    $msgInput.placeholder  = L.msgPh;
-    $pwInput.placeholder   = L.codePh;
-    $unlockBtn.textContent = L.btnOpen;
-    $submitBtn.textContent = L.btnSend;
-    $bgmInfo.textContent   = L.bgm;
-  }
-  $langSel.addEventListener('change', e => applyLang(e.target.value));
-  applyLang(currentLang);
+    $form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = $nameInput.value.trim();
+      if (!name) return;
+      const body = new URLSearchParams({ name, message: $msgInput.value.trim() });
 
-  /* ───── 초대코드 잠금 해제 ───── */
-  const INVITE_CODE = '0920';
-  const $mainContent = document.getElementById('mainContent');
-$unlockBtn.addEventListener('click', () => {
-  if ($pwInput.value.trim() === INVITE_CODE) {
-    $lockScreen.style.display = 'none';
-    $mainContent.style.display = 'block';
-      $bgm.muted = false;
-      $bgm.currentTime = 0;
-      $bgm.play().catch(() => {});
-        if($slides && $slides.length > 0){
-      $slides[0].classList.add('show');
-    }
-    } else {
-      alert({
-        ko: '코드가 틀립니다.',
-        en: 'Wrong code.',
-        ja: 'コードが違います。'
-      }[currentLang]);
-    }
-  });
-
-  /* ───── RSVP 전송 ───── */
-  const messages = {
-    ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
-    en: { sending: 'Sending...',         success: 'Thank you! Your message has been sent.' },
-    ja: { sending: '送信中です...',      success: 'ありがとうございます！正常に送信されました。' }
-  };
-  $form.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = $nameInput.value.trim();
-    if (!name) return;
-    const body = new URLSearchParams({ name, message: $msgInput.value.trim() });
-
-    $status.textContent = messages[currentLang].sending;
-    fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body
-    }).then(() => {
-      $status.textContent = messages[currentLang].success;
-      $form.reset();
-    }).catch(() => {
-      $status.textContent = messages[currentLang].success; // 에러 무시
+      $status.textContent = messages[currentLang].sending;
+      fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      }).then(() => {
+        $status.textContent = messages[currentLang].success;
+        $form.reset();
+      }).catch(() => {
+        $status.textContent = messages[currentLang].success;
+      });
     });
-  });
 
-  /* ───── 슬라이드 페이드 + BGM info 표시 제어 ───── */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
-    }
+    // 슬라이드 페이드 효과 및 BGM info
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
+        }
+      });
+    }, { threshold: 0.25, root: $scrollContainer });
+
+    $slides.forEach(slide => observer.observe(slide));
   });
-}, { threshold: 0.25, root: document.querySelector('.scroll-container') });
-$slides.forEach(slide => observer.observe(slide));
-});
-  </script>
+</script>
 </body>
 </html>
