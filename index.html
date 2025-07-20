@@ -265,28 +265,14 @@
   </style>
 </head>
 <body>
-  <div id="pcBlocker" style="display:none; position:fixed; inset:0; z-index:3000; background:#f8fbf7; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;">
-  <div style="max-width:480px;">
-    <h2 id="pcBlockerTitle" style="font-size:1.6rem; color:#2a2a2a; margin-bottom:16px;"
-        data-lang-ko="모바일 기기에서 열어주세요 📱"
-        data-lang-en="Please open this invitation on a mobile device 📱"
-        data-lang-ja="スマートフォンでご覧ください 📱">
-      모바일 기기에서 열어주세요 📱
-    </h2>
-    <p id="pcBlockerDesc" style="font-size:1rem; color:#555; margin-bottom:20px;"
-       data-lang-ko="이 청첩장은 모바일 화면에 최적화되어 있습니다.<br>스마트폰으로 다시 접속해 주세요."
-       data-lang-en="This invitation is optimized for mobile viewing.<br>Please revisit on your smartphone."
-       data-lang-ja="この招待状はモバイル表示に最適化されています。<br>スマートフォンで再度アクセスしてください。">
-       이 청첩장은 모바일 화면에 최적화되어 있습니다.<br>스마트폰으로 다시 접속해 주세요.
+  <div id="pcBlocker" style="display:none; justify-content: center; align-items: center; flex-direction: column; text-align: center; height: 100vh;">
+    <img src="assets/img/QR.png" alt="QR 코드" width="180" />
+    <p data-lang-ko="모바일로 접속해 주세요 📱"
+       data-lang-en="Please open on your mobile 📱"
+       data-lang-ja="スマートフォンで開いてください 📱">
+       모바일로 접속해 주세요 📱
     </p>
-    <img src="/Wed_Invitation/assets/img/QR.png" alt="QR 코드" style="width:200px; height:auto; border:1px solid #ccc; border-radius:12px;" />
-    <p style="font-size:0.9rem; color:#999; margin-top:8px;"
-       data-lang-ko="📷 QR 코드를 스캔해 청첩장을 확인해 주세요"
-       data-lang-en="📷 Scan the QR code to view the invitation"
-       data-lang-ja="📷 QRコードをスキャンして招待状をご覧ください">
-          </p>
-  </div>
-   </div>
+  </div>  
 <div id="lockScreen">
   <div class="lang-row">
     <span>🌐</span>
