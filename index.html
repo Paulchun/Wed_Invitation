@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Hye Sung & Hyo Eun Wedding Invitation.</title>
 
+<!-- Open Graph for link previews -->
+<meta property="og:title" content="Hye Sung & Hyo Eun Wedding Invitation" />
+<meta property="og:description" content="You are cordially invited to the wedding of Hye Sung and Hyo Eun, taking place on September 20, 2025, at Laviedor Resort." />
+<meta property="og:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.jpg" />
+<meta property="og:url" content="https://paulchun.github.io/Wed_Invitation/" />
+<meta property="og:type" content="website" />
+
+<!-- Twitter Card support -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Hye Sung & Hyo Eun Wedding Invitation" />
+<meta name="twitter:description" content="You are cordially invited to the wedding of Hye Sung and Hyo Eun." />
+<meta name="twitter:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.jpg" />
+  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -335,7 +348,7 @@
     </h1>
 
     <p class="invite-names"
-       data-lang-ko="1전혜성 - 남효은"
+       data-lang-ko="전혜성 - 남효은"
        data-lang-en="Chun Hye Sung & Nam Hyo Eun"
        data-lang-ja="ジョン•ヘソン & 南暁銀"
        style="margin-bottom: 12px; font-size: 1.2rem;">
@@ -354,7 +367,7 @@
     <button id="unlockBtn">청첩장 열기</button>
   </div>
   
-<audio id="bgm" loop>
+  <audio id="bgm" loop muted>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
@@ -563,67 +576,61 @@ document.addEventListener('DOMContentLoaded', () => {
     $bgmInfo.textContent = L.bgm;
   }
 
-  // ✅ 올바른 위치: applyLang 바깥에서 RSVP 등록
-  $form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = $nameInput.value.trim();
-    const message = $msgInput.value.trim();
-
-    if (!name) {
-      $status.textContent = currentLang === 'ko' ? '이름을 입력해주세요.' :
-                            currentLang === 'ja' ? 'お名前を入力してください。' :
-                            'Please enter your name.';
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('message', message);
-
-    try {
-      const res = await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (res.ok) {
-        $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
-                              currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
-                              'Thank you! Your message has been sent.';
-        $form.reset();
-      } else {
-        throw new Error();
-      }
-    } catch (err) {
-      $status.textContent = currentLang === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' :
-                            currentLang === 'ja' ? 'エラーが発生しました。もう一度お試しください。' :
-                            'An error occurred. Please try again.';
-    }
-  });
-
   $langSel.addEventListener('change', e => {
     applyLang(e.target.value);
-    renderCalendar(e.target.value);
+    renderCalendar(e.target.value); // ✅ 언어 바뀔 때 달력도 다시 렌더링
   });
 
   applyLang(currentLang);
-  renderCalendar(currentLang);
-});
-  
-$unlockBtn.addEventListener('click', () => {
-  const entered = $pwInput.value.trim();
-  if (entered === '0920') {
-    $lockScreen.style.display = 'none';
-    $mainContent.style.display = 'block';
-   $bgm.muted = false;
-    $bgm.play().catch(() => {
-      console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
-    });
-  } else {
-    alert(strings[currentLang].alertWrong);
-  }
-});
+  renderCalendar(currentLang); // ✅ 초기 달력 렌더링
 
+    // 초대코드 해제
+    const INVITE_CODE = '0920';
+    $unlockBtn.addEventListener('click', () => {
+      if ($pwInput.value.trim() === INVITE_CODE) {
+        $lockScreen.style.display = 'none';
+        $mainContent.style.display = 'block';
+        $bgm.muted = false;
+        $bgm.currentTime = 0;
+        $bgm.play().catch(() => {});
+        if ($slides.length > 0) {
+          $slides.forEach(slide => slide.classList.add('show'));
+        }
+      } else {
+        const wrongMsg = {
+          ko: '코드가 틀립니다.',
+          en: 'Wrong code.',
+          ja: 'コードが違います。'
+        };
+        alert(wrongMsg[currentLang] || wrongMsg['ko']);
+      }
+    });
+
+    // RSVP 처리
+    const messages = {
+      ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
+      en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
+      ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
+    };
+
+    $form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = $nameInput.value.trim();
+      if (!name) return;
+      const body = new URLSearchParams({ name, message: $msgInput.value.trim() });
+
+      $status.textContent = messages[currentLang].sending;
+      fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      }).then(() => {
+        $status.textContent = messages[currentLang].success;
+        $form.reset();
+      }).catch(() => {
+        $status.textContent = messages[currentLang].success;
+      });
+    });
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -635,7 +642,8 @@ $unlockBtn.addEventListener('click', () => {
 
   $slides.forEach(slide => observer.observe(slide));
 }); // ✅ 이 중괄호가 잘 닫히게 끝나야 합니다
-  
+
+
 // ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
 function renderCalendar(lang) {
   const calendarDaysEl = document.getElementById('calendarDays');
@@ -646,7 +654,12 @@ function renderCalendar(lang) {
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ja: ['日', '月', '火', '水', '木', '金', '土']
   };
-
+const monthNames = {
+    ko: '2025년 9월',
+    en: 'September 2025',
+    ja: '2025年9月'
+  };
+ if (calendarMonthEl) calendarMonthEl.textContent = monthNames[lang]; // ✅ 언어별 달 표기 설정
   const year = 2025;
   const month = 8;
   const firstDay = new Date(year, month, 1).getDay();
