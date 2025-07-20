@@ -442,13 +442,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const $status      = document.getElementById('rsvpStatus');
   const $nameInput   = document.getElementById('rsvpName');
   const $msgInput    = document.getElementById('rsvpMessage');
-   const pcTitle = document.getElementById('pcBlockerTitle');
-    const pcDesc  = document.getElementById('pcBlockerDesc');
-    if (pcTitle && pcDesc) {
-      const titleText = pcTitle.getAttribute(`data-lang-${lang}`);
-      const descText  = pcDesc.getAttribute(`data-lang-${lang}`);
-      if (titleText) pcTitle.innerHTML = titleText;
-      if (descText)  pcDesc.innerHTML  = descText;
+   const $pcBlocker = document.getElementById('pcBlocker');
+  const $lockScreen = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
+
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  if (!isMobileDevice()) {
+    // PC인 경우 차단 메시지 표시
+    if ($pcBlocker) $pcBlocker.style.display = 'flex';
+    if ($lockScreen) $lockScreen.style.display = 'none';
+    if ($mainContent) $mainContent.style.display = 'none';
+  } else {
+    // 모바일에서는 정상 출력
+    if ($pcBlocker) $pcBlocker.style.display = 'none';
+    if ($lockScreen) $lockScreen.style.display = 'block';
+    if ($mainContent) $mainContent.style.display = 'block';
 
   /* ───── 다국어 적용 ───── */
   let currentLang = 'ko';
