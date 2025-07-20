@@ -420,15 +420,33 @@
     </div>
   </main>
 
-  <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
-  /* ───── DOM 선택자 ───── */
+  // PC/모바일 감지 및 차단
+  function isMobileDevice() {
+    const ua = navigator.userAgent.toLowerCase();
+    return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
+  }
+
+  const $pcBlocker   = document.getElementById('pcBlocker');
+  const $lockScreen  = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
+
+  if (!isMobileDevice()) {
+    $pcBlocker.style.display = 'flex';
+    $lockScreen.style.display = 'none';
+    return; // PC인 경우 여기서 스크립트 중단
+  }
+
+  // 모바일인 경우만 아래 코드 실행
+  $pcBlocker.style.display = 'none';
+  $lockScreen.style.display = 'flex';
+
+  // DOM 선택자
   const $langSel     = document.getElementById('languageSelect');
   const $allTransEls = document.querySelectorAll('[data-lang-ko]');
   const $pwInput     = document.getElementById('pwInput');
   const $unlockBtn   = document.getElementById('unlockBtn');
-  const $lockScreen  = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
   const $bgm         = document.getElementById('bgm');
   const $bgmInfo     = document.getElementById('bgmInfo');
   const $slides      = document.querySelectorAll('.slide');
@@ -437,50 +455,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const $status      = document.getElementById('rsvpStatus');
   const $nameInput   = document.getElementById('rsvpName');
   const $msgInput    = document.getElementById('rsvpMessage');
-   const $pcBlocker = document.getElementById('pcBlocker');
-  const $lockScreen = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
 
- const ua = navigator.userAgent || navigator.vendor || window.opera;
-  const isMobile = /android|iphone|ipad|ipod/i.test(ua.toLowerCase());
-
-  const $pcBlocker   = document.getElementById('pcBlocker');
-  const $lockScreen  = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-
-  if (!isMobile) {
-    // 데스크탑인 경우 → 차단 메시지 보여주고 나머지 숨김
-  const $pcBlocker   = document.getElementById('pcBlocker');
-  const $lockScreen  = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-
-  function isMobileDevice() {
-    const ua = navigator.userAgent.toLowerCase();
-    return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
-  }
-
-  const isMobile = isMobileDevice();
-
-  if (!isMobile) {
-    if ($pcBlocker) $pcBlocker.style.display = 'flex';
-    if ($lockScreen) $lockScreen.style.display = 'none';
-    if ($mainContent) $mainContent.style.display = 'none';
-  } else {
-    if ($pcBlocker) $pcBlocker.style.display = 'none';
-    if ($lockScreen) $lockScreen.style.display = 'block';
-    if ($mainContent) $mainContent.style.display = 'block';
   /* ───── 다국어 적용 ───── */
   let currentLang = 'ko';
   function applyLang(lang) {
     currentLang = lang;
 
-    /* data-lang‑xx 속성 있는 모든 요소 업데이트 */
     $allTransEls.forEach(el => {
-      const txt = el.getAttribute(data-lang-${lang});
+      const txt = el.getAttribute(`data-lang-${lang}`);
       if (txt) el.innerHTML = txt;
     });
 
-    /* 입력창, 버튼, BGM info */
     const strings = {
       ko: {
         namePh: '성함',
@@ -519,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $submitBtn.textContent = L.btnSend;
     $bgmInfo.textContent   = L.bgm;
   }
+
   $langSel.addEventListener('change', e => applyLang(e.target.value));
   applyLang(currentLang);
 
@@ -531,6 +517,16 @@ document.addEventListener('DOMContentLoaded', () => {
       $bgm.muted = false;
       $bgm.currentTime = 0;
       $bgm.play().catch(() => {});
+
+      // 슬라이드 표시 리셋
+      setTimeout(() => {
+        $slides.forEach(slide => {
+          const rect = slide.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            slide.classList.add('show');
+          }
+        });
+      }, 50);
     } else {
       alert({
         ko: '코드가 틀립니다.',
@@ -543,9 +539,10 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ───── RSVP 전송 ───── */
   const messages = {
     ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
-    en: { sending: 'Sending...',         success: 'Thank you! Your message has been sent.' },
-    ja: { sending: '送信中です...',      success: 'ありがとうございます！正常に送信されました。' }
+    en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
+    ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
   };
+
   $form.addEventListener('submit', e => {
     e.preventDefault();
     const name = $nameInput.value.trim();
@@ -565,12 +562,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ───── 슬라이드 페이드 + BGM info 표시 제어 ───── */
+  /* ───── 슬라이드 페이드 + BGM 표시 제어 ───── */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('show');
-        // 첫 슬라이드에서는 BGM info 나타나고, 나머지 슬라이드에서는 숨김
         $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
       }
     });
@@ -578,6 +574,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $slides.forEach(slide => observer.observe(slide));
 });
-  </script>
+</script>
 </body>
 </html>
