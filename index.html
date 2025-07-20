@@ -265,6 +265,22 @@
   </style>
 </head>
 <body>
+  <div id="pcBlocker" style="display:none; position:fixed; inset:0; z-index:3000; background:#f8fbf7; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;">
+  <div style="max-width:480px;">
+    <h2 id="pcBlockerTitle" style="font-size:1.6rem; color:#2a2a2a; margin-bottom:16px;"
+        data-lang-ko="모바일 기기에서 열어주세요 📱"
+        data-lang-en="Please open this invitation on a mobile device 📱"
+        data-lang-ja="スマートフォンでご覧ください 📱">
+      모바일 기기에서 열어주세요 📱
+    </h2>
+    <p id="pcBlockerDesc" style="font-size:1rem; color:#555;"
+       data-lang-ko="이 청첩장은 모바일 화면에 최적화되어 있습니다.<br>스마트폰으로 다시 접속해 주세요."
+       data-lang-en="This invitation is optimized for mobile viewing.<br>Please revisit on your smartphone."
+       data-lang-ja="この招待状はモバイル表示に最適化されています。<br>スマートフォンで再度アクセスしてください。">
+       이 청첩장은 모바일 화면에 최적화되어 있습니다.<br>스마트폰으로 다시 접속해 주세요.
+    </p>
+  </div>
+</div>
 <div id="lockScreen">
   <div class="lang-row">
     <span>🌐</span>
@@ -420,6 +436,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const $status      = document.getElementById('rsvpStatus');
   const $nameInput   = document.getElementById('rsvpName');
   const $msgInput    = document.getElementById('rsvpMessage');
+   const pcTitle = document.getElementById('pcBlockerTitle');
+    const pcDesc  = document.getElementById('pcBlockerDesc');
+    if (pcTitle && pcDesc) {
+      const titleText = pcTitle.getAttribute(`data-lang-${lang}`);
+      const descText  = pcDesc.getAttribute(`data-lang-${lang}`);
+      if (titleText) pcTitle.innerHTML = titleText;
+      if (descText)  pcDesc.innerHTML  = descText;
 
   /* ───── 다국어 적용 ───── */
   let currentLang = 'ko';
