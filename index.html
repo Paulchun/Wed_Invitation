@@ -114,7 +114,17 @@
     text-align: center;
   }
   
-  .person{flex-direction:column;gap:20px;background:#ffffffd9;color:#1e1e1e}
+.person {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* ✅ 수직 중앙 정렬 */
+  align-items: center;
+  gap: 20px;
+  background: #ffffffd9;
+  color: #1e1e1e;
+  text-align: center;
+  padding: 24px;
+}
   .person h2{font-family:"Dancing Script",cursive;font-size:2.2rem;margin-bottom:4px}
   .person-block {
     display: flex;
@@ -122,7 +132,6 @@
     align-items: center;
     text-align: center;
     gap: 12px;
-    padding-top: 10px;
     z-index: 1;
   }
   .person-block img {
