@@ -307,6 +307,16 @@
   right: -6px;
 }
   
+  .rsvp{background:#f0f5f0;flex-direction:column;gap:14px}
+  .rsvp h2{font-family:"Dancing Script",cursive;font-size:2rem}
+  .rsvp-header{font-size:1.1rem;margin-bottom:8px;font-weight:600;text-align:center}
+  .rsvp form{display:flex;flex-direction:column;gap:12px;width:85%;max-width:420px;margin:0 auto}
+  .rsvp input,.rsvp textarea{padding:12px;border-radius:8px;border:1px solid #cbd5d1;font-size:1rem}
+  .rsvp textarea{resize:vertical;min-height:110px}
+  .rsvp button{background:#4b6b4f;color:#fff;padding:12px;border:none;border-radius:8px;font-size:1rem;cursor:pointer;transition:.25s}
+  .rsvp button:hover{background:#38543c}
+  #rsvpStatus{font-weight:600;text-align:center;margin-top:6px}
+
   @media(max-width:768px){
     .welcome-header {
       font-size: 1.6rem;
@@ -440,19 +450,27 @@
       </section>
 
       <!-- RSVP -->
-<section class="slide info fade" style="background-image: url('/Wed_Invitation/assets/img/rsvp_bg.png'); background-size: cover; background-position: center;"> 
-  <h2 data-lang-ko="참석 여부를 남겨주세요"
-      data-lang-en="Please RSVP"
-      data-lang-ja="ご出席の可否をご記入ください">
-    참석 여부를 남겨주세요
-  </h2>
-  <iframe
-    src="https://docs.google.com/forms/d/e/1FAIpQLSfm5VU9yue9JbYLlwtoAubRpp75gqGiz_hGHfN7phhrroN2lQ/viewform?embedded=true"
-    width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0"
-    style="border:none;max-width:100%;background:#ffffff;border-radius:12px">
-    로딩 중입니다…
-  </iframe>
-</section>
+      <section class="slide rsvp fade" style="background-image: url('/Wed_Invitation/assets/img/rsvp_bg.png'); background-size: cover; background-position: center;">
+        <h2>RSVP</h2>
+        <p id="rsvpHeader" class="rsvp-header"
+           data-lang-ko="참석 의사가 있으신 분은 아래에 남겨주세요"
+           data-lang-ja="ご参加の意思がある方は下にご記入ください"
+           data-lang-en="If you plan to attend, please leave a message below">
+           참석 의사가 있으신 분은 아래에 남겨주세요
+        </p>
+        <p id="rsvpDeadline" class="rsvp-header"
+           data-lang-ko="번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다."
+           data-lang-ja="お手数をおかけいたしますが、8月15日までにご出欠のご連絡をお願いいたします。"
+           data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
+           번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
+        </p>
+        <form id="rsvpForm">
+          <input type="text" id="rsvpName" placeholder="성함" />
+          <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
+          <button type="submit" id="rsvpSubmit">보내기</button>
+          <div id="rsvpStatus"></div>
+        </form>
+      </section>
     </div>
   </main>
 
@@ -511,10 +529,32 @@
     const $bgm = document.getElementById('bgm');
     const $bgmInfo = document.getElementById('bgmInfo');
     const $slides = document.querySelectorAll('.slide');
+    const $submitBtn = document.getElementById('rsvpSubmit');
+    const $form = document.getElementById('rsvpForm');
+    const $nameInput = document.getElementById('rsvpName');
+    const $msgInput = document.getElementById('rsvpMessage');
+    const $status = document.getElementById('rsvpStatus');
     const $mainContent = document.getElementById('mainContent');
     const $lockScreen = document.getElementById('lockScreen');
-  const strings = {
+  // RSVP 처리
+      const messages = {
+        ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
+        en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
+        ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
+      };
+    let currentLang = 'ko';
+  
+    function applyLang(lang) {
+      currentLang = lang;
+      $allTransEls.forEach(el => {
+        const txt = el.getAttribute(`data-lang-${lang}`);
+        if (txt) el.innerHTML = txt;
+      });
+  
+      const strings = {
         ko: {
+          namePh: '성함',
+          msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
           codePh: '초대 코드를 입력하세요',
           btnOpen: '청첩장 열기',
           btnSend: '보내기',
@@ -522,6 +562,8 @@
           alertWrong: '코드가 틀립니다.'
         },
         en: {
+          namePh: 'Your name',
+          msgPh: 'Message (e.g. need accommodation)',
           codePh: 'Enter invitation code',
           btnOpen: 'Open Invitation',
           btnSend: 'Send',
@@ -529,6 +571,8 @@
           alertWrong: 'Wrong code.'
         },
         ja: {
+          namePh: 'お名前',
+          msgPh: 'メッセージ (例: 宿泊が必要です)',
           codePh: '招待コードを入力してください',
           btnOpen: '招待状を開く',
           btnSend: '送信',
