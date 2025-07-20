@@ -434,20 +434,67 @@
   <script>
 document.addEventListener('DOMContentLoaded', () => {
   // PC/모바일 감지 및 차단
-  function isMobileDevice() {
-    const ua = navigator.userAgent.toLowerCase();
-    return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
-  }
+5번 모바일 감지 로직 개선
+기존 코드:
+javascriptfunction isMobileDevice() {
+  const ua = navigator.userAgent.toLowerCase();
+  return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
+}
+수정된 코드:
+javascriptfunction isMobileDevice() {
+  // 1. 터치 지원 확인
+  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
+  // 2. User Agent 체크 (더 정확한 패턴)
+  const ua = navigator.userAgent.toLowerCase();
+  const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+  
+  // 3. 화면 크기 체크 (orientation 고려)
+  const screenWidth = Math.max(window.innerWidth, window.innerHeight);
+  const isMobileScreen = screenWidth <= 1024; // 태블릿도 포함
+  
+  // 4. 모바일 브라우저 특성 체크
+  const isMobileBrowser = /mobi|android/i.test(ua);
+  
+  // 5. CSS media query 지원 체크
+  const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+  const isTouchDevice = mediaQuery.matches;
+  
+  // 종합 판단: 여러 조건 중 하나라도 만족하면 모바일
+  return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || 
+         (isMobileScreen && hasTouch);
+}
 
+// 화면 크기 변경 감지 (선택사항)
+function setupResponsiveCheck() {
   const $pcBlocker = document.getElementById('pcBlocker');
   const $lockScreen = document.getElementById('lockScreen');
-  const $mainContent = document.getElementById('mainContent');
-
-  if (!isMobileDevice()) {
-    $pcBlocker.style.display = 'flex';
-    $lockScreen.style.display = 'none';
-    return; // PC인 경우 여기서 스크립트 중단
+  
+  function checkDevice() {
+    if (!isMobileDevice()) {
+      $pcBlocker.style.display = 'flex';
+      $lockScreen.style.display = 'none';
+    } else {
+      $pcBlocker.style.display = 'none';
+      $lockScreen.style.display = 'flex';
+    }
   }
+  
+  // 초기 체크
+  checkDevice();
+  
+  // 화면 회전이나 크기 변경 시 재체크 (디바운스 적용)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(checkDevice, 250);
+  });
+  
+  // orientation 변경 감지
+  window.addEventListener('orientationchange', () => {
+    setTimeout(checkDevice, 300); // orientation 변경 후 약간의 지연
+  });
+}
 
   // 모바일인 경우만 아래 코드 실행
   $pcBlocker.style.display = 'none';
@@ -474,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* data-lang‑xx 속성 있는 모든 요소 업데이트 */
     $allTransEls.forEach(el => {
-      const txt = el.getAttribute(data-lang-${lang});
+      const txt = el.getAttribute(`data-lang-${lang}`);
       if (txt) el.innerHTML = txt;
     });
 
