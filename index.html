@@ -294,9 +294,7 @@
       </select>
     </div>
 
-<div id="bgmInfo" style="display: none;">
-  🎵-ありがとう
-</div>
+<div id="bgmInfo" style="display: none;"></div>
 
     <h1 class="invite-date" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #3b4d3c;">
       Wedding Invitation
@@ -374,7 +372,6 @@
         <h2 data-lang-ko="📅 결혼식은 이 날이에요" data-lang-ja="📅 結婚式はこの日です" data-lang-en="📅 The Wedding Day">📅 결혼식은 이 날이에요</h2>
         <div class="calendar-box">
           <div class="month" id="calendarMonth">2025년 9월</div>
-          <div class="calendar-weekdays">
   <span data-lang-ko="일" data-lang-en="Sun" data-lang-ja="日">일</span>
   <span data-lang-ko="월" data-lang-en="Mon" data-lang-ja="月">월</span>
   <span data-lang-ko="화" data-lang-en="Tue" data-lang-ja="火">화</span>
@@ -546,7 +543,6 @@ $allTransEls.forEach(el => {
   /* ───── 초대코드 잠금 해제 ───── */
   const INVITE_CODE = '0920';
   const $mainContent = document.getElementById('mainContent');
-const $mainContent = document.getElementById('mainContent'); // ← 추가
 $unlockBtn.addEventListener('click', () => {
   if ($pwInput.value.trim() === INVITE_CODE) {
     $mainContent.style.display = 'block';
