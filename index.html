@@ -586,21 +586,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyLang(currentLang);
   renderCalendar(currentLang);
-
-  $unlockBtn.addEventListener('click', () => {
-    const entered = $pwInput.value.trim();
-    if (entered === '0920') {
-      $lockScreen.style.display = 'none';
-      $mainContent.style.display = 'block';
-      $bgm.muted = false;
-      $bgm.play().catch(() => {
-        console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
-      });
-    } else {
-      alert(strings[currentLang].alertWrong);
-    }
-  });
-
+  
+$unlockBtn.addEventListener('click', () => {
+  const entered = $pwInput.value.trim();
+  if (entered === '0920') {
+    $lockScreen.style.display = 'none';
+    $mainContent.style.display = 'block';
+    $bgm.muted = false;
+    $bgm.play().catch(() => {
+      console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
+    });
+  } else {
+    alert(strings[currentLang].alertWrong);
+  }
+});
+  
   $form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = $nameInput.value.trim();
