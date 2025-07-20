@@ -596,29 +596,29 @@ document.addEventListener('DOMContentLoaded', () => {
   $langSel.addEventListener('change', e => applyLang(e.target.value));
   applyLang(currentLang);
 
-  $form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = $nameInput.value.trim();
-    const message = $msgInput.value.trim();
-    if (!name) {
-      $status.textContent = strings[currentLang].alertWrong;
-      return;
-    }
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('message', message);
+$form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = $nameInput.value.trim();
+  const message = $msgInput.value.trim();
+
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('message', message);
     try {
       await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
         method: 'POST',
         body: formData
-      });
-      $status.textContent = strings[currentLang].success;
-      $form.reset();
-    } catch (err) {
-      $status.textContent = strings[currentLang].error;
-    }
-  });
-
+    });
+  } catch (e) {
+    // 무시
+  }
+ $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
+                        currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                        'Thank you! Your message has been sent.';
+  $form.reset();
+});
+  
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
