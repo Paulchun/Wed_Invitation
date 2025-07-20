@@ -1,23 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Hye Sung & Hyo Eun Wedding Invitation.</title>
 
-<!-- Open Graph for link previews -->
-<meta property="og:title" content="Hye Sung & Hyo Eun Wedding Invitation" />
-<meta property="og:description" content="You are cordially invited to the wedding of Hye Sung and Hyo Eun, taking place on September 20, 2025, at Laviedor Resort." />
-<meta property="og:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.jpg" />
-<meta property="og:url" content="https://paulchun.github.io/Wed_Invitation/" />
-<meta property="og:type" content="website" />
-
-<!-- Twitter Card support -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Hye Sung & Hyo Eun Wedding Invitation" />
-<meta name="twitter:description" content="You are cordially invited to the wedding of Hye Sung and Hyo Eun." />
-<meta name="twitter:image" content="https://paulchun.github.io/Wed_Invitation/assets/img/preview.jpg" />
-  
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -348,7 +335,7 @@
     </h1>
 
     <p class="invite-names"
-       data-lang-ko="전혜성 - 남효은"
+       data-lang-ko="1전혜성 - 남효은"
        data-lang-en="Chun Hye Sung & Nam Hyo Eun"
        data-lang-ja="ジョン•ヘソン & 南暁銀"
        style="margin-bottom: 12px; font-size: 1.2rem;">
@@ -367,7 +354,7 @@
     <button id="unlockBtn">청첩장 열기</button>
   </div>
   
-  <audio id="bgm" loop muted>
+<audio id="bgm" loop>
     <source src="assets/audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
@@ -455,7 +442,7 @@
            data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
            번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
         </p>
-<form id="rsvpForm">
+        <form id="rsvpForm">
           <input type="text" id="rsvpName" placeholder="성함" />
           <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
           <button type="submit" id="rsvpSubmit">보내기</button>
@@ -466,45 +453,49 @@
   </main>
 
 <script>
-const $scrollContainer = document.querySelector('.scroll-container');
-if ($scrollContainer) {
-  $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function isMobileDevice() {
-  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const ua = navigator.userAgent.toLowerCase();
-  const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
-  const screenWidth = Math.max(window.innerWidth, window.innerHeight);
-  const isMobileScreen = screenWidth <= 1024;
-  const isMobileBrowser = /mobi|android/i.test(ua);
-  const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
-  const isTouchDevice = mediaQuery.matches;
-  return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
-}
-
-function setupResponsiveCheck() {
-  const $pcBlocker = document.getElementById('pcBlocker');
-  const $lockScreen = document.getElementById('lockScreen');
-  function checkDevice() {
-    if (!isMobileDevice()) {
-      $pcBlocker.style.display = 'flex';
-      $lockScreen.style.display = 'none';
-    } else {
-      $pcBlocker.style.display = 'none';
-      $lockScreen.style.display = 'flex';
-    }
+  const $scrollContainer = document.querySelector('.scroll-container');
+  if ($scrollContainer) {
+    $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  checkDevice();
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(checkDevice, 250);
-  });
-  window.addEventListener('orientationchange', () => {
-    setTimeout(checkDevice, 300);
-  });
-}
+
+  function isMobileDevice() {
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const ua = navigator.userAgent.toLowerCase();
+    const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+    const screenWidth = Math.max(window.innerWidth, window.innerHeight);
+    const isMobileScreen = screenWidth <= 1024;
+    const isMobileBrowser = /mobi|android/i.test(ua);
+    const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const isTouchDevice = mediaQuery.matches;
+    return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
+  }
+
+  function setupResponsiveCheck() {
+    const $pcBlocker = document.getElementById('pcBlocker');
+    const $lockScreen = document.getElementById('lockScreen');
+
+    function checkDevice() {
+      if (!isMobileDevice()) {
+        $pcBlocker.style.display = 'flex';
+        $lockScreen.style.display = 'none';
+      } else {
+        $pcBlocker.style.display = 'none';
+        $lockScreen.style.display = 'flex';
+      }
+    }
+
+    checkDevice();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkDevice, 250);
+    });
+
+    window.addEventListener('orientationchange', () => {
+      setTimeout(checkDevice, 300);
+    });
+  }
 
 document.addEventListener('DOMContentLoaded', () => {
   setupResponsiveCheck();
@@ -523,79 +514,116 @@ document.addEventListener('DOMContentLoaded', () => {
   const $msgInput = document.getElementById('rsvpMessage');
   const $mainContent = document.getElementById('mainContent');
   const $lockScreen = document.getElementById('lockScreen');
-  const calendarMonthEl = document.getElementById('calendarMonth');
 
   let currentLang = 'ko';
 
-  const strings = {
-    ko: {
-      namePh: '성함',
-      msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
-      codePh: '초대 코드를 입력하세요',
-      btnOpen: '청첩장 열기',
-      btnSend: '보내기',
-      bgm: '🎵 - ありがとう',
-      alertWrong: '코드가 틀립니다.',
-      success: '감사합니다! 메시지가 전송되었습니다.',
-      error: '오류가 발생했지만 메시지를 접수했습니다.'
-    },
-    en: {
-      namePh: 'Your name',
-      msgPh: 'Message (e.g. need accommodation)',
-      codePh: 'Enter invitation code',
-      btnOpen: 'Open Invitation',
-      btnSend: 'Send',
-      bgm: '🎵 - Arigatou',
-      alertWrong: 'Wrong code.',
-      success: 'Thank you! Your message has been sent.',
-      error: 'Error occurred, but your message was received.'
-    },
-    ja: {
-      namePh: 'お名前',
-      msgPh: 'メッセージ (例: 宿泊が必要です)',
-      codePh: '招待コードを入力してください',
-      btnOpen: '招待状を開く',
-      btnSend: '送信',
-      bgm: '🎵 - ありがとう',
-      alertWrong: 'コードが違います。',
-      success: 'ありがとうございます！メッセージが送信されました。',
-      error: 'エラーが発生しましたが、メッセージは受信されました。'
-    }
-  };
-
   function applyLang(lang) {
     currentLang = lang;
-    const L = strings[lang];
     $allTransEls.forEach(el => {
       const txt = el.getAttribute(`data-lang-${lang}`);
       if (txt) el.innerHTML = txt;
     });
+
+    const strings = {
+      ko: {
+        namePh: '성함',
+        msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
+        codePh: '초대 코드를 입력하세요',
+        btnOpen: '청첩장 열기',
+        btnSend: '보내기',
+        bgm: '🎵 - ありがとう',
+        alertWrong: '코드가 틀립니다.'
+      },
+      en: {
+        namePh: 'Your name',
+        msgPh: 'Message (e.g. need accommodation)',
+        codePh: 'Enter invitation code',
+        btnOpen: 'Open Invitation',
+        btnSend: 'Send',
+        bgm: '🎵 - ありがとう',
+        alertWrong: 'Wrong code.'
+      },
+      ja: {
+        namePh: 'お名前',
+        msgPh: 'メッセージ (例: 宿泊が必要です)',
+        codePh: '招待コードを入力してください',
+        btnOpen: '招待状を開く',
+        btnSend: '送信',
+        bgm: '🎵 - ありがとう',
+        alertWrong: 'コードが違います。'
+      }
+    };
+
+    const L = strings[lang];
     $nameInput.placeholder = L.namePh;
     $msgInput.placeholder = L.msgPh;
     $pwInput.placeholder = L.codePh;
     $unlockBtn.textContent = L.btnOpen;
     $submitBtn.textContent = L.btnSend;
     $bgmInfo.textContent = L.bgm;
-    renderCalendar(lang);
   }
 
-  $unlockBtn.addEventListener('click', () => {
-    const entered = $pwInput.value.trim();
-    if (entered === '0920') {
-      $lockScreen.style.display = 'none';
-      $mainContent.style.display = 'block';
-      $bgm.muted = false;
-      $bgm.play().catch(() => {
-        console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
+  // ✅ 올바른 위치: applyLang 바깥에서 RSVP 등록
+  $form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = $nameInput.value.trim();
+    const message = $msgInput.value.trim();
+
+    if (!name) {
+      $status.textContent = currentLang === 'ko' ? '이름을 입력해주세요.' :
+                            currentLang === 'ja' ? 'お名前を入力してください。' :
+                            'Please enter your name.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('message', message);
+
+    try {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+        method: 'POST',
+        body: formData
       });
-    } else {
-      alert(strings[currentLang].alertWrong);
+
+      if (res.ok) {
+        $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
+                              currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                              'Thank you! Your message has been sent.';
+        $form.reset();
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      $status.textContent = currentLang === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' :
+                            currentLang === 'ja' ? 'エラーが発生しました。もう一度お試しください。' :
+                            'An error occurred. Please try again.';
     }
   });
 
-  $langSel.addEventListener('change', e => applyLang(e.target.value));
+  $langSel.addEventListener('change', e => {
+    applyLang(e.target.value);
+    renderCalendar(e.target.value);
+  });
+
   applyLang(currentLang);
+  renderCalendar(currentLang);
+});
   
+$unlockBtn.addEventListener('click', () => {
+  const entered = $pwInput.value.trim();
+  if (entered === '0920') {
+    $lockScreen.style.display = 'none';
+    $mainContent.style.display = 'block';
+   $bgm.muted = false;
+    $bgm.play().catch(() => {
+      console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
+    });
+  } else {
+    alert(strings[currentLang].alertWrong);
+  }
+});
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -606,23 +634,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.25, root: $scrollContainer });
 
   $slides.forEach(slide => observer.observe(slide));
-});
-
+}); // ✅ 이 중괄호가 잘 닫히게 끝나야 합니다
+  
+// ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
 function renderCalendar(lang) {
   const calendarDaysEl = document.getElementById('calendarDays');
-  const calendarMonthEl = document.getElementById('calendarMonth');
   const highlightDate = 20;
+
   const weekdays = {
     ko: ['일', '월', '화', '수', '목', '금', '토'],
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ja: ['日', '月', '火', '水', '木', '金', '土']
   };
-  const monthNames = {
-    ko: '2025년 9월',
-    en: 'September 2025',
-    ja: '2025年9月'
-  };
-  if (calendarMonthEl) calendarMonthEl.textContent = monthNames[lang];
+
   const year = 2025;
   const month = 8;
   const firstDay = new Date(year, month, 1).getDay();
@@ -632,8 +656,11 @@ function renderCalendar(lang) {
   html += weekdays[lang].map(day =>
     `<div class="day-cell"><span class="day">${day}</span></div>`
   ).join('');
+
+  let cellIndex = 0;
   for (let i = 0; i < firstDay; i++) {
     html += `<div class="day-cell"><span class="day"></span><span class="date"></span></div>`;
+    cellIndex++;
   }
   for (let day = 1; day <= totalDays; day++) {
     const isHighlight = day === highlightDate ? 'highlight' : '';
@@ -642,42 +669,11 @@ function renderCalendar(lang) {
         <span class="day"></span>
         <span class="date">${day}</span>
       </div>`;
+    cellIndex++;
   }
-  if (calendarDaysEl) calendarDaysEl.innerHTML = html;
+
+  calendarDaysEl.innerHTML = html;
 }
-   /* ───── RSVP 전송 ───── */
-  const messages = {
-    ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
-    en: { sending: 'Sending...',         success: 'Thank you! Your message has been sent.' },
-    ja: { sending: '送信中です...',      success: 'ありがとうございます！正常に送信されました。" }
-  };
-
-  const $form = document.getElementById('rsvpForm');
-  const $nameInput = document.getElementById('rsvpName');
-  const $msgInput = document.getElementById('rsvpMessage');
-  const $status = document.getElementById('rsvpStatus');
-
-  $form.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = $nameInput.value.trim();
-    if (!name) return;
-
-    const body = new URLSearchParams({ name, message: $msgInput.value.trim() });
-
-    $status.textContent = messages[currentLang].sending;
-
-    fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body
-    }).then(() => {
-      $status.textContent = messages[currentLang].success;
-      $form.reset();
-    }).catch(() => {
-      $status.textContent = messages[currentLang].success;
-    });
-  });
-
 </script>
 </body>
 </html>
