@@ -294,6 +294,10 @@
       </select>
     </div>
 
+<div id="bgmInfo" style="display: none;">
+  🎵-ありがとう
+</div>
+
     <h1 class="invite-date" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #3b4d3c;">
       Wedding Invitation
     </h1>
@@ -430,38 +434,23 @@
     </div>
   </main>
 
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-setupResponsiveCheck();
-javascriptfunction isMobileDevice() {
-  // 1. 터치 지원 확인
+<script>
+function isMobileDevice() {
   const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  
-  // 2. User Agent 체크 (더 정확한 패턴)
   const ua = navigator.userAgent.toLowerCase();
   const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
-  
-  // 3. 화면 크기 체크 (orientation 고려)
   const screenWidth = Math.max(window.innerWidth, window.innerHeight);
-  const isMobileScreen = screenWidth <= 1024; // 태블릿도 포함
-  
-  // 4. 모바일 브라우저 특성 체크
+  const isMobileScreen = screenWidth <= 1024;
   const isMobileBrowser = /mobi|android/i.test(ua);
-  
-  // 5. CSS media query 지원 체크
   const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
   const isTouchDevice = mediaQuery.matches;
-  
-  // 종합 판단: 여러 조건 중 하나라도 만족하면 모바일
-  return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || 
-         (isMobileScreen && hasTouch);
+  return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
 }
 
-// 화면 크기 변경 감지 (선택사항)
 function setupResponsiveCheck() {
   const $pcBlocker = document.getElementById('pcBlocker');
   const $lockScreen = document.getElementById('lockScreen');
-  
+
   function checkDevice() {
     if (!isMobileDevice()) {
       $pcBlocker.style.display = 'flex';
@@ -471,27 +460,22 @@ function setupResponsiveCheck() {
       $lockScreen.style.display = 'flex';
     }
   }
-  
-  // 초기 체크
-  checkDevice();
-  
-  // 화면 회전이나 크기 변경 시 재체크 (디바운스 적용)
+
+  checkDevice(); // ✅ 초기 1회 실행
+
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(checkDevice, 250);
   });
-  
-  // orientation 변경 감지
+
   window.addEventListener('orientationchange', () => {
-    setTimeout(checkDevice, 300); // orientation 변경 후 약간의 지연
+    setTimeout(checkDevice, 300);
   });
 }
 
-  // 모바일인 경우만 아래 코드 실행
-  $pcBlocker.style.display = 'none';
-  $lockScreen.style.display = 'flex';
-
+document.addEventListener('DOMContentLoaded', () => {
+  setupResponsiveCheck(); // ✅ 여기서 호출
   // DOM 선택자
   const $langSel = document.getElementById('languageSelect');
   const $allTransEls = document.querySelectorAll('[data-lang-ko]');
@@ -512,10 +496,10 @@ function setupResponsiveCheck() {
     currentLang = lang;
 
     /* data-lang‑xx 속성 있는 모든 요소 업데이트 */
-    $allTransEls.forEach(el => {
-      const txt = el.getAttribute(`data-lang-${lang}`);
-      if (txt) el.innerHTML = txt;
-    });
+$allTransEls.forEach(el => {
+  const txt = el.getAttribute(`data-lang-${lang}`); // ← 템플릿 리터럴로 수정
+  if (txt) el.innerHTML = txt;
+});
 
     /* 입력창, 버튼, BGM info */
     const strings = {
@@ -562,10 +546,10 @@ function setupResponsiveCheck() {
   /* ───── 초대코드 잠금 해제 ───── */
   const INVITE_CODE = '0920';
   const $mainContent = document.getElementById('mainContent');
-  $unlockBtn.addEventListener('click', () => {
-    if ($pwInput.value.trim() === INVITE_CODE) {
-      $lockScreen.style.display = 'none';
-      $mainContent.style.display = 'block';
+const $mainContent = document.getElementById('mainContent'); // ← 추가
+$unlockBtn.addEventListener('click', () => {
+  if ($pwInput.value.trim() === INVITE_CODE) {
+    $mainContent.style.display = 'block';
       $bgm.muted = false;
       $bgm.currentTime = 0;
       $bgm.play().catch(() => {});
