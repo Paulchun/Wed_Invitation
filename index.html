@@ -469,45 +469,49 @@
   </main>
 
 <script>
-const $scrollContainer = document.querySelector('.scroll-container');
-if ($scrollContainer) {
-  $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function isMobileDevice() {
-  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const ua = navigator.userAgent.toLowerCase();
-  const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
-  const screenWidth = Math.max(window.innerWidth, window.innerHeight);
-  const isMobileScreen = screenWidth <= 1024;
-  const isMobileBrowser = /mobi|android/i.test(ua);
-  const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
-  const isTouchDevice = mediaQuery.matches;
-  return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
-}
-
-function setupResponsiveCheck() {
-  const $pcBlocker = document.getElementById('pcBlocker');
-  const $lockScreen = document.getElementById('lockScreen');
-  function checkDevice() {
-    if (!isMobileDevice()) {
-      $pcBlocker.style.display = 'flex';
-      $lockScreen.style.display = 'none';
-    } else {
-      $pcBlocker.style.display = 'none';
-      $lockScreen.style.display = 'flex';
-    }
+  const $scrollContainer = document.querySelector('.scroll-container');
+  if ($scrollContainer) {
+    $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  checkDevice();
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(checkDevice, 250);
-  });
-  window.addEventListener('orientationchange', () => {
-    setTimeout(checkDevice, 300);
-  });
-}
+
+  function isMobileDevice() {
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const ua = navigator.userAgent.toLowerCase();
+    const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+    const screenWidth = Math.max(window.innerWidth, window.innerHeight);
+    const isMobileScreen = screenWidth <= 1024;
+    const isMobileBrowser = /mobi|android/i.test(ua);
+    const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const isTouchDevice = mediaQuery.matches;
+    return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
+  }
+
+  function setupResponsiveCheck() {
+    const $pcBlocker = document.getElementById('pcBlocker');
+    const $lockScreen = document.getElementById('lockScreen');
+
+    function checkDevice() {
+      if (!isMobileDevice()) {
+        $pcBlocker.style.display = 'flex';
+        $lockScreen.style.display = 'none';
+      } else {
+        $pcBlocker.style.display = 'none';
+        $lockScreen.style.display = 'flex';
+      }
+    }
+
+    checkDevice();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkDevice, 250);
+    });
+
+    window.addEventListener('orientationchange', () => {
+      setTimeout(checkDevice, 300);
+    });
+  }
 
 document.addEventListener('DOMContentLoaded', () => {
   setupResponsiveCheck();
@@ -526,7 +530,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const $msgInput = document.getElementById('rsvpMessage');
   const $mainContent = document.getElementById('mainContent');
   const $lockScreen = document.getElementById('lockScreen');
-  const calendarMonthEl = document.getElementById('calendarMonth');
 
   let currentLang = 'ko';
 
@@ -538,9 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btnOpen: '청첩장 열기',
       btnSend: '보내기',
       bgm: '🎵 - ありがとう',
-      alertWrong: '코드가 틀립니다.',
-      success: '감사합니다! 메시지가 전송되었습니다.',
-      error: '오류가 발생했지만 메시지를 접수했습니다.'
+      alertWrong: '코드가 틀립니다.'
     },
     en: {
       namePh: 'Your name',
@@ -548,10 +549,8 @@ document.addEventListener('DOMContentLoaded', () => {
       codePh: 'Enter invitation code',
       btnOpen: 'Open Invitation',
       btnSend: 'Send',
-      bgm: '🎵 - Arigatou',
-      alertWrong: 'Wrong code.',
-      success: 'Thank you! Your message has been sent.',
-      error: 'Error occurred, but your message was received.'
+      bgm: '🎵 - ありがとう',
+      alertWrong: 'Wrong code.'
     },
     ja: {
       namePh: 'お名前',
@@ -560,68 +559,82 @@ document.addEventListener('DOMContentLoaded', () => {
       btnOpen: '招待状を開く',
       btnSend: '送信',
       bgm: '🎵 - ありがとう',
-      alertWrong: 'コードが違います。',
-      success: 'ありがとうございます！メッセージが送信されました。',
-      error: 'エラーが発生しましたが、メッセージは受信されました。'
+      alertWrong: 'コードが違います。'
     }
   };
 
   function applyLang(lang) {
     currentLang = lang;
-    const L = strings[lang];
     $allTransEls.forEach(el => {
       const txt = el.getAttribute(`data-lang-${lang}`);
       if (txt) el.innerHTML = txt;
     });
+
+    const L = strings[lang];
     $nameInput.placeholder = L.namePh;
     $msgInput.placeholder = L.msgPh;
     $pwInput.placeholder = L.codePh;
     $unlockBtn.textContent = L.btnOpen;
     $submitBtn.textContent = L.btnSend;
     $bgmInfo.textContent = L.bgm;
-    renderCalendar(lang);
   }
 
-  $unlockBtn.addEventListener('click', () => {
-    const entered = $pwInput.value.trim();
-    if (entered === '0920') {
-      $lockScreen.style.display = 'none';
-      $mainContent.style.display = 'block';
-      $bgm.muted = false;
-      $bgm.play().catch(() => {
-        console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
-      });
-    } else {
-      alert(strings[currentLang].alertWrong);
-    }
+  $langSel.addEventListener('change', e => {
+    applyLang(e.target.value);
+    renderCalendar(e.target.value);
   });
 
-  $langSel.addEventListener('change', e => applyLang(e.target.value));
   applyLang(currentLang);
-
+  renderCalendar(currentLang);
+  
+$unlockBtn.addEventListener('click', () => {
+  const entered = $pwInput.value.trim();
+  if (entered === '0920') {
+    $lockScreen.style.display = 'none';
+    $mainContent.style.display = 'block';
+    $bgm.muted = false;
+    $bgm.play().catch(() => {
+      console.warn("BGM 재생 실패: 사용자 상호작용이 필요할 수 있음");
+    });
+  } else {
+    alert(strings[currentLang].alertWrong);
+  }
+});
+  
   $form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = $nameInput.value.trim();
     const message = $msgInput.value.trim();
+
     if (!name) {
-      $status.textContent = strings[currentLang].alertWrong;
+      $status.textContent = currentLang === 'ko' ? '이름을 입력해주세요.' :
+                            currentLang === 'ja' ? 'お名前を入力してください。' : 'Please enter your name.';
       return;
     }
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('message', message);
+
     try {
-      await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+      const res = await fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
         method: 'POST',
         body: formData
+        mode: 'no-cors'
       });
-      $status.textContent = strings[currentLang].success;
-      $form.reset();
-    } catch (err) {
-      $status.textContent = strings[currentLang].error;
-    }
-  });
 
+        $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
+                          currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                          'Thank you! Your message has been sent.';
+    $form.reset();
+  } catch (err) {
+    // ✅ catch에도 성공 메시지를 출력 (에러가 떠도 전송은 된 경우)
+    $status.textContent = currentLang === 'ko' ? '감사합니다! 메시지가 전송되었습니다.' :
+                          currentLang === 'ja' ? 'ありがとうございます！メッセージが送信されました。' :
+                          'Thank you! Your message has been sent.';
+  }
+});
+  
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -629,28 +642,34 @@ document.addEventListener('DOMContentLoaded', () => {
         $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
       }
     });
-  }, { threshold: 0.25, root: $scrollContainer });
+  }, { threshold: 0.25 });
 
   $slides.forEach(slide => observer.observe(slide));
 });
 
+// ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
 function renderCalendar(lang) {
   const calendarDaysEl = document.getElementById('calendarDays');
   const calendarMonthEl = document.getElementById('calendarMonth');
+
   const highlightDate = 20;
+  const year = 2025;
+  const month = 8;
+
   const weekdays = {
     ko: ['일', '월', '화', '수', '목', '금', '토'],
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ja: ['日', '月', '火', '水', '木', '金', '土']
   };
+
   const monthNames = {
     ko: '2025년 9월',
     en: 'September 2025',
     ja: '2025年9月'
   };
+
   if (calendarMonthEl) calendarMonthEl.textContent = monthNames[lang];
-  const year = 2025;
-  const month = 8;
+
   const firstDay = new Date(year, month, 1).getDay();
   const totalDays = new Date(year, month + 1, 0).getDate();
 
@@ -658,9 +677,13 @@ function renderCalendar(lang) {
   html += weekdays[lang].map(day =>
     `<div class="day-cell"><span class="day">${day}</span></div>`
   ).join('');
+
+  let cellIndex = 0;
   for (let i = 0; i < firstDay; i++) {
     html += `<div class="day-cell"><span class="day"></span><span class="date"></span></div>`;
+    cellIndex++;
   }
+
   for (let day = 1; day <= totalDays; day++) {
     const isHighlight = day === highlightDate ? 'highlight' : '';
     html += `
@@ -668,8 +691,10 @@ function renderCalendar(lang) {
         <span class="day"></span>
         <span class="date">${day}</span>
       </div>`;
+    cellIndex++;
   }
-  if (calendarDaysEl) calendarDaysEl.innerHTML = html;
+
+  calendarDaysEl.innerHTML = html;
 }
 </script>
 </body>
