@@ -446,17 +446,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const $lockScreen = document.getElementById('lockScreen');
   const $mainContent = document.getElementById('mainContent');
 
-  function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  }
+ const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const isMobile = /android|iphone|ipad|ipod/i.test(ua.toLowerCase());
 
-  if (!isMobileDevice()) {
-    // PC인 경우 차단 메시지 표시
+  const $pcBlocker   = document.getElementById('pcBlocker');
+  const $lockScreen  = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
+
+  if (!isMobile) {
+    // 데스크탑인 경우 → 차단 메시지 보여주고 나머지 숨김
     if ($pcBlocker) $pcBlocker.style.display = 'flex';
     if ($lockScreen) $lockScreen.style.display = 'none';
     if ($mainContent) $mainContent.style.display = 'none';
   } else {
-    // 모바일에서는 정상 출력
+    // 모바일인 경우 → 모든 콘텐츠 정상 표시
     if ($pcBlocker) $pcBlocker.style.display = 'none';
     if ($lockScreen) $lockScreen.style.display = 'block';
     if ($mainContent) $mainContent.style.display = 'block';
