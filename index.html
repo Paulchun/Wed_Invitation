@@ -420,7 +420,7 @@
     </div>
   </main>
 
-<script>
+  <script>
 document.addEventListener('DOMContentLoaded', () => {
   // PC/모바일 감지 및 차단
   function isMobileDevice() {
@@ -428,8 +428,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
   }
 
-  const $pcBlocker   = document.getElementById('pcBlocker');
-  const $lockScreen  = document.getElementById('lockScreen');
+  const $pcBlocker = document.getElementById('pcBlocker');
+  const $lockScreen = document.getElementById('lockScreen');
   const $mainContent = document.getElementById('mainContent');
 
   if (!isMobileDevice()) {
@@ -443,29 +443,31 @@ document.addEventListener('DOMContentLoaded', () => {
   $lockScreen.style.display = 'flex';
 
   // DOM 선택자
-  const $langSel     = document.getElementById('languageSelect');
+  const $langSel = document.getElementById('languageSelect');
   const $allTransEls = document.querySelectorAll('[data-lang-ko]');
-  const $pwInput     = document.getElementById('pwInput');
-  const $unlockBtn   = document.getElementById('unlockBtn');
-  const $bgm         = document.getElementById('bgm');
-  const $bgmInfo     = document.getElementById('bgmInfo');
-  const $slides      = document.querySelectorAll('.slide');
-  const $submitBtn   = document.getElementById('rsvpSubmit');
-  const $form        = document.getElementById('rsvpForm');
-  const $status      = document.getElementById('rsvpStatus');
-  const $nameInput   = document.getElementById('rsvpName');
-  const $msgInput    = document.getElementById('rsvpMessage');
+  const $pwInput = document.getElementById('pwInput');
+  const $unlockBtn = document.getElementById('unlockBtn');
+  const $bgm = document.getElementById('bgm');
+  const $bgmInfo = document.getElementById('bgmInfo');
+  const $slides = document.querySelectorAll('.slide');
+  const $submitBtn = document.getElementById('rsvpSubmit');
+  const $form = document.getElementById('rsvpForm');
+  const $status = document.getElementById('rsvpStatus');
+  const $nameInput = document.getElementById('rsvpName');
+  const $msgInput = document.getElementById('rsvpMessage');
 
   /* ───── 다국어 적용 ───── */
   let currentLang = 'ko';
   function applyLang(lang) {
     currentLang = lang;
 
+    /* data-lang‑xx 속성 있는 모든 요소 업데이트 */
     $allTransEls.forEach(el => {
-      const txt = el.getAttribute(`data-lang-${lang}`);
+      const txt = el.getAttribute(data-lang-${lang});
       if (txt) el.innerHTML = txt;
     });
 
+    /* 입력창, 버튼, BGM info */
     const strings = {
       ko: {
         namePh: '성함',
@@ -504,7 +506,6 @@ document.addEventListener('DOMContentLoaded', () => {
     $submitBtn.textContent = L.btnSend;
     $bgmInfo.textContent   = L.bgm;
   }
-
   $langSel.addEventListener('change', e => applyLang(e.target.value));
   applyLang(currentLang);
 
@@ -517,16 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
       $bgm.muted = false;
       $bgm.currentTime = 0;
       $bgm.play().catch(() => {});
-
-      // 슬라이드 표시 리셋
-      setTimeout(() => {
-        $slides.forEach(slide => {
-          const rect = slide.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-            slide.classList.add('show');
-          }
-        });
-      }, 50);
     } else {
       alert({
         ko: '코드가 틀립니다.',
@@ -539,10 +530,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ───── RSVP 전송 ───── */
   const messages = {
     ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
-    en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
-    ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
+    en: { sending: 'Sending...',         success: 'Thank you! Your message has been sent.' },
+    ja: { sending: '送信中です...',      success: 'ありがとうございます！正常に送信されました。' }
   };
-
   $form.addEventListener('submit', e => {
     e.preventDefault();
     const name = $nameInput.value.trim();
@@ -562,11 +552,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ───── 슬라이드 페이드 + BGM 표시 제어 ───── */
+  /* ───── 슬라이드 페이드 + BGM info 표시 제어 ───── */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('show');
+        // 첫 슬라이드에서는 BGM info 나타나고, 나머지 슬라이드에서는 숨김
         $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
       }
     });
@@ -574,6 +565,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $slides.forEach(slide => observer.observe(slide));
 });
-</script>
+  </script>
 </body>
 </html>
