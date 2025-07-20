@@ -519,143 +519,144 @@
     });
   }
 
-document.addEventListener('DOMContentLoaded', () => {
-  setupResponsiveCheck();
-
-  const $langSel = document.getElementById('languageSelect');
-  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
-  const $pwInput = document.getElementById('pwInput');
-  const $unlockBtn = document.getElementById('unlockBtn');
-  const $bgm = document.getElementById('bgm');
-  const $bgmInfo = document.getElementById('bgmInfo');
-  const $slides = document.querySelectorAll('.slide');
-  const $submitBtn = document.getElementById('rsvpSubmit');
-  const $form = document.getElementById('rsvpForm');
-  const $status = document.getElementById('rsvpStatus');
-  const $nameInput = document.getElementById('rsvpName');
-  const $msgInput = document.getElementById('rsvpMessage');
-  const $mainContent = document.getElementById('mainContent');
-  const $lockScreen = document.getElementById('lockScreen');
-
-  let currentLang = 'ko';
-
-  function applyLang(lang) {
-    currentLang = lang;
-    $allTransEls.forEach(el => {
-      const txt = el.getAttribute(`data-lang-${lang}`);
-      if (txt) el.innerHTML = txt;
-    });
-
-    const strings = {
-      ko: {
-        namePh: '성함',
-        msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
-        codePh: '초대 코드를 입력하세요',
-        btnOpen: '청첩장 열기',
-        btnSend: '보내기',
-        bgm: '🎵 - ありがとう',
-        alertWrong: '코드가 틀립니다.'
-      },
-      en: {
-        namePh: 'Your name',
-        msgPh: 'Message (e.g. need accommodation)',
-        codePh: 'Enter invitation code',
-        btnOpen: 'Open Invitation',
-        btnSend: 'Send',
-        bgm: '🎵 - ありがとう',
-        alertWrong: 'Wrong code.'
-      },
-      ja: {
-        namePh: 'お名前',
-        msgPh: 'メッセージ (例: 宿泊が必要です)',
-        codePh: '招待コードを入力してください',
-        btnOpen: '招待状を開く',
-        btnSend: '送信',
-        bgm: '🎵 - ありがとう',
-        alertWrong: 'コードが違います。'
-      }
-    };
-
-    const L = strings[lang];
-    $nameInput.placeholder = L.namePh;
-    $msgInput.placeholder = L.msgPh;
-    $pwInput.placeholder = L.codePh;
-    $unlockBtn.textContent = L.btnOpen;
-    $submitBtn.textContent = L.btnSend;
-    $bgmInfo.textContent = L.bgm;
-  }
-
-  $langSel.addEventListener('change', e => {
-    applyLang(e.target.value);
-    renderCalendar(e.target.value); // ✅ 언어 바뀔 때 달력도 다시 렌더링
-  });
-
-  applyLang(currentLang);
-  renderCalendar(currentLang); // ✅ 초기 달력 렌더링
-
-    // 초대코드 해제
-    const INVITE_CODE = '0920';
-    $unlockBtn.addEventListener('click', () => {
-      if ($pwInput.value.trim() === INVITE_CODE) {
-        $lockScreen.style.display = 'none';
-        $mainContent.style.display = 'block';
-        $bgm.muted = false;
-        $bgm.currentTime = 0;
-        $bgm.play().catch(() => {});
-        if ($slides.length > 0) {
-          $slides.forEach(slide => slide.classList.add('show'));
+  document.addEventListener('DOMContentLoaded', () => {
+    setupResponsiveCheck();
+  
+    const $langSel = document.getElementById('languageSelect');
+    const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+    const $pwInput = document.getElementById('pwInput');
+    const $unlockBtn = document.getElementById('unlockBtn');
+    const $bgm = document.getElementById('bgm');
+    const $bgmInfo = document.getElementById('bgmInfo');
+    const $slides = document.querySelectorAll('.slide');
+    const $submitBtn = document.getElementById('rsvpSubmit');
+    const $form = document.getElementById('rsvpForm');
+    const $nameInput = document.getElementById('rsvpName');
+    const $msgInput = document.getElementById('rsvpMessage');
+    const $status = document.getElementById('rsvpStatus');
+    const $mainContent = document.getElementById('mainContent');
+    const $lockScreen = document.getElementById('lockScreen');
+  // RSVP 처리
+      const messages = {
+        ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
+        en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
+        ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
+      };
+    let currentLang = 'ko';
+  
+    function applyLang(lang) {
+      currentLang = lang;
+      $allTransEls.forEach(el => {
+        const txt = el.getAttribute(`data-lang-${lang}`);
+        if (txt) el.innerHTML = txt;
+      });
+  
+      const strings = {
+        ko: {
+          namePh: '성함',
+          msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
+          codePh: '초대 코드를 입력하세요',
+          btnOpen: '청첩장 열기',
+          btnSend: '보내기',
+          bgm: '🎵 - ありがとう',
+          alertWrong: '코드가 틀립니다.'
+        },
+        en: {
+          namePh: 'Your name',
+          msgPh: 'Message (e.g. need accommodation)',
+          codePh: 'Enter invitation code',
+          btnOpen: 'Open Invitation',
+          btnSend: 'Send',
+          bgm: '🎵 - ありがとう',
+          alertWrong: 'Wrong code.'
+        },
+        ja: {
+          namePh: 'お名前',
+          msgPh: 'メッセージ (例: 宿泊が必要です)',
+          codePh: '招待コードを入力してください',
+          btnOpen: '招待状を開く',
+          btnSend: '送信',
+          bgm: '🎵 - ありがとう',
+          alertWrong: 'コードが違います。'
         }
-      } else {
-        const wrongMsg = {
-          ko: '코드가 틀립니다.',
-          en: 'Wrong code.',
-          ja: 'コードが違います。'
-        };
-        alert(wrongMsg[currentLang] || wrongMsg['ko']);
-      }
+      };
+  
+      const L = strings[lang];
+      $nameInput.placeholder = L.namePh;
+      $msgInput.placeholder = L.msgPh;
+      $pwInput.placeholder = L.codePh;
+      $unlockBtn.textContent = L.btnOpen;
+      $submitBtn.textContent = L.btnSend;
+      $bgmInfo.textContent = L.bgm;
+    }
+  
+    $langSel.addEventListener('change', e => {
+      applyLang(e.target.value);
+      renderCalendar(e.target.value); // ✅ 언어 바뀔 때 달력도 다시 렌더링
     });
-
-    // RSVP 처리
-    const messages = {
-      ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
-      en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
-      ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
-    };
-
-$form.addEventListener('submit', e => {
-  e.preventDefault();
-  const name = $nameInput.value.trim();
-  if (!name) return;
-  const message = $msgInput.value.trim();
-  const body = new URLSearchParams({ name, message });
-
-  $status.textContent = messages[currentLang].sending;
-
-  fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  }).then(() => {
-    $status.textContent = messages[currentLang].success;
-    $form.reset();
-  }).catch(() => {
-    $status.textContent = messages[currentLang].success; // 실패해도 성공 메시지 표시
+  
+    applyLang(currentLang);
+    renderCalendar(currentLang); // ✅ 초기 달력 렌더링
+  
+      // 초대코드 해제
+      const INVITE_CODE = '0920';
+      $unlockBtn.addEventListener('click', () => {
+        if ($pwInput.value.trim() === INVITE_CODE) {
+          $lockScreen.style.display = 'none';
+          $mainContent.style.display = 'block';
+          $bgm.muted = false;
+          $bgm.currentTime = 0;
+          $bgm.play().catch(() => {});
+          if ($slides.length > 0) {
+            $slides.forEach(slide => slide.classList.add('show'));
+          }
+        } else {
+          const wrongMsg = {
+            ko: '코드가 틀립니다.',
+            en: 'Wrong code.',
+            ja: 'コードが違います。'
+          };
+          alert(wrongMsg[currentLang] || wrongMsg['ko']);
+        }
+      });
+  
+  
+  
+  $form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $nameInput.value.trim();
+    if (!name) return;
+    const message = $msgInput.value.trim();
+    const body = new URLSearchParams({ name, message });
+  
+    $status.textContent = messages[currentLang].sending;
+  
+    fetch('https://script.google.com/macros/s/AKfycbxNIJJJid0yuIa7y8ymnf8tl-_BnhAsUabJ-S9YLvjiv9G0FziQHfgxMadUL8oVFN6r4g/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    }).then(() => {
+      $status.textContent = messages[currentLang].success;
+      $form.reset();
+    }).catch(() => {
+      $status.textContent = messages[currentLang].success; // 실패해도 성공 메시지 표시
+    });
   });
-});
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-        $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
-      }
-    });
-  }, { threshold: 0.25, root: $scrollContainer });
-
-  $slides.forEach(slide => observer.observe(slide));
-}); // ✅ 이 중괄호가 잘 닫히게 끝나야 합니다
-
-
-// ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
-function renderCalendar(lang) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
+        }
+      });
+    }, { threshold: 0.25, root: $scrollContainer });
+  
+    $slides.forEach(slide => observer.observe(slide));
+  }); // ✅ 이 중괄호가 잘 닫히게 끝나야 합니다
+  
+  
+  // ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
+  function renderCalendar(lang) {
   const calendarDaysEl = document.getElementById('calendarDays');
   const calendarMonthEl = document.getElementById('calendarMonth'); 
   const highlightDate = 20;
