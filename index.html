@@ -455,17 +455,14 @@
            data-lang-en="We kindly ask you to RSVP by August 15. Thank you in advance.">
            번거로우시겠지만 8월 15일까지 참석 여부를 알려주시면 감사하겠습니다.
         </p>
-     <form id="rsvpForm">
-      <input id="rsvpName" name="name" placeholder="성함" type="text"/>
-      <textarea id="rsvpMessage" name="message" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
-      <button id="rsvpSubmit" type="submit">
-       보내기
-      </button>
-      <div id="rsvpStatus">
-      </div>
-     </form>
-    </section>
-   </div>
+<form id="rsvpForm">
+          <input type="text" id="rsvpName" placeholder="성함" />
+          <textarea id="rsvpMessage" placeholder="남기실 말씀 (예: 숙박이 필요합니다)"></textarea>
+          <button type="submit" id="rsvpSubmit">보내기</button>
+          <div id="rsvpStatus"></div>
+        </form>
+      </section>
+    </div>
   </main>
 
 <script>
