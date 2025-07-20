@@ -380,7 +380,6 @@
   <span data-lang-ko="토" data-lang-en="Sat" data-lang-ja="土">토</span>
 </div>
           <div class="days" id="calendarDays">
-            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
             <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
             <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
             <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span class="highlight">20</span>
@@ -433,14 +432,7 @@
 
   <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // PC/모바일 감지 및 차단
-5번 모바일 감지 로직 개선
-기존 코드:
-javascriptfunction isMobileDevice() {
-  const ua = navigator.userAgent.toLowerCase();
-  return /android|iphone|ipad|ipod|mobile|touch/.test(ua) || window.innerWidth < 768;
-}
-수정된 코드:
+setupResponsiveCheck();
 javascriptfunction isMobileDevice() {
   // 1. 터치 지원 확인
   const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -569,6 +561,7 @@ function setupResponsiveCheck() {
 
   /* ───── 초대코드 잠금 해제 ───── */
   const INVITE_CODE = '0920';
+  const $mainContent = document.getElementById('mainContent');
   $unlockBtn.addEventListener('click', () => {
     if ($pwInput.value.trim() === INVITE_CODE) {
       $lockScreen.style.display = 'none';
