@@ -325,9 +325,9 @@
 .slide {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* 중앙에서 위쪽으로 정렬 */
+  justify-content: flex-start;
   align-items: center;
-  padding-top: 8vh; /* 위쪽 공간 확보 */
+  padding-top: 14vh; /* ↓ 내려감 */
   padding-bottom: 5vh;
   scroll-snap-align: start;
   opacity: 0;
@@ -344,28 +344,27 @@
   opacity: 1;
 }
 
-/* calendar, info, rsvp 섹션도 동일하게 위로 정렬되도록 수정 */
+/* calendar, info, rsvp 섹션도 동일하게 살짝 아래로 조정 */
 .calendar, .slide.info, .rsvp, .person {
   justify-content: flex-start !important;
-  padding-top: 6vh !important;
+  padding-top: 12vh !important; /* ↓ 더 아래로 */
   padding-bottom: 4vh;
 }
 
-/* welcome-header 위치 조정 */
+/* welcome-header 위치는 유지 */
 .welcome-header {
-  top: 10% !important; /* 기존 18%에서 줄임 */
+  top: 10% !important;
 }
 
-/* 캘린더 박스 상단 마진 조정으로 더 위로 */
+/* 캘린더 박스 약간 아래로 */
 .calendar-box {
+  margin-top: 4vh;
+}
+
+/* RSVP form 위치도 조금 아래로 */
+.rsvp form {
   margin-top: 2vh;
 }
-
-/* RSVP form 위치도 살짝 위로 */
-.rsvp form {
-  margin-top: 1vh;
-}
-  }
   </style>
 </head>
 <body>
@@ -443,7 +442,7 @@
 
       <!-- Groom -->
       <section class="slide person fade" style="background-image: url('/Wed_Invitation/assets/img/groom_bg.png'); background-size: cover; background-position: center;">
-        <h2 data-lang-ko="신랑-전혜성" data-lang-ja="新郎-ジョン•ヘソン" data-lang-en="Groom-Paul">신랑</h2>
+        <h2 data-lang-ko="신랑: 전혜성" data-lang-ja="新郎: ジョン•ヘソン" data-lang-en="Groom: Paul">신랑</h2>
         <div class="person-block groom">
           <img src="/Wed_Invitation/assets/img/groom.jpg" alt="신랑" />
           <p data-lang-ko="언제나 곁에 있어줘서 진심으로 고마워. 함께할 우리의 미래가 벌써부터 기대돼."
@@ -456,7 +455,7 @@
 
       <!-- Bride -->
       <section class="slide person fade" style="background-image: url('/Wed_Invitation/assets/img/bride_bg.png'); background-size: cover; background-position: center;">
-        <h2 data-lang-ko="신부-남효은" data-lang-ja="新婦-南暁銀" data-lang-en="Bride-Monica">신부</h2>
+        <h2 data-lang-ko="신부: 남효은" data-lang-ja="新婦: 南暁銀" data-lang-en="Bride: Monica">신부</h2>
         <div class="person-block bride">
           <img src="/Wed_Invitation/assets/img/bride.jpg" alt="신부" />
           <p data-lang-ko="앞으로도 잘 먹고 잘 자고, 행복하게 지내자. 나는 언제나 오빠 옆에서 웃고 있을게!"
