@@ -503,6 +503,7 @@
       if (!isMobileDevice()) {
         $pcBlocker.style.display = 'flex';
         $lockScreen.style.display = 'none';
+        document.getElementById('mainContent').style.display = 'none'; // 추가
       } else {
         $pcBlocker.style.display = 'none';
         $lockScreen.style.display = 'flex';
@@ -522,8 +523,8 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    setupResponsiveCheck();
+  window.addEventListener('orientationchange', () => {
+    setTimeout(checkDevice, 300);
   
     const $langSel = document.getElementById('languageSelect');
     const $allTransEls = document.querySelectorAll('[data-lang-ko]');
@@ -560,7 +561,7 @@
           btnOpen: '청첩장 열기',
           btnSend: '보내기',
           bgm: '🎵 - ありがとう',
-          alertWrong: '코드가 틀립니다.'
+          alertWrong: '코드가 틀립니다.',
           rsvpBtn: 'Google 폼으로 RSVP 하기',
         },
         en: {
@@ -570,7 +571,7 @@
           btnOpen: 'Open Invitation',
           btnSend: 'Send',
           bgm: '🎵 - ありがとう',
-          alertWrong: 'Wrong code.'
+          alertWrong: 'Wrong code.',
           rsvpBtn: 'Submit RSVP via Google Form',
         },
         ja: {
@@ -580,7 +581,7 @@
           btnOpen: '招待状を開く',
           btnSend: '送信',
           bgm: '🎵 - ありがとう',
-          alertWrong: 'コードが違います。'
+          alertWrong: 'コードが違います。',
           rsvpBtn: 'Googleフォームで出席確認',
         }
       };
