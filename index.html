@@ -321,6 +321,50 @@
     .welcome-header {
       font-size: 1.6rem;
     }
+/* 수정된 슬라이드 레이아웃: 위로 정렬되도록 padding-top 추가 */
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 중앙에서 위쪽으로 정렬 */
+  align-items: center;
+  padding-top: 8vh; /* 위쪽 공간 확보 */
+  padding-bottom: 5vh;
+  scroll-snap-align: start;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  flex-shrink: 0;
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.slide.show {
+  opacity: 1;
+}
+
+/* calendar, info, rsvp 섹션도 동일하게 위로 정렬되도록 수정 */
+.calendar, .slide.info, .rsvp, .person {
+  justify-content: flex-start !important;
+  padding-top: 6vh !important;
+  padding-bottom: 4vh;
+}
+
+/* welcome-header 위치 조정 */
+.welcome-header {
+  top: 10% !important; /* 기존 18%에서 줄임 */
+}
+
+/* 캘린더 박스 상단 마진 조정으로 더 위로 */
+.calendar-box {
+  margin-top: 2vh;
+}
+
+/* RSVP form 위치도 살짝 위로 */
+.rsvp form {
+  margin-top: 1vh;
+}
   }
   </style>
 </head>
