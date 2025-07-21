@@ -321,50 +321,6 @@
     .welcome-header {
       font-size: 1.6rem;
     }
-/* 수정된 슬라이드 레이아웃: 위로 정렬되도록 padding-top 추가 */
-.slide {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 14vh; /* ↓ 내려감 */
-  padding-bottom: 5vh;
-  scroll-snap-align: start;
-  opacity: 0;
-  transition: opacity 0.9s ease;
-  flex-shrink: 0;
-  height: 100vh;
-  width: 100vw;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.slide.show {
-  opacity: 1;
-}
-
-/* calendar, info, rsvp 섹션도 동일하게 살짝 아래로 조정 */
-.calendar, .slide.info, .rsvp, .person {
-  justify-content: flex-start !important;
-  padding-top: 12vh !important; /* ↓ 더 아래로 */
-  padding-bottom: 4vh;
-}
-
-/* welcome-header 위치는 유지 */
-.welcome-header {
-  top: 10% !important;
-}
-
-/* 캘린더 박스 약간 아래로 */
-.calendar-box {
-  margin-top: 4vh;
-}
-
-/* RSVP form 위치도 조금 아래로 */
-.rsvp form {
-  margin-top: 2vh;
-}
   </style>
 </head>
 <body>
@@ -429,7 +385,7 @@
 
       <!-- Slide 1 -->
       <section class="slide fade" style="background-image:url('/Wed_Invitation/assets/img/1.jpg')">
-        <div class="overlay-text" We're getting married. Hyesung & Hyo Eun</div>
+        <div class="overlay-text" We're getting married<br>Hyesung & Hyo Eun</div>
       </section>
 
       <!-- Slide 2 -->
