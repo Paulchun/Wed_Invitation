@@ -478,10 +478,26 @@
   </main>
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
   const $scrollContainer = document.querySelector('.scroll-container');
   if ($scrollContainer) {
     $scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  const $pcBlocker = document.getElementById('pcBlocker');
+  const $lockScreen = document.getElementById('lockScreen');
+  const $mainContent = document.getElementById('mainContent');
+  const $pwInput = document.getElementById('pwInput');
+  const $unlockBtn = document.getElementById('unlockBtn');
+  const $bgm = document.getElementById('bgm');
+  const $bgmInfo = document.getElementById('bgmInfo');
+  const $slides = document.querySelectorAll('.slide');
+  const $langSel = document.getElementById('languageSelect');
+  const $rsvpBtn = document.getElementById('rsvpBtn');
+  const $allTransEls = document.querySelectorAll('[data-lang-ko]');
+
+  const INVITE_CODE = '0920';
+  let currentLang = 'ko';
 
   function isMobileDevice() {
     const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -495,190 +511,151 @@
     return hasTouch || mobileUA || isMobileBrowser || isTouchDevice || (isMobileScreen && hasTouch);
   }
 
-  function setupResponsiveCheck() {
-    const $pcBlocker = document.getElementById('pcBlocker');
-    const $lockScreen = document.getElementById('lockScreen');
+  function checkDevice() {
+    if (!isMobileDevice()) {
+      $pcBlocker.style.display = 'flex';
+      $lockScreen.style.display = 'none';
+      $mainContent.style.display = 'none';
+    } else {
+      $pcBlocker.style.display = 'none';
+      $lockScreen.style.display = 'flex';
+    }
+  }
 
-    function checkDevice() {
-      if (!isMobileDevice()) {
-        $pcBlocker.style.display = 'flex';
-        $lockScreen.style.display = 'none';
-        document.getElementById('mainContent').style.display = 'none'; // 추가
-      } else {
-        $pcBlocker.style.display = 'none';
-        $lockScreen.style.display = 'flex';
+  checkDevice();
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(checkDevice, 250);
+  });
+
+  const strings = {
+    ko: {
+      namePh: '성함',
+      msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
+      codePh: '초대 코드를 입력하세요',
+      btnOpen: '청첩장 열기',
+      btnSend: '보내기',
+      bgm: '🎵 - ありがとう',
+      alertWrong: '코드가 틀립니다.',
+      rsvpBtn: 'Google 폼으로 RSVP 하기',
+    },
+    en: {
+      namePh: 'Your name',
+      msgPh: 'Message (e.g. need accommodation)',
+      codePh: 'Enter invitation code',
+      btnOpen: 'Open Invitation',
+      btnSend: 'Send',
+      bgm: '🎵 - Arigatou',
+      alertWrong: 'Wrong code.',
+      rsvpBtn: 'Submit RSVP via Google Form',
+    },
+    ja: {
+      namePh: 'お名前',
+      msgPh: 'メッセージ (例: 宿泊が必要です)',
+      codePh: '招待コードを入力してください',
+      btnOpen: '招待状を開く',
+      btnSend: '送信',
+      bgm: '🎵 - ありがとう',
+      alertWrong: 'コードが違います。',
+      rsvpBtn: 'Googleフォームで出席確認',
+    }
+  };
+
+  function applyLang(lang) {
+    currentLang = lang;
+    const L = strings[lang];
+    $allTransEls.forEach(el => {
+      const txt = el.getAttribute(`data-lang-${lang}`);
+      if (txt) el.innerHTML = txt;
+    });
+
+    $pwInput.placeholder = L.codePh;
+    $unlockBtn.textContent = L.btnOpen;
+    $bgmInfo.textContent = L.bgm;
+    if ($rsvpBtn) $rsvpBtn.textContent = L.rsvpBtn;
+  }
+
+  $langSel.addEventListener('change', e => {
+    applyLang(e.target.value);
+    renderCalendar(e.target.value);
+  });
+
+  $unlockBtn.addEventListener('click', () => {
+    if ($pwInput.value.trim() === INVITE_CODE) {
+      $lockScreen.style.display = 'none';
+      $mainContent.style.display = 'block';
+      $bgm.muted = false;
+      $bgm.currentTime = 0;
+      $bgm.play().catch(err => {
+        console.warn('BGM autoplay failed:', err);
+      });
+      $slides.forEach(slide => slide.classList.add('show'));
+    } else {
+      alert(strings[currentLang]?.alertWrong || strings.ko.alertWrong);
+    }
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
       }
-    }
-
-    checkDevice();
-
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(checkDevice, 250);
     });
+  }, { threshold: 0.25, root: $scrollContainer });
 
-    window.addEventListener('orientationchange', () => {
-      setTimeout(checkDevice, 300);
-    });
-  }
+  $slides.forEach(slide => observer.observe(slide));
 
-  window.addEventListener('orientationchange', () => {
-    setTimeout(checkDevice, 300);
-  
-    const $langSel = document.getElementById('languageSelect');
-    const $allTransEls = document.querySelectorAll('[data-lang-ko]');
-    const $pwInput = document.getElementById('pwInput');
-    const $unlockBtn = document.getElementById('unlockBtn');
-    const $bgm = document.getElementById('bgm');
-    const $bgmInfo = document.getElementById('bgmInfo');
-    const $slides = document.querySelectorAll('.slide');
-    const $mainContent = document.getElementById('mainContent');
-    const $lockScreen = document.getElementById('lockScreen');
-    const $rsvpBtn = document.getElementById('rsvpBtn'); // ⬅️ RSVP 버튼 정의
-    
-  // RSVP 처리
-      const messages = {
-        ko: { sending: '전송 중입니다...', success: '감사합니다! 잘 전달되었어요.' },
-        en: { sending: 'Sending...', success: 'Thank you! Your message has been sent.' },
-        ja: { sending: '送信中です...', success: 'ありがとうございます！正常に送信されました。' }
-      };
-    let currentLang = 'ko';
-  
-    function applyLang(lang) {
-      currentLang = lang;
-      $allTransEls.forEach(el => {
-        const txt = el.getAttribute(`data-lang-${lang}`);
-        if (txt) el.innerHTML = txt;
-        if ($rsvpBtn) $rsvpBtn.textContent = L.rsvpBtn;
-      });
-  
-      const strings = {
-        ko: {
-          namePh: '성함',
-          msgPh: '남기실 말씀 (예: 숙박이 필요합니다)',
-          codePh: '초대 코드를 입력하세요',
-          btnOpen: '청첩장 열기',
-          btnSend: '보내기',
-          bgm: '🎵 - ありがとう',
-          alertWrong: '코드가 틀립니다.',
-          rsvpBtn: 'Google 폼으로 RSVP 하기',
-        },
-        en: {
-          namePh: 'Your name',
-          msgPh: 'Message (e.g. need accommodation)',
-          codePh: 'Enter invitation code',
-          btnOpen: 'Open Invitation',
-          btnSend: 'Send',
-          bgm: '🎵 - ありがとう',
-          alertWrong: 'Wrong code.',
-          rsvpBtn: 'Submit RSVP via Google Form',
-        },
-        ja: {
-          namePh: 'お名前',
-          msgPh: 'メッセージ (例: 宿泊が必要です)',
-          codePh: '招待コードを入力してください',
-          btnOpen: '招待状を開く',
-          btnSend: '送信',
-          bgm: '🎵 - ありがとう',
-          alertWrong: 'コードが違います。',
-          rsvpBtn: 'Googleフォームで出席確認',
-        }
-      };
-  
-      const L = strings[lang];
-      $pwInput.placeholder = L.codePh;
-      $unlockBtn.textContent = L.btnOpen;
-      $bgmInfo.textContent = L.bgm;
-    }
-  
-    $langSel.addEventListener('change', e => {
-      applyLang(e.target.value);
-      renderCalendar(e.target.value); // ✅ 언어 바뀔 때 달력도 다시 렌더링
-    });
-  
-    applyLang(currentLang);
-    renderCalendar(currentLang); // ✅ 초기 달력 렌더링
-  
-      // 초대코드 해제
-      const INVITE_CODE = '0920';
-      $unlockBtn.addEventListener('click', () => {
-        if ($pwInput.value.trim() === INVITE_CODE) {
-          $lockScreen.style.display = 'none';
-          $mainContent.style.display = 'block';
-          $bgm.muted = false;
-          $bgm.currentTime = 0;
-          $bgm.play().catch(() => {});
-          if ($slides.length > 0) {
-            $slides.forEach(slide => slide.classList.add('show'));
-          }
-        } else {
-          const wrongMsg = {
-            ko: '코드가 틀립니다.',
-            en: 'Wrong code.',
-            ja: 'コードが違います。'
-          };
-          alert(wrongMsg[currentLang] || wrongMsg['ko']);
-        }
-      });
+  applyLang(currentLang);
+  renderCalendar(currentLang);
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          $bgmInfo.style.display = (entry.target === $slides[0]) ? 'flex' : 'none';
-        }
-      });
-    }, { threshold: 0.25, root: $scrollContainer });
-  
-    $slides.forEach(slide => observer.observe(slide));
-  }); // ✅ 이 중괄호가 잘 닫히게 끝나야 합니다
-  
-  
-  // ✅ DOMContentLoaded 밖에 위치한 renderCalendar 정의
   function renderCalendar(lang) {
-  const calendarDaysEl = document.getElementById('calendarDays');
-  const calendarMonthEl = document.getElementById('calendarMonth'); 
-  const highlightDate = 20;
+    const calendarDaysEl = document.getElementById('calendarDays');
+    const calendarMonthEl = document.getElementById('calendarMonth');
+    const highlightDate = 20;
 
-  const weekdays = {
-    ko: ['일', '월', '화', '수', '목', '금', '토'],
-    en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    ja: ['日', '月', '火', '水', '木', '金', '土']
-  };
-const monthNames = {
-    ko: '2025년 9월',
-    en: 'September 2025',
-    ja: '2025年9月'
-  };
- if (calendarMonthEl) calendarMonthEl.textContent = monthNames[lang]; // ✅ 언어별 달 표기 설정
-  const year = 2025;
-  const month = 8;
-  const firstDay = new Date(year, month, 1).getDay();
-  const totalDays = new Date(year, month + 1, 0).getDate();
+    const weekdays = {
+      ko: ['일', '월', '화', '수', '목', '금', '토'],
+      en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      ja: ['日', '月', '火', '水', '木', '金', '土']
+    };
+    const monthNames = {
+      ko: '2025년 9월',
+      en: 'September 2025',
+      ja: '2025年9月'
+    };
 
-  let html = '';
-  html += weekdays[lang].map(day =>
-    `<div class="day-cell"><span class="day">${day}</span></div>`
-  ).join('');
+    if (calendarMonthEl) calendarMonthEl.textContent = monthNames[lang];
 
-  let cellIndex = 0;
-  for (let i = 0; i < firstDay; i++) {
-    html += `<div class="day-cell"><span class="day"></span><span class="date"></span></div>`;
-    cellIndex++;
+    const year = 2025;
+    const month = 8; // 9월 (JS는 0부터 시작)
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    let html = '';
+    html += weekdays[lang].map(day =>
+      `<div class="day-cell"><span class="day">${day}</span></div>`
+    ).join('');
+
+    let cellIndex = 0;
+    for (let i = 0; i < firstDay; i++) {
+      html += `<div class="day-cell"><span class="day"></span><span class="date"></span></div>`;
+      cellIndex++;
+    }
+    for (let day = 1; day <= totalDays; day++) {
+      const isHighlight = day === highlightDate ? 'highlight' : '';
+      html += `
+        <div class="day-cell ${isHighlight}">
+          <span class="day"></span>
+          <span class="date">${day}</span>
+        </div>`;
+      cellIndex++;
+    }
+
+    calendarDaysEl.innerHTML = html;
   }
-  for (let day = 1; day <= totalDays; day++) {
-    const isHighlight = day === highlightDate ? 'highlight' : '';
-    html += `
-      <div class="day-cell ${isHighlight}">
-        <span class="day"></span>
-        <span class="date">${day}</span>
-      </div>`;
-    cellIndex++;
-  }
-
-  calendarDaysEl.innerHTML = html;
-}
+});
 </script>
 </body>
 </html>
